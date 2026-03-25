@@ -1,26 +1,665 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Hero Container ─── */
+.hero-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #a8adb8;
+  background:
+    radial-gradient(ellipse 70% 60% at 55% 50%, #bfc3cb 0%, transparent 100%),
+    linear-gradient(180deg, #a9aeb9 0%, #b2b6bf 40%, #a4a9b4 100%);
+  color: #fff;
+  font-family: var(--font-sans), system-ui, sans-serif;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ─── Top-left ΔΤΔ logo ─── */
+.hero-logo {
+  position: absolute;
+  top: 32px;
+  left: 48px;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.9);
+  z-index: 10;
+  user-select: none;
+}
+
+/* ─── Top-right nav ─── */
+.hero-nav {
+  position: absolute;
+  top: 32px;
+  right: 48px;
+  z-index: 50;
+}
+
+/* ─── Avatar button & dropdown ─── */
+.hero-avatar-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: border-color 0.2s, background 0.2s;
+}
+.hero-avatar-btn:hover {
+  border-color: rgba(0, 0, 0, 0.45);
+  background: rgba(255, 255, 255, 0.5);
+}
+.hero-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.hero-avatar-default {
+  width: 24px;
+  height: 24px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.hero-avatar-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  background: #2a2d35;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+}
+.hero-avatar-dropdown-greeting {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  font-weight: 500;
+}
+.hero-avatar-dropdown-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.hero-avatar-dropdown-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+.hero-avatar-dropdown-copy {
+  font-size: 0.8rem;
+  padding: 8px 14px;
+  border-radius: 0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: center;
+}
+.hero-avatar-dropdown-copy:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.hero-avatar-dropdown-btn {
+  width: 100%;
+  text-align: center;
+  font-size: 0.75rem;
+  padding: 10px 20px;
+}
+
+.hero-btn {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 12.5px 30px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.hero-btn-ghost {
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: transparent;
+}
+
+.hero-btn-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.hero-btn-solid {
+  color: #3a3d45;
+  background: #fff;
+  border: 1px solid #fff;
+}
+
+.hero-btn-solid:hover {
+  background: rgba(255, 255, 255, 0.88);
+}
+
+/* ─── Left info panel ─── */
+.hero-left {
+  position: absolute;
+  top: 50%;
+  left: 48px;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hero-divider {
+  width: 50px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.6);
+  margin: 15px 0;
+}
+
+.hero-label {
+  font-size: 0.875rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.hero-countdown-title {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 0;
+}
+
+.hero-date {
+  font-size: 0.875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.hero-location {
+  font-size: 0.875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* ─── Countdown ─── */
+.countdown {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0;
+  margin-top: 0px;
+  position: relative;
+}
+
+.countdown-segment {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.countdown-number {
+  font-size: 3.5rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.countdown-colon {
+  font-size: 2.75rem;
+  font-weight: 300;
+  margin: 0 8px;
+  opacity: 0.7;
+  line-height: 1;
+}
+
+.countdown-labels {
+  display: flex;
+  width: 100%;
+  gap: 0;
+  margin-top: 5px;
+}
+
+.countdown-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  width: 70px;
+  text-align: left;
+}
+
+.countdown-label:first-child {
+  width: 65px;
+}
+
+/* ─── Right guest list panel ─── */
+.hero-guest-panel {
+  position: absolute;
+  top: 120px;
+  right: 48px;
+  bottom: 48px;
+  width: 270px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-guest-header {
+  margin-bottom: 16px;
+  text-align: right;
+}
+
+.hero-guest-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.hero-guest-list-wrapper {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+.hero-guest-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.hero-guest-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.hero-guest-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hero-guest-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.hero-guest-blurred {
+  filter: blur(2.5px);
+  /* ← adjust blur amount here */
+  opacity: 0.7;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-guest-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  transition: background 0.15s ease;
+}
+
+.hero-guest-row:hover {
+  background: rgba(255, 255, 255, 0.13);
+}
+
+.hero-guest-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.hero-guest-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-guest-avatar-letter {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hero-guest-info {
+  min-width: 0;
+}
+
+.hero-guest-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hero-guest-year {
+  font-size: 0.65rem;
+  opacity: 0.6;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Skeleton bars for blurred state */
+.hero-skeleton-bar {
+  height: 10px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.hero-skeleton-bar-sm {
+  height: 7px;
+  margin-top: 6px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Blur overlay with CTA */
+.hero-guest-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  z-index: 5;
+}
+
+.hero-guest-overlay-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.15);
+}
+
+.hero-guest-overlay-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.hero-guest-overlay-btn {
+  padding: 10px 24px;
+  font-size: 0.75rem;
+}
+
+/* ─── Bottom-left info ─── */
+.hero-bottom-left {
+  position: absolute;
+  bottom: 48px;
+  left: 48px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  font-weight: 500;
+}
+
+/* ─── Subtle noise texture overlay ─── */
+.hero-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ensure content is above noise */
+.hero-logo,
+.hero-left,
+.hero-guest-panel,
+.hero-bottom-left {
+  z-index: 2;
+}
+
+/* ─── Modal ─── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  animation: modal-fade-in 0.15s ease;
+}
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 520px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: #2a2d35;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+  padding: 40px 32px;
+  color: #fff;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  animation: modal-slide-up 0.2s ease;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* No border-radius on anything inside the modal */
+.modal-content *,
+.modal-content *::before,
+.modal-content *::after {
+  border-radius: 0 !important;
+}
+
+/* Override form field styles inside modals */
+.modal-content input[type="text"],
+.modal-content input[type="email"],
+.modal-content input[type="tel"],
+.modal-content input[type="number"],
+.modal-content textarea {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.modal-content input::placeholder,
+.modal-content textarea::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.modal-content input[type="text"]:focus,
+.modal-content input[type="email"]:focus,
+.modal-content input[type="tel"]:focus,
+.modal-content input[type="number"]:focus,
+.modal-content textarea:focus {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Checkboxes and radios */
+.modal-content input[type="checkbox"],
+.modal-content input[type="radio"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.07);
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.modal-content input[type="checkbox"]:checked,
+.modal-content input[type="radio"]:checked {
+  background: #fff;
+  border-color: #fff;
+}
+
+.modal-content input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: solid #2a2d35;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.modal-content input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 6px;
+  height: 6px;
+  background: #2a2d35;
+}
+
+.modal-content input[type="checkbox"]:focus,
+.modal-content input[type="radio"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);
+}
+
+/* Submit buttons in modal match hero-btn-solid style */
+.modal-content button[type="submit"] {
+  background: #fff;
+  color: #2a2d35;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+.modal-content button[type="submit"]:hover {
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.modal-content button[type="submit"]:disabled {
+  opacity: 0.5;
+}
+
+/* Toggle buttons (email/phone) */
+.modal-content .bg-purple-600 {
+  background: #fff;
+  color: #2a2d35;
+}
+
+.modal-content .bg-white\/5 {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.modal-content .border-white\/10 {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Muted text inside modals */
+.modal-content .text-gray-400,
+.modal-content .text-gray-500 {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.modal-content .text-red-400 {
+  color: #fca5a5;
+}
+
+/* Error banners */
+.modal-content .bg-red-900\/50 {
+  background: rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+/* Link-style buttons */
+.modal-content .text-purple-400 {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.modal-content .text-purple-400:hover,
+.modal-content .hover\:text-purple-300:hover {
+  color: #fff;
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+  transition: color 0.15s ease;
+}
+
+.modal-close:hover {
+  color: #fff;
+}
+
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modal-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
