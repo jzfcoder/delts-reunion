@@ -14,10 +14,11 @@ export async function signup(
   _prev: SignupState,
   formData: FormData
 ): Promise<SignupState> {
-  const name = formData.get("name") as string | null;
-  if (!name?.trim()) {
-    return { error: "Name is required." };
+  const firstName = formData.get("first_name") as string | null;
+  if (!firstName?.trim()) {
+    return { error: "First name is required." };
   }
+  const lastName = (formData.get("last_name") as string)?.trim() || null;
 
   const phone = (formData.get("phone") as string)?.trim() || null;
   const email = (formData.get("email") as string)?.trim() || null;
@@ -41,8 +42,11 @@ export async function signup(
   const referralCode = crypto.randomUUID().slice(0, 8);
   const referredBy = (formData.get("referred_by") as string) || null;
 
+  console.log("signup action called, name:", firstName, lastName, "phone:", phone, "email:", email);
+
   const { error } = await supabase.from("attendees").insert({
-    name: name.trim(),
+    first_name: firstName.trim(),
+    last_name: lastName,
     address: (formData.get("address") as string)?.trim() || null,
     phone,
     email,
@@ -74,8 +78,11 @@ export async function signup(
   });
 
   if (error) {
+    console.log("supabase error:", error);
     return { error: "Something went wrong. Please try again." };
   }
+
+  console.log("insert succeeded, redirecting");
 
   const cookieStore = await cookies();
   cookieStore.set("session", sessionToken, {
@@ -86,5 +93,5 @@ export async function signup(
     maxAge: 60 * 60 * 24 * 365,
   });
 
-  redirect(`/signup?success=true&ref=${referralCode}`);
+  redirect(`/?welcome=true&ref=${referralCode}`);
 }

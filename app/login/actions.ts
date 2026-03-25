@@ -12,23 +12,28 @@ export async function login(
   _prev: LoginState,
   formData: FormData
 ): Promise<LoginState> {
-  const name = (formData.get("name") as string)?.trim();
+  const firstName = (formData.get("first_name") as string)?.trim();
+  const lastName = (formData.get("last_name") as string)?.trim();
   const email = (formData.get("email") as string)?.trim();
   const phone = (formData.get("phone") as string)?.trim();
 
-  if (!name) {
-    return { error: "Name is required." };
+  if (!firstName) {
+    return { error: "First name is required." };
   }
 
   if (!email && !phone) {
     return { error: "Please provide either your email or phone number." };
   }
 
-  // Build query: match name AND (email OR phone)
+  // Build query: match first_name (+ last_name if provided) AND (email OR phone)
   let query = supabase
     .from("attendees")
     .select("session_token, referral_code")
-    .ilike("name", name);
+    .ilike("first_name", firstName);
+
+  if (lastName) {
+    query = query.ilike("last_name", lastName);
+  }
 
   if (email) {
     query = query.ilike("email", email);
@@ -54,5 +59,5 @@ export async function login(
     maxAge: 60 * 60 * 24 * 365,
   });
 
-  redirect("/guests");
+  redirect("/");
 }

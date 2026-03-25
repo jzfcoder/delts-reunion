@@ -1,6 +1,7 @@
 export interface Attendee {
   id: string;
-  name: string;
+  first_name: string;
+  last_name: string | null;
   address: string | null;
   phone: string | null;
   graduation_date: string | null;

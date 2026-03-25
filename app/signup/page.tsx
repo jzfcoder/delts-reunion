@@ -18,7 +18,7 @@ export default async function SignupPage({
         <div className="text-center">
           <h1 className="text-3xl font-bold">You&apos;re in!</h1>
           <p className="mt-2 text-gray-400">
-            Welcome, {session.name}. We&apos;ll see you in May.
+            Welcome, {session.first_name}. We&apos;ll see you in May.
           </p>
         </div>
 
@@ -49,7 +49,7 @@ export default async function SignupPage({
         <div className="text-center">
           <h1 className="text-3xl font-bold">Already signed up!</h1>
           <p className="mt-2 text-gray-400">
-            You&apos;re registered as {session.name}.
+            You&apos;re registered as {session.first_name} {session.last_name}.
           </p>
         </div>
 

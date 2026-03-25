@@ -19,9 +19,10 @@ const LABELS = ["DAYS", "HOURS", "MIN", "SEC"] as const;
 const KEYS = ["days", "hours", "minutes", "seconds"] as const;
 
 export function Countdown() {
-  const [time, setTime] = useState(calcTimeLeft);
+  const [time, setTime] = useState<ReturnType<typeof calcTimeLeft> | null>(null);
 
   useEffect(() => {
+    setTime(calcTimeLeft());
     const id = setInterval(() => setTime(calcTimeLeft()), 1000);
     return () => clearInterval(id);
   }, []);
@@ -31,7 +32,7 @@ export function Countdown() {
       {KEYS.map((key, i) => (
         <span key={key} className="countdown-segment">
           <span className="countdown-number">
-            {String(time[key]).padStart(key === "days" ? 1 : 2, "0")}
+            {time ? String(time[key]).padStart(key === "days" ? 1 : 2, "0") : "--"}
           </span>
           {i < KEYS.length - 1 && <span className="countdown-colon">:</span>}
         </span>

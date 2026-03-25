@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 export default async function Home({
   searchParams,
 }: {
-  searchParams: Promise<{ ref?: string }>;
+  searchParams: Promise<{ ref?: string; welcome?: string }>;
 }) {
   const params = await searchParams;
   const session = await getSession();
@@ -16,12 +16,12 @@ export default async function Home({
   const guests = session
     ? await supabase
         .from("attendees")
-        .select("name, graduation_date, profile_pic_url, days_attending")
+        .select("first_name, last_name, graduation_date, profile_pic_url, days_attending")
         .order("created_at", { ascending: true })
         .then(({ data }) =>
           (data ?? []) as Pick<
             Attendee,
-            "name" | "graduation_date" | "profile_pic_url" | "days_attending"
+            "first_name" | "last_name" | "graduation_date" | "profile_pic_url" | "days_attending"
           >[]
         )
     : [];
@@ -30,10 +30,11 @@ export default async function Home({
     <HomePage
       guests={guests}
       isLoggedIn={!!session}
-      userName={session?.name.split(" ")[0]}
+      userName={session?.first_name}
       profilePicUrl={session?.profile_pic_url ?? undefined}
       referralCode={session?.referral_code}
       referredBy={params.ref}
+      showWelcome={params.welcome === "true"}
     />
   );
 }

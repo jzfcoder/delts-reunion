@@ -18,16 +18,27 @@ export function LoginForm() {
         </p>
       )}
 
-      <label className="flex flex-col gap-1.5">
-        <span className="text-sm font-medium">Name</span>
-        <input
-          type="text"
-          name="name"
-          required
-          placeholder="As you entered when you RSVP'd"
-          className="border border-white/10 bg-white/5 px-4 py-2.5 focus:border-white/40 focus:outline-none"
-        />
-      </label>
+      <div className="flex gap-4">
+        <label className="flex flex-col gap-1.5 flex-1">
+          <span className="text-sm font-medium">First Name</span>
+          <input
+            type="text"
+            name="first_name"
+            required
+            placeholder="As you RSVP'd"
+            className="border border-white/10 bg-white/5 px-4 py-2.5 focus:border-white/40 focus:outline-none"
+          />
+        </label>
+        <label className="flex flex-col gap-1.5 flex-1">
+          <span className="text-sm font-medium">Last Name</span>
+          <input
+            type="text"
+            name="last_name"
+            placeholder="As you RSVP'd"
+            className="border border-white/10 bg-white/5 px-4 py-2.5 focus:border-white/40 focus:outline-none"
+          />
+        </label>
+      </div>
 
       <div className="flex flex-col gap-2">
         <span className="text-sm font-medium">Verify with</span>

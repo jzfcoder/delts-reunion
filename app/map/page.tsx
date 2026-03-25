@@ -11,13 +11,13 @@ export default async function MapPage() {
 
   const { data: attendees } = await supabase
     .from("attendees")
-    .select("name, address, graduation_date, profile_pic_url")
+    .select("first_name, last_name, address, graduation_date, profile_pic_url")
     .not("address", "is", null)
     .order("address", { ascending: true });
 
   const guests = (attendees ?? []) as Pick<
     Attendee,
-    "name" | "address" | "graduation_date" | "profile_pic_url"
+    "first_name" | "last_name" | "address" | "graduation_date" | "profile_pic_url"
   >[];
 
   // Group by address (city-level)
@@ -58,18 +58,18 @@ export default async function MapPage() {
                       {guest.profile_pic_url ? (
                         <img
                           src={guest.profile_pic_url}
-                          alt={guest.name}
+                          alt={`${guest.first_name} ${guest.last_name ?? ""}`.trim()}
                           className="h-full w-full object-cover"
                         />
                       ) : (
                         <span className="text-sm font-bold text-purple-400">
-                          {guest.name.charAt(0).toUpperCase()}
+                          {guest.first_name.charAt(0).toUpperCase()}
                         </span>
                       )}
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium truncate">
-                        {guest.name}
+                        {guest.first_name} {guest.last_name}
                       </p>
                       {guest.graduation_date && (
                         <p className="text-xs text-gray-500">

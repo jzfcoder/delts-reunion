@@ -2,7 +2,7 @@
 
 import type { Attendee } from "@/lib/types";
 
-type Guest = Pick<Attendee, "name" | "graduation_date" | "profile_pic_url" | "days_attending">;
+type Guest = Pick<Attendee, "first_name" | "last_name" | "graduation_date" | "profile_pic_url" | "days_attending">;
 
 const DUMMY_GUESTS = [
   { name: "Jacob McCarren", year: "'18" },
@@ -44,17 +44,17 @@ export function GuestListPreview({
                   {guest.profile_pic_url ? (
                     <img
                       src={guest.profile_pic_url}
-                      alt={guest.name}
+                      alt={`${guest.first_name} ${guest.last_name ?? ""}`.trim()}
                       className="hero-guest-avatar-img"
                     />
                   ) : (
                     <span className="hero-guest-avatar-letter">
-                      {guest.name.charAt(0).toUpperCase()}
+                      {guest.first_name.charAt(0).toUpperCase()}
                     </span>
                   )}
                 </div>
                 <div className="hero-guest-info">
-                  <p className="hero-guest-name">{guest.name}</p>
+                  <p className="hero-guest-name">{guest.first_name} {guest.last_name}</p>
                   {guest.graduation_date && (
                     <p className="hero-guest-year">{guest.graduation_date}</p>
                   )}
@@ -92,11 +92,11 @@ export function GuestListPreview({
         <div className="hero-guest-overlay">
           <p className="hero-guest-overlay-text">RSVP to see who&apos;s coming</p>
           <div className="hero-guest-overlay-buttons">
-            <button onClick={onLogin} className="hero-btn hero-btn-ghost hero-guest-overlay-btn">
-              LOG IN
-            </button>
             <button onClick={onSignup} className="hero-btn hero-btn-solid hero-guest-overlay-btn">
               RSVP
+            </button>
+            <button onClick={onLogin} className="hero-btn hero-btn-ghost hero-guest-overlay-btn">
+              LOG IN
             </button>
           </div>
         </div>

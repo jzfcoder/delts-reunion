@@ -3,14 +3,16 @@
 import { useState, useRef, useEffect } from "react";
 import { Countdown } from "@/components/countdown";
 import { GuestListPreview } from "@/components/guest-list-preview";
+import { Globe } from "@/components/globe";
 import { Modal } from "@/components/modal";
 import { LoginForm } from "@/components/login-form";
 import { SignupForm } from "@/components/signup-form";
+import { logout } from "@/app/logout/actions";
 import type { Attendee } from "@/lib/types";
 
 type Guest = Pick<
   Attendee,
-  "name" | "graduation_date" | "profile_pic_url" | "days_attending"
+  "first_name" | "last_name" | "graduation_date" | "profile_pic_url" | "days_attending"
 >;
 
 export function HomePage({
@@ -20,6 +22,7 @@ export function HomePage({
   profilePicUrl,
   referralCode,
   referredBy,
+  showWelcome,
 }: {
   guests: Guest[];
   isLoggedIn: boolean;
@@ -27,8 +30,11 @@ export function HomePage({
   profilePicUrl?: string;
   referralCode?: string;
   referredBy?: string;
+  showWelcome?: boolean;
 }) {
-  const [modal, setModal] = useState<"login" | "signup" | null>(null);
+  const [modal, setModal] = useState<"login" | "signup" | "welcome" | null>(
+    showWelcome ? "welcome" : null
+  );
   const [avatarOpen, setAvatarOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -62,6 +68,9 @@ export function HomePage({
 
   return (
     <div className="hero-container">
+      {/* Center globe */}
+      <Globe />
+
       {/* Top-left greek logo */}
       <div className="hero-logo">ΔΤΔ</div>
 
@@ -103,6 +112,13 @@ export function HomePage({
                   className="hero-avatar-dropdown-copy"
                 >
                   {copied ? "Copied!" : "Copy invite link"}
+                </button>
+                <div className="hero-avatar-dropdown-divider" />
+                <button
+                  onClick={() => logout()}
+                  className="hero-avatar-dropdown-copy"
+                >
+                  Log out
                 </button>
               </>
             ) : (
@@ -186,6 +202,38 @@ export function HomePage({
             <p className="mt-2 text-sm text-gray-400">May 1 – 3, 2026</p>
           </div>
           <SignupForm referredBy={referredBy} />
+        </div>
+      </Modal>
+
+      {/* Welcome Modal (shown after signup) */}
+      <Modal open={modal === "welcome"} onClose={() => setModal(null)}>
+        <div className="flex flex-col items-center gap-6">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold">You&apos;re in!</h2>
+            <p className="mt-2 text-sm text-gray-400">
+              Welcome, {userName}. We&apos;ll see you in May.
+            </p>
+          </div>
+          {referralCode && (
+            <div className="w-full">
+              <p className="mb-2 text-sm text-gray-400 text-center">
+                Spread the word — share your invite link:
+              </p>
+              <div className="flex gap-2">
+                <input
+                  readOnly
+                  value={referralUrl}
+                  className="flex-1 border border-white/10 bg-white/5 px-4 py-2 text-sm"
+                />
+                <button
+                  onClick={copyReferral}
+                  className="bg-purple-600 px-4 py-2 text-sm font-medium hover:bg-purple-500 transition-colors"
+                >
+                  {copied ? "Copied!" : "Copy"}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </Modal>
     </div>

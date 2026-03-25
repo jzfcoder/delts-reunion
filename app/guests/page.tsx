@@ -11,12 +11,12 @@ export default async function GuestsPage() {
 
   const { data: attendees } = await supabase
     .from("attendees")
-    .select("name, graduation_date, profile_pic_url, days_attending")
+    .select("first_name, last_name, graduation_date, profile_pic_url, days_attending")
     .order("created_at", { ascending: true });
 
   const guests = (attendees ?? []) as Pick<
     Attendee,
-    "name" | "graduation_date" | "profile_pic_url" | "days_attending"
+    "first_name" | "last_name" | "graduation_date" | "profile_pic_url" | "days_attending"
   >[];
 
   return (
@@ -37,17 +37,17 @@ export default async function GuestsPage() {
               {guest.profile_pic_url ? (
                 <img
                   src={guest.profile_pic_url}
-                  alt={guest.name}
+                  alt={`${guest.first_name} ${guest.last_name ?? ""}`.trim()}
                   className="h-full w-full object-cover"
                 />
               ) : (
                 <span className="text-lg font-bold text-purple-400">
-                  {guest.name.charAt(0).toUpperCase()}
+                  {guest.first_name.charAt(0).toUpperCase()}
                 </span>
               )}
             </div>
             <div className="min-w-0">
-              <p className="font-medium truncate">{guest.name}</p>
+              <p className="font-medium truncate">{guest.first_name} {guest.last_name}</p>
               {guest.graduation_date && (
                 <p className="text-sm text-gray-400">{guest.graduation_date}</p>
               )}

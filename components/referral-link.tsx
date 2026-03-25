@@ -6,8 +6,8 @@ export function ReferralLink({ code }: { code: string }) {
   const [copied, setCopied] = useState(false);
   const url =
     typeof window !== "undefined"
-      ? `${window.location.origin}/signup?ref=${code}`
-      : `/signup?ref=${code}`;
+      ? `${window.location.origin}?ref=${code}`
+      : `/?ref=${code}`;
 
   return (
     <div className="flex flex-col gap-2">
