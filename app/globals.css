@@ -207,16 +207,20 @@
 /* ─── Countdown ─── */
 .countdown {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
+  align-items: flex-start;
   gap: 0;
   margin-top: 0px;
-  position: relative;
 }
 
 .countdown-segment {
   display: inline-flex;
-  align-items: baseline;
+  align-items: flex-start;
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .countdown-number {
@@ -235,24 +239,12 @@
   line-height: 1;
 }
 
-.countdown-labels {
-  display: flex;
-  width: 100%;
-  gap: 0;
-  margin-top: 5px;
-}
-
 .countdown-label {
   font-size: 0.75rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   opacity: 0.8;
-  width: 70px;
-  text-align: left;
-}
-
-.countdown-label:first-child {
-  width: 65px;
+  margin-top: 6px;
 }
 
 /* ─── Right guest list panel ─── */
@@ -661,5 +653,84 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ─── Mobile responsive ─── */
+@media (max-width: 768px) {
+  .hero-container {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 24px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .hero-logo {
+    display: none;
+  }
+
+  .hero-nav {
+    position: absolute;
+    top: 24px;
+    right: 20px;
+  }
+
+  .hero-left {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-top: 0;
+  }
+
+  .countdown-number {
+    font-size: 2.25rem;
+  }
+
+  .countdown-colon {
+    font-size: 1.75rem;
+    margin: 0 4px;
+  }
+
+  .countdown-label {
+    font-size: 0.65rem;
+  }
+
+  .hero-guest-panel {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    max-height: 45vh;
+  }
+
+  .hero-guest-header {
+    text-align: left;
+  }
+
+  .hero-bottom-left {
+    position: relative;
+    bottom: auto;
+    left: auto;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 28px 20px;
+    max-height: 90vh;
+  }
+
+  /* Globe: fixed background on mobile so it doesn't push layout */
+  .globe-canvas {
+    position: fixed !important;
+    opacity: 0.4;
+    pointer-events: none !important;
+    z-index: 0 !important;
   }
 }

@@ -15,7 +15,7 @@ function calcTimeLeft() {
   };
 }
 
-const LABELS = ["DAYS", "HOURS", "MIN", "SEC"] as const;
+const LABELS = ["DAYS", "HRS", "MIN", "SEC"] as const;
 const KEYS = ["days", "hours", "minutes", "seconds"] as const;
 
 export function Countdown() {
@@ -31,19 +31,15 @@ export function Countdown() {
     <div className="countdown">
       {KEYS.map((key, i) => (
         <span key={key} className="countdown-segment">
-          <span className="countdown-number">
-            {time ? String(time[key]).padStart(key === "days" ? 1 : 2, "0") : "--"}
+          <span className="countdown-unit">
+            <span className="countdown-number">
+              {time ? String(time[key]).padStart(key === "days" ? 1 : 2, "0") : "--"}
+            </span>
+            <span className="countdown-label">{LABELS[i]}</span>
           </span>
           {i < KEYS.length - 1 && <span className="countdown-colon">:</span>}
         </span>
       ))}
-      <div className="countdown-labels">
-        {LABELS.map((label) => (
-          <span key={label} className="countdown-label">
-            {label}
-          </span>
-        ))}
-      </div>
     </div>
   );
 }

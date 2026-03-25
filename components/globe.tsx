@@ -62,8 +62,8 @@ export function Globe() {
       baseColor: [0.68, 0.62, 0.78],
       markerColor: [1, 1, 1],
       glowColor: [0.78, 0.72, 0.88],
-      scale: 0.75,
-      offset: [0, 1000],
+      scale: window.innerWidth <= 768 ? 0.9 : 0.73,
+      offset: [0, window.innerWidth <= 768 ? 400 : 1000],
       markers: [
         { location: VENUE, size: 0.04, color: [1, 0.85, 0.2] },
         ...SAMPLE_ORIGINS.map((loc) => ({ location: loc, size: 0.015 })),
@@ -160,6 +160,7 @@ export function Globe() {
   return (
     <canvas
       ref={canvasRef}
+      className="globe-canvas"
       style={{
         position: "absolute",
         top: "50%",
