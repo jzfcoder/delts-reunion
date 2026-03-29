@@ -67,6 +67,7 @@ export function HomePage({
   }
 
   return (
+    <>
     <div className="hero-container">
       {/* Center globe */}
       <Globe />
@@ -150,12 +151,15 @@ export function HomePage({
       {/* Left info panel */}
       <div className="hero-left">
         <div className="hero-divider" />
+        <p className="hero-label" style={{ opacity: 0.6, marginBottom: "4px" }}>5TH ANNIVERSARY — HOUSE RENOVATION</p>
         <h2 className="hero-countdown-title">ALUMNI REUNION IN</h2>
         <Countdown />
 
         <div className="hero-divider" />
-        <p className="hero-date">MAY 2, 2026</p>
+        <p className="hero-date">MAY 1 – MAY 3, 2026</p>
         <p className="hero-location">416 BEACON ST, CAMBRIDGE, MA</p>
+        <div className="hero-divider" />
+        <p className="hero-label" style={{ fontSize: "0.75rem", opacity: 0.6 }}>RSVP DEADLINE — APRIL 20, 2026</p>
       </div>
 
       {/* Right guest list panel */}
@@ -168,7 +172,7 @@ export function HomePage({
 
       {/* Bottom-left horizontal info */}
       <div className="hero-bottom-left">
-        <span>LAT. 42.3520° N &nbsp; LON. 71.0863° W</span>
+        <span>LAT. 42.3519° N &nbsp; LON. 71.0865° W</span>
         <span>COMMITTED TO LIVES OF EXCELLENCE SINCE 1858</span>
       </div>
 
@@ -198,8 +202,9 @@ export function HomePage({
       <Modal open={modal === "signup"} onClose={() => setModal(null)}>
         <div className="flex flex-col items-center gap-6">
           <div className="text-center">
-            <h2 className="text-2xl font-bold">Sign Up for Delts Reunion</h2>
+            <h2 className="text-2xl font-bold">Sign Up for the 5th Anniversary Reunion</h2>
             <p className="mt-2 text-sm text-gray-400">May 1 – 3, 2026</p>
+            <p className="mt-1 text-xs text-gray-500">RSVP deadline: April 20, 2026</p>
           </div>
           <SignupForm referredBy={referredBy} />
         </div>
@@ -236,6 +241,105 @@ export function HomePage({
           )}
         </div>
       </Modal>
+
+      {/* Scroll hint */}
+      <div className="hero-scroll-hint">
+        <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
+          <rect x="0.75" y="0.75" width="14.5" height="22.5" rx="7.25" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.4"/>
+          <circle className="hero-scroll-dot" cx="8" cy="7" r="2.5" fill="currentColor" fillOpacity="0.6"/>
+        </svg>
+      </div>
+    </div>
+
+    {/* ── Itinerary Section ── */}
+    <section className="itinerary-section">
+      <div className="itinerary-inner">
+        <div className="itinerary-header">
+          <p className="itinerary-eyebrow">5th Anniversary — House Renovation</p>
+          <h2 className="itinerary-headline">The Weekend</h2>
+          <div className="hero-divider" style={{ marginTop: "20px" }} />
+        </div>
+
+        <div className="itinerary-days">
+          {/* Friday */}
+          <div className="itinerary-day">
+            <p className="itinerary-day-label">Friday — May 1</p>
+            <ItineraryEvent time="8:00 PM" title="Opening Night Drinks" detail="We're kicking off the weekend with our own private room at Carrie Nation — the whole crew, cold drinks, and the first round of catching up." />
+          </div>
+
+          {/* Saturday */}
+          <div className="itinerary-day">
+            <p className="itinerary-day-label">Saturday — May 2</p>
+            <ItineraryEvent time="10:00 AM" title="Return of the Lobster Trip" detail="Vans leave at 10 — we're taking over the beach for a full day of lobster rolls, football, spike ball, and cornhole. This is the one." />
+            <ItineraryEvent time="6:00 PM" title="Formal Dinner at Fogo de Chão" detail="Private rooms reserved for the full Churrasco experience — unlimited cuts, exceptional company, and an evening to remember." />
+          </div>
+
+          {/* Sunday */}
+          <div className="itinerary-day">
+            <p className="itinerary-day-label">Sunday — May 3</p>
+            <ItineraryEvent time="9:00 AM" title="Rooftop Send-Off" detail="Close out the weekend over breakfast with sweeping views of the Boston skyline and the Charles River. A proper goodbye." />
+          </div>
+        </div>
+
+      </div>
+    </section>
+    {/* ── Alumni Chairs Section ── */}
+    <section className="chairs-section">
+      <div className="chairs-inner">
+        <p className="itinerary-eyebrow">Questions? We&apos;re Here to Help</p>
+        <h2 className="itinerary-headline">Alumni Chairs</h2>
+        <div className="hero-divider" style={{ marginTop: "20px" }} />
+        <p className="chairs-blurb">
+          Have a question about the weekend, logistics, or anything else? Don&apos;t hesitate to reach out directly to this year&apos;s alumni chairs.
+        </p>
+        <div className="chairs-grid">
+          <div className="chair-card">
+            <div className="chair-avatar">NK</div>
+            <p className="chair-name">Nathan Kim</p>
+            <p className="chair-title">Alumni Chair</p>
+            <div className="chair-divider" />
+            <a className="chair-contact" href="mailto:nkim4724@mit.edu">nkim4724@mit.edu</a>
+            <a className="chair-contact" href="tel:+18186966854">818-696-6854</a>
+          </div>
+          <div className="chair-card">
+            <div className="chair-avatar">JF</div>
+            <p className="chair-name">Jeremy Flint</p>
+            <p className="chair-title">Alumni Chair</p>
+            <div className="chair-divider" />
+            <a className="chair-contact" href="mailto:jzflint@mit.edu">jzflint@mit.edu</a>
+            <a className="chair-contact" href="tel:+14086485530">408-648-5530</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    {/* ── Media Section ── */}
+    <section className="media-section">
+      <div className="chairs-inner">
+        <p className="itinerary-eyebrow">Photos & Videos</p>
+        <h2 className="itinerary-headline">Memories</h2>
+        <div className="hero-divider" style={{ marginTop: "20px" }} />
+        <p className="chairs-blurb">
+          Photos and videos captured throughout the reunion weekend will be shared here.
+        </p>
+        <div className="media-coming-soon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.2 }}>
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <p className="media-coming-soon-title">Coming Soon</p>
+        </div>
+      </div>
+    </section>
+    </>
+  );
+}
+
+function ItineraryEvent({ time, title, note, detail }: { time: string; title: string; note?: string; detail?: string }) {
+  return (
+    <div className="itinerary-event">
+      <span className="itinerary-time">{time}</span>
+      <span className="itinerary-event-title">{title}</span>
+      {detail && <span className="itinerary-event-detail">{detail}</span>}
+      {note && <span className="itinerary-event-note">{note}</span>}
     </div>
   );
 }
