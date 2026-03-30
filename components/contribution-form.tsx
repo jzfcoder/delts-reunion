@@ -3,7 +3,7 @@
 import { useActionState, useState } from "react";
 import { submitContribution, type ContributeState } from "@/app/contribute/actions";
 
-const AMOUNTS = ["$50", "$100", "$130", "$150", "$200", "$250+", "Other"];
+const AMOUNTS = ["$50", "$100", "$130", "$150", "$200", "$250", "Other"];
 
 export function ContributionForm() {
   const [state, formAction, pending] = useActionState<ContributeState, FormData>(

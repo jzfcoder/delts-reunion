@@ -215,7 +215,10 @@ export function HomePage({
           <div className="text-center">
             <h2 className="text-2xl font-bold">Sign Up for the 5th Anniversary Reunion</h2>
             <p className="mt-2 text-sm text-gray-400">May 1 – 3, 2026</p>
-            <p className="mt-1 text-xs text-gray-500">RSVP deadline: April 20, 2026</p>
+            <p className="mt-1 text-xs text-gray-500 flex items-center justify-center gap-1.5">
+              <span className="rsvp-pulse-dot" />
+              RSVP deadline: April 20, 2026
+            </p>
           </div>
           <SignupForm referredBy={referredBy} />
         </div>
@@ -299,7 +302,7 @@ export function HomePage({
           <FadeIn delay={300}>
             <div className="itinerary-day">
               <p className="itinerary-day-label">Sunday — May 3</p>
-              <ItineraryEvent time="9:00 AM" title="Rooftop Send-Off" detail="Close out the weekend over breakfast with sweeping views of the Boston skyline and the Charles River. A proper goodbye." />
+              <ItineraryEvent time="10:00 AM" title="Rooftop Send-Off" detail="Close out the weekend over breakfast with sweeping views of the Boston skyline and the Charles River. A proper goodbye." />
             </div>
           </FadeIn>
         </div>

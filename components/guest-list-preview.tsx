@@ -123,7 +123,10 @@ export function GuestListPreview({
 
         <div className="hero-guest-overlay">
           <p className="hero-guest-overlay-text">RSVP to see who&apos;s coming</p>
-          <p className="hero-guest-overlay-deadline">Deadline: April 20, 2026</p>
+          <p className="hero-guest-overlay-deadline">
+            <span className="rsvp-pulse-dot" />
+            Deadline: April 20, 2026
+          </p>
           <div className="hero-guest-overlay-buttons">
             <button onClick={onSignup} className="hero-btn hero-btn-solid hero-guest-overlay-btn">
               RSVP
