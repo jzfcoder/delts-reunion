@@ -8,6 +8,7 @@ import { Modal } from "@/components/modal";
 import { LoginForm } from "@/components/login-form";
 import { SignupForm } from "@/components/signup-form";
 import { logout } from "@/app/logout/actions";
+import { ContributionForm } from "@/components/contribution-form";
 import type { Attendee } from "@/lib/types";
 
 type Guest = Pick<
@@ -305,6 +306,36 @@ export function HomePage({
 
       </div>
     </section>
+    {/* ── Donations Section ── */}
+    <section className="donations-section">
+      <div className="chairs-inner">
+        <p className="itinerary-eyebrow">Support the Weekend</p>
+        <h2 className="itinerary-headline">Contribute</h2>
+        <div className="hero-divider" style={{ marginTop: "20px" }} />
+        <p className="chairs-blurb">
+          To help cover the cost of the weekend, we&apos;re suggesting a recommended contribution of <strong>$55 for the Lobster Trip</strong> and <strong>$75 for the Fogo de Chão dinner</strong> — roughly $130 in total (this includes transportation via vans). These are entirely optional, and no one will be turned away. Every contribution, large or small, goes directly toward making this reunion one to remember — and helps cover expenses for current undergraduates joining us for the weekend.
+        </p>
+        <div className="donations-grid">
+          <div className="donation-card">
+            <p className="donation-method">Zelle</p>
+            <div className="chair-divider" />
+            <p className="donation-detail">Send to</p>
+            <p className="donation-value">dtd-treasurer@mit.edu</p>
+          </div>
+          <div className="donation-card">
+            <p className="donation-method">Check</p>
+            <div className="chair-divider" />
+            <p className="donation-detail">Make payable to</p>
+            <p className="donation-value">Delta Tau Delta Fraternity</p>
+          </div>
+        </div>
+        <p className="donation-alt-note">
+          Prefer a different payment method? Feel free to reach out to one of the alumni chairs and we&apos;ll make it work.
+        </p>
+        <ContributionForm />
+      </div>
+    </section>
+
     {/* ── Alumni Chairs Section ── */}
     <section className="chairs-section">
       <div className="chairs-inner">

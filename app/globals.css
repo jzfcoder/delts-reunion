@@ -838,9 +838,76 @@
   font-weight: 400;
 }
 
+/* ─── Donations Section ─── */
+.donations-section {
+  background: #16181f;
+  color: #fff;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.donations-grid {
+  display: flex;
+  gap: 24px;
+}
+
+.donation-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px 32px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  min-width: 240px;
+  transition: background 0.15s ease;
+}
+
+.donation-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.donation-method {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.4;
+}
+
+.donation-detail {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.35;
+  font-weight: 400;
+}
+
+.donation-value {
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.donation-alt-note {
+  margin-top: 20px;
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
+  line-height: 1.8;
+  opacity: 0.5;
+  font-weight: 400;
+}
+
+/* ─── Contribution Form ─── */
+.contribution-form-wrapper {
+  margin-top: 48px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 36px;
+}
+
 /* ─── Alumni Chairs Section ─── */
 .chairs-section {
-  background: #16181f;
+  background: #1c1f27;
   color: #fff;
   font-family: var(--font-sans), system-ui, sans-serif;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -956,7 +1023,7 @@
 
 /* ─── Media Section ─── */
 .media-section {
-  background: #1c1f27;
+  background: #16181f;
   color: #fff;
   font-family: var(--font-sans), system-ui, sans-serif;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -1165,6 +1232,18 @@
     font-size: 1.05rem;
   }
 
+  /* ── Donations ── */
+  .donations-grid {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .donation-card {
+    min-width: unset;
+    width: 100%;
+    padding: 20px 20px;
+  }
+
   /* ── Alumni Chairs ── */
   .chairs-inner {
     padding: 64px 24px 60px;
@@ -1201,14 +1280,20 @@
   /* Prevent fixed globe from showing through below-fold sections */
   .itinerary-section,
   .chairs-section,
-  .media-section {
+  .media-section,
+  .donations-section {
     position: relative;
     z-index: 1;
     isolation: isolate;
+  }
+
+  .itinerary-section,
+  .chairs-section {
     background-color: #1c1f27;
   }
 
-  .chairs-section {
+  .donations-section,
+  .media-section {
     background-color: #16181f;
   }
 }

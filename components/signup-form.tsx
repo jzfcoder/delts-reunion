@@ -128,8 +128,11 @@ export function SignupForm({ referredBy }: { referredBy?: string }) {
       {/* Willing to Pay */}
       <fieldset className="flex flex-col gap-2">
         <legend className="text-sm font-medium mb-1">
-          Willing to pay ~$100 for dinner/reunion?
+          Do you plan to contribute to the reunion?
         </legend>
+        <p className="text-xs text-gray-400 -mt-1">
+          Contribution details and recommended amounts are available on the main page.
+        </p>
         {[
           { value: "yes", label: "Yes" },
           { value: "no", label: "No" },
