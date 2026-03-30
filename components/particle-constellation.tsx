@@ -35,9 +35,16 @@ function createParticle(w: number, h: number): Particle {
     vx: Math.cos(angle) * baseSpeed,
     vy: Math.sin(angle) * baseSpeed,
     baseSpeed,
-    radius: 0.7 + Math.random() * 1.5,
+    // Slightly larger stars — range 1.5 – 3.5 px
+    radius: 1.5 + Math.random() * 2.0,
     opacity: 0.35 + Math.random() * 0.45,
   };
+}
+
+// One particle per ~14 000 px² of canvas area, clamped to a sensible range.
+// Recalculated on every resize so the field stays proportional at any size.
+function targetCount(w: number, h: number): number {
+  return Math.min(Math.max(Math.round((w * h) / 14000), 28), 150);
 }
 
 // ─── Component ───────────────────────────────────────────────────────────────
@@ -57,9 +64,6 @@ export function ParticleConstellation() {
     const el: HTMLCanvasElement = canvasRef.current;
     const cx: CanvasRenderingContext2D = ctx;
 
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const PARTICLE_COUNT = isMobile ? 50 : 95;
-
     let width = 0;
     let height = 0;
     let particles: Particle[] = [];
@@ -76,11 +80,22 @@ export function ParticleConstellation() {
       cx.scale(dpr, dpr);
     }
 
+    // ── Sync particle array to the target count for current dimensions ────
+    // Adds new particles at random positions; trims excess from the tail.
+    function syncParticleCount() {
+      const target = targetCount(width, height);
+      while (particles.length < target) {
+        particles.push(createParticle(width, height));
+      }
+      if (particles.length > target) {
+        particles.length = target;
+      }
+    }
+
     function init() {
       resize();
-      particles = Array.from({ length: PARTICLE_COUNT }, () =>
-        createParticle(width, height)
-      );
+      particles = [];
+      syncParticleCount();
     }
 
     // ── Draw loop ─────────────────────────────────────────────────────────
@@ -182,11 +197,12 @@ export function ParticleConstellation() {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {
         resize();
-        // Clamp any out-of-bounds particles after shrink
+        // Clamp any out-of-bounds particles after a shrink, then adjust count
         for (const p of particles) {
           if (p.x > width)  p.x = Math.random() * width;
           if (p.y > height) p.y = Math.random() * height;
         }
+        syncParticleCount();
       }, 120);
     }
 
