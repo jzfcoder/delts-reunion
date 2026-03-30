@@ -9,6 +9,7 @@ import { LoginForm } from "@/components/login-form";
 import { SignupForm } from "@/components/signup-form";
 import { logout } from "@/app/logout/actions";
 import { ContributionForm } from "@/components/contribution-form";
+import { ParticleConstellation } from "@/components/particle-constellation";
 import type { Attendee } from "@/lib/types";
 
 type Guest = Pick<
@@ -80,6 +81,10 @@ export function HomePage({
   return (
     <>
     <div className="hero-container">
+      {/* Particle constellation — lives between the noise texture (z-index 1)
+          and the globe / UI panels (z-index 2+) */}
+      <ParticleConstellation />
+
       {/* Center globe */}
       <Globe />
 
@@ -184,7 +189,7 @@ export function HomePage({
       {/* Bottom-left horizontal info */}
       <div className="hero-bottom-left">
         <span>LAT. 42.3519° N &nbsp; LON. 71.0865° W</span>
-        <span>COMMITTED TO LIVES OF EXCELLENCE SINCE 1858</span>
+        <span>COMMITTED TO LIVES OF EXCELLENCE SINCE 1889</span>
       </div>
 
       {/* Login Modal */}
