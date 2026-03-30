@@ -44,7 +44,8 @@ export function HomePage({
 
   useEffect(() => {
     function handleScroll() {
-      setScrolled(window.scrollY > 80);
+      const isScrolled = window.scrollY > 80;
+      setScrolled((prev) => (prev === isScrolled ? prev : isScrolled));
     }
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);

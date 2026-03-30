@@ -68,22 +68,27 @@ export function Globe() {
 
     const IDLE_DELAY = 2000;
     const LERP = 0.03;
+    const dpr = Math.min(window.devicePixelRatio, 2);
+
+    // Canvas CSS is 100vmax × 100vmax (always square) — use its actual size
+    const rect = canvasRef.current.getBoundingClientRect();
+    const isMobile = window.innerWidth <= 768;
 
     const globe = createGlobe(canvasRef.current, {
-      devicePixelRatio: 2,
-      width: Math.max(window.innerWidth, window.innerHeight) * 2,
-      height: Math.max(window.innerWidth, window.innerHeight) * 2,
+      devicePixelRatio: dpr,
+      width: rect.width * dpr,
+      height: rect.height * dpr,
       phi: currentPhi.current,
       theta: currentTheta.current,
       dark: 0,
       diffuse: 1.2,
-      mapSamples: 16000,
+      mapSamples: 8000,
       mapBrightness: 6,
       baseColor: [0.68, 0.62, 0.78],
       markerColor: [1, 1, 1],
       glowColor: [0.78, 0.72, 0.88],
-      scale: window.innerWidth <= 768 ? 0.9 : 0.73,
-      offset: [0, window.innerWidth <= 768 ? 400 : 1000],
+      scale: isMobile ? 0.9 : 0.73,
+      offset: [0, isMobile ? 400 : 1000],
       markers: [
         { location: VENUE, size: 0.04, color: [1, 0.85, 0.2] },
         ...SAMPLE_ORIGINS.map((loc) => ({ location: loc, size: 0.015 })),
@@ -94,12 +99,27 @@ export function Globe() {
       })),
       arcColor: [1, 1, 1],
       arcWidth: 0.3,
-      arcHeight: 0.3,
+      arcHeight: 0.8,
       opacity: 0.9,
     });
 
+    // Handle resize so the WebGL buffer matches the canvas CSS size
+    function updateSize() {
+      if (!canvasRef.current) return;
+      const r = canvasRef.current.getBoundingClientRect();
+      const mobile = window.innerWidth <= 768;
+      globe.update({
+        width: r.width * dpr,
+        height: r.height * dpr,
+        scale: mobile ? 0.9 : 0.73,
+        offset: [0, mobile ? 400 : 1000],
+      });
+    }
+    window.addEventListener("resize", updateSize);
+
     // Animation loop — cobe v2 uses globe.update(), not onRender
     let frameId: number;
+
     function animate() {
       const now = Date.now();
       const idle = now - lastInteraction.current;
@@ -174,6 +194,7 @@ export function Globe() {
       canvas.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("resize", updateSize);
     };
   }, []);
 
