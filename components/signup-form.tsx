@@ -37,7 +37,7 @@ export function SignupForm({ referredBy }: { referredBy?: string }) {
       )}
 
       {/* Name */}
-      <div className="flex gap-4">
+      <div className="flex flex-col sm:flex-row gap-4">
         <label className="flex flex-col gap-1.5 flex-1">
           <span className="text-sm font-medium">
             First Name <span className="text-red-400">*</span>
