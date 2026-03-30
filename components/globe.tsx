@@ -20,17 +20,37 @@ const FOCUS_THETA = Math.PI / 8; // equator
 
 // Sample guest origins — replace with geocoded addresses later
 const SAMPLE_ORIGINS: [number, number][] = [
-  [34.0522, -118.2437], // Los Angeles
-  [40.7128, -74.006], // New York
-  [41.8781, -87.6298], // Chicago
-  [29.7604, -95.3698], // Houston
-  [33.749, -84.388], // Atlanta
-  [47.6062, -122.3321], // Seattle
-  [25.7617, -80.1918], // Miami
-  [39.7392, -104.9903], // Denver
-  [37.7749, -122.4194], // San Francisco
-  [38.9072, -77.0369], // Washington DC
-  [51.5074, -0.1278], // London
+  [34.0522, -118.2437],  // Los Angeles
+  [40.7128, -74.006],    // New York
+  [41.8781, -87.6298],   // Chicago
+  [29.7604, -95.3698],   // Houston
+  [33.749, -84.388],     // Atlanta
+  [47.6062, -122.3321],  // Seattle
+  [25.7617, -80.1918],   // Miami
+  [39.7392, -104.9903],  // Denver
+  [37.7749, -122.4194],  // San Francisco
+  [38.9072, -77.0369],   // Washington DC
+  [51.5074, -0.1278],    // London
+  [48.8566, 2.3522],     // Paris
+  [35.6762, 139.6503],   // Tokyo
+  [1.3521, 103.8198],    // Singapore
+  [-33.8688, 151.2093],  // Sydney
+  [55.7558, 37.6173],    // Moscow
+  [19.4326, -99.1332],   // Mexico City
+  [43.6532, -79.3832],   // Toronto
+  [-23.5505, -46.6333],  // São Paulo
+  [28.6139, 77.209],     // New Delhi
+  [31.2304, 121.4737],   // Shanghai
+  [52.52, 13.405],       // Berlin
+  [-26.2041, 28.0473],   // Johannesburg
+  [30.0444, 31.2357],    // Cairo
+  [45.4215, -75.6972],   // Ottawa
+  [32.0853, 34.7818],    // Tel Aviv
+  [44.9778, -93.265],    // Minneapolis
+  [36.1627, -86.7816],   // Nashville
+  [42.3601, -71.0589],   // Boston
+  [35.2271, -80.8431],   // Charlotte
+  [45.5051, -122.675],   // Portland
 ];
 
 export function Globe() {

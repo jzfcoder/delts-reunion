@@ -312,7 +312,7 @@ export function HomePage({
         <h2 className="itinerary-headline">Alumni Chairs</h2>
         <div className="hero-divider" style={{ marginTop: "20px" }} />
         <p className="chairs-blurb">
-          Have a question about the weekend, logistics, or anything else? Don&apos;t hesitate to reach out directly to this year&apos;s alumni chairs.
+          We couldn&apos;t be more excited to bring everyone together for this. If you have any questions about logistics, the schedule, or anything in between, please don&apos;t hesitate to reach out to us directly.
         </p>
         <div className="chairs-grid">
           <ChairCard
