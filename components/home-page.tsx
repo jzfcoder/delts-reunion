@@ -9,6 +9,7 @@ import { LoginForm } from "@/components/login-form";
 import { SignupForm } from "@/components/signup-form";
 import { logout } from "@/app/logout/actions";
 import { ContributionForm } from "@/components/contribution-form";
+import { ParticleConstellation } from "@/components/particle-constellation";
 import type { Attendee } from "@/lib/types";
 
 type Guest = Pick<
@@ -80,6 +81,10 @@ export function HomePage({
   return (
     <>
     <div className="hero-container">
+      {/* Particle constellation — lives between the noise texture (z-index 1)
+          and the globe / UI panels (z-index 2+) */}
+      <ParticleConstellation />
+
       {/* Center globe */}
       <Globe />
 
@@ -184,7 +189,7 @@ export function HomePage({
       {/* Bottom-left horizontal info */}
       <div className="hero-bottom-left">
         <span>LAT. 42.3519° N &nbsp; LON. 71.0865° W</span>
-        <span>COMMITTED TO LIVES OF EXCELLENCE SINCE 1858</span>
+        <span>COMMITTED TO LIVES OF EXCELLENCE SINCE 1889</span>
       </div>
 
       {/* Login Modal */}
@@ -294,7 +299,7 @@ export function HomePage({
             <div className="itinerary-day">
               <p className="itinerary-day-label">Saturday — May 2</p>
               <ItineraryEvent time="10:00 AM" title="Return of the Lobster Trip" detail="Vans leave at 10 — we're taking over the beach for a full day of lobster rolls, football, spike ball, and cornhole. This is the one." />
-              <ItineraryEvent time="6:00 PM" title="Formal Dinner at Fogo de Chão" detail="Private rooms reserved for the full Churrasco experience — unlimited cuts, exceptional company, and an evening to remember." />
+              <ItineraryEvent time="6:00 PM" title="Dinner at Fogo de Chão" detail="Private rooms reserved for the full Churrasco experience — unlimited cuts, exceptional company, and an evening to remember." />
             </div>
           </FadeIn>
 
