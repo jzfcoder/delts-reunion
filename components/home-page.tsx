@@ -8,6 +8,7 @@ import { Modal } from "@/components/modal";
 import { LoginForm } from "@/components/login-form";
 import { SignupForm } from "@/components/signup-form";
 import { logout } from "@/app/logout/actions";
+import { ContributionForm } from "@/components/contribution-form";
 import type { Attendee } from "@/lib/types";
 
 type Guest = Pick<
@@ -37,7 +38,17 @@ export function HomePage({
   );
   const [avatarOpen, setAvatarOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleScroll() {
+      setScrolled(window.scrollY > 80);
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -204,7 +215,10 @@ export function HomePage({
           <div className="text-center">
             <h2 className="text-2xl font-bold">Sign Up for the 5th Anniversary Reunion</h2>
             <p className="mt-2 text-sm text-gray-400">May 1 – 3, 2026</p>
-            <p className="mt-1 text-xs text-gray-500">RSVP deadline: April 20, 2026</p>
+            <p className="mt-1 text-xs text-gray-500 flex items-center justify-center gap-1.5">
+              <span className="rsvp-pulse-dot" />
+              RSVP deadline: April 20, 2026
+            </p>
           </div>
           <SignupForm referredBy={referredBy} />
         </div>
@@ -243,46 +257,88 @@ export function HomePage({
       </Modal>
 
       {/* Scroll hint */}
-      <div className="hero-scroll-hint">
-        <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
-          <rect x="0.75" y="0.75" width="14.5" height="22.5" rx="7.25" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.4"/>
-          <circle className="hero-scroll-dot" cx="8" cy="7" r="2.5" fill="currentColor" fillOpacity="0.6"/>
+      <div
+        className={`hero-scroll-hint${scrolled ? " hero-scroll-hint--hidden" : ""}`}
+        onClick={() => document.getElementById("itinerary")?.scrollIntoView({ behavior: "smooth" })}
+        style={{ pointerEvents: scrolled ? "none" : "auto", cursor: "pointer" }}
+      >
+        <span className="hero-scroll-hint-text">The Weekend Awaits</span>
+        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" className="hero-scroll-hint-arrow">
+          <path d="M1 1L6 6.5L11 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       </div>
     </div>
 
     {/* ── Itinerary Section ── */}
-    <section className="itinerary-section">
+    <section id="itinerary" className="itinerary-section">
       <div className="itinerary-inner">
-        <div className="itinerary-header">
-          <p className="itinerary-eyebrow">5th Anniversary — House Renovation</p>
-          <h2 className="itinerary-headline">The Weekend</h2>
-          <div className="hero-divider" style={{ marginTop: "20px" }} />
-        </div>
+        <FadeIn>
+          <div className="itinerary-header">
+            <p className="itinerary-eyebrow">5th Anniversary — House Renovation</p>
+            <h2 className="itinerary-headline">The Weekend</h2>
+            <div className="hero-divider" style={{ marginTop: "20px" }} />
+          </div>
+        </FadeIn>
 
         <div className="itinerary-days">
           {/* Friday */}
-          <div className="itinerary-day">
-            <p className="itinerary-day-label">Friday — May 1</p>
-            <ItineraryEvent time="8:00 PM" title="Opening Night Drinks" detail="We're kicking off the weekend with our own private room at Carrie Nation — the whole crew, cold drinks, and the first round of catching up." />
-          </div>
+          <FadeIn delay={100}>
+            <div className="itinerary-day">
+              <p className="itinerary-day-label">Friday — May 1</p>
+              <ItineraryEvent time="8:00 PM" title="Opening Night Drinks" detail="We're kicking off the weekend with our own private room at Carrie Nation — the whole crew, cold drinks, and the first round of catching up." />
+            </div>
+          </FadeIn>
 
           {/* Saturday */}
-          <div className="itinerary-day">
-            <p className="itinerary-day-label">Saturday — May 2</p>
-            <ItineraryEvent time="10:00 AM" title="Return of the Lobster Trip" detail="Vans leave at 10 — we're taking over the beach for a full day of lobster rolls, football, spike ball, and cornhole. This is the one." />
-            <ItineraryEvent time="6:00 PM" title="Formal Dinner at Fogo de Chão" detail="Private rooms reserved for the full Churrasco experience — unlimited cuts, exceptional company, and an evening to remember." />
-          </div>
+          <FadeIn delay={200}>
+            <div className="itinerary-day">
+              <p className="itinerary-day-label">Saturday — May 2</p>
+              <ItineraryEvent time="10:00 AM" title="Return of the Lobster Trip" detail="Vans leave at 10 — we're taking over the beach for a full day of lobster rolls, football, spike ball, and cornhole. This is the one." />
+              <ItineraryEvent time="6:00 PM" title="Formal Dinner at Fogo de Chão" detail="Private rooms reserved for the full Churrasco experience — unlimited cuts, exceptional company, and an evening to remember." />
+            </div>
+          </FadeIn>
 
           {/* Sunday */}
-          <div className="itinerary-day">
-            <p className="itinerary-day-label">Sunday — May 3</p>
-            <ItineraryEvent time="9:00 AM" title="Rooftop Send-Off" detail="Close out the weekend over breakfast with sweeping views of the Boston skyline and the Charles River. A proper goodbye." />
-          </div>
+          <FadeIn delay={300}>
+            <div className="itinerary-day">
+              <p className="itinerary-day-label">Sunday — May 3</p>
+              <ItineraryEvent time="10:00 AM" title="Rooftop Send-Off" detail="Close out the weekend over breakfast with sweeping views of the Boston skyline and the Charles River. A proper goodbye." />
+            </div>
+          </FadeIn>
         </div>
 
       </div>
     </section>
+    {/* ── Donations Section ── */}
+    <section className="donations-section">
+      <div className="chairs-inner">
+        <p className="itinerary-eyebrow">Support the Weekend</p>
+        <h2 className="itinerary-headline">Contribute</h2>
+        <div className="hero-divider" style={{ marginTop: "20px" }} />
+        <p className="chairs-blurb">
+          To help cover the cost of the weekend, we&apos;re suggesting a recommended contribution of <strong>$55 for the Lobster Trip</strong> and <strong>$75 for the Fogo de Chão dinner</strong> — roughly $130 in total (this includes transportation via vans). These are entirely optional, and no one will be turned away. Every contribution, large or small, goes directly toward making this reunion one to remember — and helps cover expenses for current undergraduates joining us for the weekend.
+        </p>
+        <div className="donations-grid">
+          <div className="donation-card">
+            <p className="donation-method">Zelle</p>
+            <div className="chair-divider" />
+            <p className="donation-detail">Send to</p>
+            <p className="donation-value">dtd-treasurer@mit.edu</p>
+          </div>
+          <div className="donation-card">
+            <p className="donation-method">Check</p>
+            <div className="chair-divider" />
+            <p className="donation-detail">Make payable to</p>
+            <p className="donation-value">Delta Tau Delta Fraternity</p>
+          </div>
+        </div>
+        <p className="donation-alt-note">
+          Prefer a different payment method? Feel free to reach out to one of the alumni chairs and we&apos;ll make it work.
+        </p>
+        <ContributionForm />
+      </div>
+    </section>
+
     {/* ── Alumni Chairs Section ── */}
     <section className="chairs-section">
       <div className="chairs-inner">
@@ -290,25 +346,25 @@ export function HomePage({
         <h2 className="itinerary-headline">Alumni Chairs</h2>
         <div className="hero-divider" style={{ marginTop: "20px" }} />
         <p className="chairs-blurb">
-          Have a question about the weekend, logistics, or anything else? Don&apos;t hesitate to reach out directly to this year&apos;s alumni chairs.
+          We couldn&apos;t be more excited to bring everyone together for this. If you have any questions about logistics, the schedule, or anything in between, please don&apos;t hesitate to reach out to us directly.
         </p>
         <div className="chairs-grid">
-          <div className="chair-card">
-            <div className="chair-avatar">NK</div>
-            <p className="chair-name">Nathan Kim</p>
-            <p className="chair-title">Alumni Chair</p>
-            <div className="chair-divider" />
-            <a className="chair-contact" href="mailto:nkim4724@mit.edu">nkim4724@mit.edu</a>
-            <a className="chair-contact" href="tel:+18186966854">818-696-6854</a>
-          </div>
-          <div className="chair-card">
-            <div className="chair-avatar">JF</div>
-            <p className="chair-name">Jeremy Flint</p>
-            <p className="chair-title">Alumni Chair</p>
-            <div className="chair-divider" />
-            <a className="chair-contact" href="mailto:jzflint@mit.edu">jzflint@mit.edu</a>
-            <a className="chair-contact" href="tel:+14086485530">408-648-5530</a>
-          </div>
+          <ChairCard
+            initials="NK"
+            name="Nathan Kim"
+            email="nkim4724@mit.edu"
+            phone="818-696-6854"
+            phoneHref="+18186966854"
+            photo="/nathan.jpg"
+          />
+          <ChairCard
+            initials="JF"
+            name="Jeremy Flint"
+            email="jzflint@mit.edu"
+            phone="408-648-5530"
+            phoneHref="+14086485530"
+            photo="/jeremy.png"
+          />
         </div>
       </div>
     </section>
@@ -330,6 +386,77 @@ export function HomePage({
       </div>
     </section>
     </>
+  );
+}
+
+function ChairCard({
+  initials,
+  name,
+  email,
+  phone,
+  phoneHref,
+  photo,
+}: {
+  initials: string;
+  name: string;
+  email: string;
+  phone: string;
+  phoneHref: string;
+  photo?: string;
+}) {
+  return (
+    <div className="chair-card">
+      <div className="chair-photo-col">
+        {photo ? (
+          <img src={photo} alt={name} className="chair-photo" />
+        ) : (
+          <div className="chair-photo-placeholder">
+            <span className="chair-photo-initials">{initials}</span>
+          </div>
+        )}
+      </div>
+      <div className="chair-info">
+        <p className="chair-name">{name}</p>
+        <p className="chair-title">Alumni Chair</p>
+        <div className="chair-divider" />
+        <a className="chair-contact" href={`mailto:${email}`}>{email}</a>
+        <a className="chair-contact" href={`tel:${phoneHref}`}>{phone}</a>
+      </div>
+    </div>
+  );
+}
+
+function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.05, rootMargin: "0px 0px -60px 0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(24px)",
+        transition: `opacity 0.7s ease ${delay}ms, transform 0.7s ease ${delay}ms`,
+      }}
+    >
+      {children}
+    </div>
   );
 }
 

@@ -24,12 +24,25 @@
   position: absolute;
   top: 32px;
   left: 48px;
-  font-size: 2rem;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  color: rgba(255, 255, 255, 0.9);
   z-index: 10;
   user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.hero-logo::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* ─── Top-right nav ─── */
@@ -417,6 +430,25 @@
   text-transform: uppercase;
   opacity: 0.5;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ─── RSVP Pulsing Dot ─── */
+.rsvp-pulse-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f87171;
+  flex-shrink: 0;
+  animation: rsvp-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes rsvp-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
 }
 
 .hero-guest-overlay-buttons {
@@ -685,23 +717,40 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
-  color: rgba(255, 255, 255, 0.5);
-  animation: scroll-hint-bob 2s ease-in-out infinite;
+  color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  animation: scroll-hint-bob 2.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.hero-scroll-hint--hidden {
+  opacity: 0;
+}
+
+.hero-scroll-hint-text {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.hero-scroll-hint-arrow {
+  animation: scroll-arrow-bob 2.5s ease-in-out infinite;
 }
 
 @keyframes scroll-hint-bob {
-  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.5; }
-  50% { transform: translateX(-50%) translateY(5px); opacity: 0.8; }
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(5px); }
 }
 
-@keyframes scroll-dot-drop {
-  0% { cy: 7px; opacity: 0.6; }
-  60% { cy: 15px; opacity: 0.6; }
-  100% { cy: 15px; opacity: 0; }
-}
-
-.hero-scroll-dot {
-  animation: scroll-dot-drop 2s ease-in-out infinite;
+@keyframes scroll-arrow-bob {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(3px); opacity: 1; }
 }
 
 /* ─── Itinerary Section ─── */
@@ -821,9 +870,76 @@
   font-weight: 400;
 }
 
+/* ─── Donations Section ─── */
+.donations-section {
+  background: #16181f;
+  color: #fff;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.donations-grid {
+  display: flex;
+  gap: 24px;
+}
+
+.donation-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px 32px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  min-width: 240px;
+  transition: background 0.15s ease;
+}
+
+.donation-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.donation-method {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.4;
+}
+
+.donation-detail {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.35;
+  font-weight: 400;
+}
+
+.donation-value {
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.donation-alt-note {
+  margin-top: 20px;
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
+  line-height: 1.8;
+  opacity: 0.5;
+  font-weight: 400;
+}
+
+/* ─── Contribution Form ─── */
+.contribution-form-wrapper {
+  margin-top: 48px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 36px;
+}
+
 /* ─── Alumni Chairs Section ─── */
 .chairs-section {
-  background: #16181f;
+  background: #1c1f27;
   color: #fff;
   font-family: var(--font-sans), system-ui, sans-serif;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -853,12 +969,10 @@
 
 .chair-card {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 36px 40px;
+  flex-direction: row;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.07);
-  min-width: 220px;
+  overflow: hidden;
   transition: background 0.15s ease;
 }
 
@@ -866,19 +980,41 @@
   background: rgba(255, 255, 255, 0.07);
 }
 
-.chair-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+.chair-photo-col {
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.chair-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.chair-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.06);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  opacity: 0.7;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.chair-photo-initials {
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  opacity: 0.25;
+}
+
+.chair-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px 32px;
+  justify-content: center;
 }
 
 .chair-name {
@@ -919,7 +1055,7 @@
 
 /* ─── Media Section ─── */
 .media-section {
-  background: #1c1f27;
+  background: #16181f;
   color: #fff;
   font-family: var(--font-sans), system-ui, sans-serif;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -1128,6 +1264,18 @@
     font-size: 1.05rem;
   }
 
+  /* ── Donations ── */
+  .donations-grid {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .donation-card {
+    min-width: unset;
+    width: 100%;
+    padding: 20px 20px;
+  }
+
   /* ── Alumni Chairs ── */
   .chairs-inner {
     padding: 64px 24px 60px;
@@ -1140,7 +1288,16 @@
 
   .chair-card {
     width: 100%;
-    padding: 24px 20px;
+    flex-direction: row;
+  }
+
+  .chair-photo-col {
+    width: 140px;
+    flex-shrink: 0;
+  }
+
+  .chair-info {
+    padding: 16px 18px;
   }
 
   .chairs-blurb {
@@ -1155,14 +1312,20 @@
   /* Prevent fixed globe from showing through below-fold sections */
   .itinerary-section,
   .chairs-section,
-  .media-section {
+  .media-section,
+  .donations-section {
     position: relative;
     z-index: 1;
     isolation: isolate;
+  }
+
+  .itinerary-section,
+  .chairs-section {
     background-color: #1c1f27;
   }
 
-  .chairs-section {
+  .donations-section,
+  .media-section {
     background-color: #16181f;
   }
 }
