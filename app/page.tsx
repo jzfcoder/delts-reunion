@@ -26,6 +26,12 @@ export default async function Home({
         )
     : [];
 
+  const contributions = await supabase
+    .from("contributions")
+    .select("first_name, last_name, amount, created_at")
+    .order("created_at", { ascending: true })
+    .then(({ data }) => (data ?? []) as { first_name: string; last_name: string | null; amount: string; created_at: string }[]);
+
   return (
     <HomePage
       guests={guests}
@@ -35,6 +41,7 @@ export default async function Home({
       referralCode={session?.referral_code}
       referredBy={params.ref}
       showWelcome={params.welcome === "true"}
+      contributions={contributions}
     />
   );
 }
