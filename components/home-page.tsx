@@ -346,6 +346,15 @@ export function HomePage({
             <div className="chair-divider" />
             <p className="donation-detail">Send to</p>
             <p className="donation-value">dtd-treasurer@mit.edu</p>
+            <p className="donation-note">In the message, include: Alumni Reunion - [First Name] [Last Name]</p>
+          </div>
+          <div className="donation-card">
+            <p className="donation-method">Venmo</p>
+            <div className="chair-divider" />
+            <p className="donation-detail">Send to</p>
+            <p className="donation-value">@nathankim626</p>
+            <p className="donation-note">In the message, include: Alumni Reunion - [First Name] [Last Name]</p>
+            <p className="donation-note">The Delta Tau Delta Venmo is currently unavailable — please use this account in the meantime.</p>
           </div>
           <div className="donation-card">
             <p className="donation-method">Check</p>

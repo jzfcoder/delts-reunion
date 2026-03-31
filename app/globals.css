@@ -924,6 +924,14 @@
   opacity: 0.85;
 }
 
+.donation-note {
+  font-size: 0.58rem;
+  line-height: 1.5;
+  opacity: 0.25;
+  font-style: italic;
+  margin-top: 4px;
+}
+
 .donation-alt-note {
   margin-top: 20px;
   font-size: 0.875rem;

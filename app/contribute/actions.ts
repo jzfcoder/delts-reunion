@@ -15,6 +15,7 @@ export async function submitContribution(
   if (!firstName) return { error: "First name is required." };
 
   const lastName = (formData.get("last_name") as string)?.trim() || null;
+  if (!lastName) return { error: "Last name is required." };
 
   const amountChoice = formData.get("amount") as string;
   const amountOther = (formData.get("amount_other") as string)?.trim();

@@ -73,25 +73,22 @@ export function SignupForm({ referredBy }: { referredBy?: string }) {
         />
       </label>
 
-      {/* Phone & Email — at least one required */}
-      <p className="text-xs text-gray-400 -mb-3">
-        Please provide at least one of phone or email <span className="text-red-400">*</span>
-      </p>
-
       <label className="flex flex-col gap-1.5">
-        <span className="text-sm font-medium">Phone Number</span>
+        <span className="text-sm font-medium">Phone Number <span className="text-red-400">*</span></span>
         <input
           type="tel"
           name="phone"
+          required
           className="border border-white/10 bg-white/5 px-4 py-2.5 focus:border-white/40 focus:outline-none"
         />
       </label>
 
       <label className="flex flex-col gap-1.5">
-        <span className="text-sm font-medium">Email</span>
+        <span className="text-sm font-medium">Email <span className="text-red-400">*</span></span>
         <input
           type="email"
           name="email"
+          required
           className="border border-white/10 bg-white/5 px-4 py-2.5 focus:border-white/40 focus:outline-none"
         />
       </label>
