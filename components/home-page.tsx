@@ -9,8 +9,16 @@ import { LoginForm } from "@/components/login-form";
 import { SignupForm } from "@/components/signup-form";
 import { logout } from "@/app/logout/actions";
 import { ContributionForm } from "@/components/contribution-form";
+import { DonationLeaderboard } from "@/components/donation-leaderboard";
 import { ParticleConstellation } from "@/components/particle-constellation";
 import type { Attendee } from "@/lib/types";
+
+type Contribution = {
+  first_name: string;
+  last_name: string | null;
+  amount: string;
+  created_at: string;
+};
 
 type Guest = Pick<
   Attendee,
@@ -25,6 +33,7 @@ export function HomePage({
   referralCode,
   referredBy,
   showWelcome,
+  contributions,
 }: {
   guests: Guest[];
   isLoggedIn: boolean;
@@ -33,6 +42,7 @@ export function HomePage({
   referralCode?: string;
   referredBy?: string;
   showWelcome?: boolean;
+  contributions: Contribution[];
 }) {
   const [modal, setModal] = useState<"login" | "signup" | "welcome" | null>(
     showWelcome ? "welcome" : null
@@ -325,7 +335,10 @@ export function HomePage({
         <h2 className="itinerary-headline">Contribute</h2>
         <div className="hero-divider" style={{ marginTop: "20px" }} />
         <p className="chairs-blurb">
-          To help cover the cost of the weekend, we&apos;re suggesting a recommended contribution of <strong>$55 for the Lobster Trip</strong> and <strong>$75 for the Fogo de Chão dinner</strong> — roughly $130 in total (this includes transportation via vans). These are entirely optional, and no one will be turned away. Every contribution, large or small, goes directly toward making this reunion one to remember — and helps cover expenses for current undergraduates joining us for the weekend.
+          To help cover the cost of the weekend, we&apos;re suggesting a recommended contribution of <strong>$55 for the Lobster Trip</strong> and <strong>$75 for the Fogo de Chão dinner</strong> — roughly $130 in total (this includes transportation via vans). These are entirely optional, and no one will be turned away. Every contribution, large or small, goes directly toward making this reunion one to remember. If you donate $130 or more, you&apos;ll receive a keepsake to remember the weekend by! Our top three donors will also receive a special gift.
+        </p>
+        <p className="chairs-blurb">
+          Our current undergrads are chipping in too — each brother in the house is contributing $65 toward the weekend. Alumni contributions help bridge the rest and make the full experience possible for everyone.
         </p>
         <div className="donations-grid">
           <div className="donation-card">
@@ -345,6 +358,7 @@ export function HomePage({
           Prefer a different payment method? Feel free to reach out to one of the alumni chairs and we&apos;ll make it work.
         </p>
         <ContributionForm />
+        <DonationLeaderboard contributions={contributions} />
       </div>
     </section>
 

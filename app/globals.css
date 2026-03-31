@@ -933,6 +933,113 @@
   font-weight: 400;
 }
 
+/* ─── Donation Leaderboard ─── */
+.leaderboard {
+  margin-top: 48px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 36px;
+}
+
+.leaderboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 20px;
+}
+
+.leaderboard-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.4;
+}
+
+.leaderboard-total {
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  opacity: 0.6;
+  font-weight: 400;
+}
+
+.leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.leaderboard-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background 0.15s ease;
+}
+
+.leaderboard-row:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.leaderboard-row--top {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.leaderboard-rank {
+  width: 28px;
+  text-align: center;
+  font-size: 0.8rem;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.leaderboard-row--top .leaderboard-rank {
+  font-size: 1rem;
+  opacity: 1;
+}
+
+.leaderboard-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+
+.leaderboard-amount {
+  flex-shrink: 0;
+  margin-left: auto;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  opacity: 0.6;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.leaderboard-row--top .leaderboard-amount {
+  opacity: 0.85;
+  font-weight: 500;
+}
+
+.leaderboard-toggle {
+  margin-top: 12px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 8px 0;
+  transition: color 0.15s ease;
+}
+
+.leaderboard-toggle:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
 /* ─── Contribution Form ─── */
 .contribution-form-wrapper {
   margin-top: 48px;
