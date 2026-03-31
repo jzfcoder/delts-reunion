@@ -307,8 +307,11 @@ export function HomePage({
           {/* Sunday */}
           <FadeIn delay={300}>
             <div className="itinerary-day">
-              <p className="itinerary-day-label">Sunday — May 3</p>
+              <p className="itinerary-day-label">Sunday — May 3 <span style={{ fontSize: "0.75em", fontWeight: 400, opacity: 0.6 }}>(Optional)</span></p>
               <ItineraryEvent time="10:00 AM" title="Rooftop Send-Off" detail="Close out the weekend over breakfast with sweeping views of the Boston skyline and the Charles River. A proper goodbye." />
+              <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.45)", marginTop: "8px", lineHeight: 1.5 }}>
+                Join us for one last morning together before heading out. If your class wants to plan something of your own afterward, this is the day to do it!
+              </p>
             </div>
           </FadeIn>
         </div>

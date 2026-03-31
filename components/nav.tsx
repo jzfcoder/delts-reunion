@@ -8,7 +8,7 @@ export function Nav() {
           Delts Reunion 2026
         </Link>
         <div className="flex gap-6 text-sm">
-          <Link href="/itinerary" className="hover:text-purple-400 transition-colors">
+          <Link href="/#itinerary" className="hover:text-purple-400 transition-colors">
             Itinerary
           </Link>
           <Link href="/signup" className="hover:text-purple-400 transition-colors">
