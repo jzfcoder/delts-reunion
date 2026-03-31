@@ -22,8 +22,11 @@ export async function signup(
 
   const phone = (formData.get("phone") as string)?.trim() || null;
   const email = (formData.get("email") as string)?.trim() || null;
-  if (!phone && !email) {
-    return { error: "Please provide either a phone number or email address." };
+  if (!phone) {
+    return { error: "Phone number is required." };
+  }
+  if (!email) {
+    return { error: "Email is required." };
   }
 
   const daysAttending = formData.getAll("days_attending") as string[];
