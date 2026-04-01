@@ -330,7 +330,7 @@ export function HomePage({
         <h2 className="itinerary-headline">Tickets</h2>
         <div className="hero-divider" style={{ marginTop: "20px" }} />
         <p className="chairs-blurb">
-          A ticket is required to attend the reunion. Ticket prices are tiered by graduation year — we want to make sure this weekend is accessible to everyone, and we recognize that recent graduates may be a bit more price sensitive.
+          A ticket is required to attend the reunion. Ticket prices are tiered by graduation year — recent graduates are more price-sensitive, and we recognize that. Our goal is to preserve buy-in across the board without letting price suppress turnout among alumni who are earlier in their careers.
         </p>
         <div className="donations-grid" style={{ marginBottom: "24px" }}>
           <div className="donation-card">
@@ -357,7 +357,7 @@ export function HomePage({
             <span className="payment-status-dot" />
             <div className="payment-status-text">
               <span className="payment-status-label">{paid ? "Payment Received" : "Payment Pending"}</span>
-              <span className="payment-status-sub">{paid ? "Your ticket is confirmed — see you in May." : "We haven\u2019t received your payment yet. Send it over and fill out the form below."}</span>
+              <span className="payment-status-sub">{paid ? "Your ticket is confirmed — see you in May." : "We manually verify payments, so this may take a little time to update. If you\u2019ve already sent it, you\u2019re all set."}</span>
             </div>
           </div>
         ) : (
@@ -423,7 +423,10 @@ export function HomePage({
         <p className="donation-alt-note">
           Prefer a different payment method? Feel free to reach out to one of the alumni chairs and we&apos;ll make it work.
         </p>
-        <p className="chairs-blurb" style={{ marginTop: "32px", marginBottom: "0" }}>
+        <p className="donation-alt-note">
+          If the ticket price presents a hardship, please don&apos;t let it stop you from coming — reach out to one of the alumni chairs privately and we&apos;ll figure something out. No one will be turned away.
+        </p>
+        <p className="chairs-blurb" style={{ marginTop: "20px", marginBottom: "0" }}>
           Once you&apos;ve sent your payment, fill out the form below to confirm your ticket.
         </p>
         <ContributionForm />
