@@ -9,16 +9,8 @@ import { LoginForm } from "@/components/login-form";
 import { SignupForm } from "@/components/signup-form";
 import { logout } from "@/app/logout/actions";
 import { ContributionForm } from "@/components/contribution-form";
-import { DonationLeaderboard } from "@/components/donation-leaderboard";
 import { ParticleConstellation } from "@/components/particle-constellation";
 import type { Attendee } from "@/lib/types";
-
-type Contribution = {
-  first_name: string;
-  last_name: string | null;
-  amount: string;
-  created_at: string;
-};
 
 type Guest = Pick<
   Attendee,
@@ -33,7 +25,8 @@ export function HomePage({
   referralCode,
   referredBy,
   showWelcome,
-  contributions,
+  alumniCount,
+  paid,
 }: {
   guests: Guest[];
   isLoggedIn: boolean;
@@ -42,7 +35,8 @@ export function HomePage({
   referralCode?: string;
   referredBy?: string;
   showWelcome?: boolean;
-  contributions: Contribution[];
+  alumniCount: number;
+  paid: boolean | null;
 }) {
   const [modal, setModal] = useState<"login" | "signup" | "welcome" | null>(
     showWelcome ? "welcome" : null
@@ -187,6 +181,7 @@ export function HomePage({
         <p className="hero-location">416 BEACON ST, CAMBRIDGE, MA</p>
         <div className="hero-divider" />
         <p className="hero-label" style={{ fontSize: "0.75rem", opacity: 0.6 }}>RSVP DEADLINE — APRIL 20, 2026</p>
+        <AttendeeCounter count={alumniCount} />
       </div>
 
       {/* Right guest list panel */}
@@ -331,15 +326,77 @@ export function HomePage({
     {/* ── Donations Section ── */}
     <section className="donations-section">
       <div className="chairs-inner">
-        <p className="itinerary-eyebrow">Support the Weekend</p>
-        <h2 className="itinerary-headline">Contribute</h2>
+        <p className="itinerary-eyebrow">Weekend Ticket</p>
+        <h2 className="itinerary-headline">Tickets</h2>
         <div className="hero-divider" style={{ marginTop: "20px" }} />
         <p className="chairs-blurb">
-          To help cover the cost of the weekend, we&apos;re suggesting a recommended contribution of <strong>$55 for the Lobster Trip</strong> and <strong>$75 for the Fogo de Chão dinner</strong> — roughly $130 in total (this includes transportation via vans). These are entirely optional, and no one will be turned away. Every contribution, large or small, goes directly toward making this reunion one to remember. If you donate $130 or more, you&apos;ll receive a keepsake to remember the weekend by! Our top three donors will also receive a special gift.
+          A ticket is required to attend the reunion. Ticket prices are tiered by graduation year — we want to make sure this weekend is accessible to everyone, and we recognize that recent graduates may be a bit more price sensitive.
         </p>
+        <div className="donations-grid" style={{ marginBottom: "24px" }}>
+          <div className="donation-card">
+            <p className="donation-method">Graduated 2021–2025</p>
+            <div className="chair-divider" />
+            <p className="donation-value">$100</p>
+          </div>
+          <div className="donation-card">
+            <p className="donation-method">Graduated 2011–2020</p>
+            <div className="chair-divider" />
+            <p className="donation-value">$150</p>
+          </div>
+          <div className="donation-card">
+            <p className="donation-method">Graduated before 2011</p>
+            <div className="chair-divider" />
+            <p className="donation-value">$200</p>
+          </div>
+        </div>
         <p className="chairs-blurb">
-          Our current undergrads are chipping in too — each brother in the house is contributing $65 toward the weekend. Alumni contributions help bridge the rest and make the full experience possible for everyone.
+          Our current undergrads are chipping in too — each brother in the house is contributing $65 toward the weekend. We want to be fully transparent about where every dollar goes, so you can see exactly what your ticket covers. Any remaining difference is being graciously covered by House Corps — a generous gesture made in honor of this being our 5th anniversary celebration.
         </p>
+        {paid !== null ? (
+          <div className={`payment-status${paid ? " payment-status--paid" : " payment-status--unpaid"}`}>
+            <span className="payment-status-dot" />
+            <div className="payment-status-text">
+              <span className="payment-status-label">{paid ? "Payment Received" : "Payment Pending"}</span>
+              <span className="payment-status-sub">{paid ? "Your ticket is confirmed — see you in May." : "We haven\u2019t received your payment yet. Send it over and fill out the form below."}</span>
+            </div>
+          </div>
+        ) : (
+          <div className="payment-status payment-status--logged-out" onClick={() => setModal("login")} style={{ cursor: "pointer" }}>
+            <span className="payment-status-dot" />
+            <div className="payment-status-text">
+              <span className="payment-status-label">Payment Status</span>
+              <span className="payment-status-sub">Log in to view your payment status.</span>
+            </div>
+          </div>
+        )}
+        <p className="chairs-blurb">Here&apos;s the estimated per-person cost breakdown:</p>
+        <div className="cost-breakdown">
+          <div className="cost-breakdown-row">
+            <span className="cost-breakdown-label">Vans (transportation)</span>
+            <span className="cost-breakdown-value">$20</span>
+          </div>
+          <div className="cost-breakdown-row">
+            <span className="cost-breakdown-label">Lobster rolls &amp; food (Lobster Trip)</span>
+            <span className="cost-breakdown-value">$40</span>
+          </div>
+          <div className="cost-breakdown-row">
+            <span className="cost-breakdown-label">Private room at Carrie Nation (incl. gratuity)</span>
+            <span className="cost-breakdown-value">$15</span>
+          </div>
+          <div className="cost-breakdown-row">
+            <span className="cost-breakdown-label">Dinner at Fogo de Chão</span>
+            <span className="cost-breakdown-value">$110</span>
+          </div>
+          <div className="cost-breakdown-row">
+            <span className="cost-breakdown-label">Rooftop breakfast send-off</span>
+            <span className="cost-breakdown-value">$15</span>
+          </div>
+          <div className="cost-breakdown-divider" />
+          <div className="cost-breakdown-row cost-breakdown-row--total">
+            <span className="cost-breakdown-label">Total per person</span>
+            <span className="cost-breakdown-value">$200</span>
+          </div>
+        </div>
         <div className="donations-grid">
           <div className="donation-card">
             <p className="donation-method">Zelle</p>
@@ -366,8 +423,10 @@ export function HomePage({
         <p className="donation-alt-note">
           Prefer a different payment method? Feel free to reach out to one of the alumni chairs and we&apos;ll make it work.
         </p>
+        <p className="chairs-blurb" style={{ marginTop: "32px", marginBottom: "0" }}>
+          Once you&apos;ve sent your payment, fill out the form below to confirm your ticket.
+        </p>
         <ContributionForm />
-        <DonationLeaderboard contributions={contributions} />
       </div>
     </section>
 
@@ -418,6 +477,43 @@ export function HomePage({
       </div>
     </section>
     </>
+  );
+}
+
+function AttendeeCounter({ count }: { count: number }) {
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    if (count === 0) return;
+
+    function runAnimation() {
+      const duration = 5000;
+      const start = performance.now();
+      let raf: number;
+      function tick(now: number) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setDisplay(Math.round(eased * count));
+        if (progress < 1) raf = requestAnimationFrame(tick);
+      }
+      raf = requestAnimationFrame(tick);
+      return () => cancelAnimationFrame(raf);
+    }
+
+    const cancel = runAnimation();
+    const interval = setInterval(runAnimation, 15000);
+    return () => {
+      cancel();
+      clearInterval(interval);
+    };
+  }, [count]);
+
+  return (
+    <div className="attendance-counter">
+      <span className="attendance-number">{display}</span>
+      <span className="attendance-label">Attendees &amp; Counting</span>
+    </div>
   );
 }
 
