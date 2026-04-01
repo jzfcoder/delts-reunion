@@ -21,5 +21,6 @@ export interface Attendee {
   referral_code: string;
   referred_by: string | null;
   profile_pic_url: string | null;
+  paid: boolean;
   created_at: string;
 }

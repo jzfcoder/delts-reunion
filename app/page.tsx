@@ -13,24 +13,24 @@ export default async function Home({
   const params = await searchParams;
   const session = await getSession();
 
-  const guests = session
-    ? await supabase
-        .from("attendees")
-        .select("first_name, last_name, graduation_date, profile_pic_url, days_attending")
-        .order("created_at", { ascending: true })
-        .then(({ data }) =>
-          (data ?? []) as Pick<
-            Attendee,
-            "first_name" | "last_name" | "graduation_date" | "profile_pic_url" | "days_attending"
-          >[]
-        )
-    : [];
-
-  const contributions = await supabase
-    .from("contributions")
-    .select("first_name, last_name, amount, created_at")
-    .order("created_at", { ascending: true })
-    .then(({ data }) => (data ?? []) as { first_name: string; last_name: string | null; amount: string; created_at: string }[]);
+  const [guests, alumniCount] = await Promise.all([
+    session
+      ? supabase
+          .from("attendees")
+          .select("first_name, last_name, graduation_date, profile_pic_url, days_attending")
+          .order("created_at", { ascending: true })
+          .then(({ data }) =>
+            (data ?? []) as Pick<
+              Attendee,
+              "first_name" | "last_name" | "graduation_date" | "profile_pic_url" | "days_attending"
+            >[]
+          )
+      : Promise.resolve([]),
+    supabase
+      .from("attendees")
+      .select("id", { count: "exact", head: true })
+      .then(({ count }) => count ?? 0),
+  ]);
 
   return (
     <HomePage
@@ -41,7 +41,8 @@ export default async function Home({
       referralCode={session?.referral_code}
       referredBy={params.ref}
       showWelcome={params.welcome === "true"}
-      contributions={contributions}
+      alumniCount={alumniCount}
+      paid={session?.paid ?? null}
     />
   );
 }
