@@ -231,6 +231,11 @@ export function HomePage({
               RSVP deadline: April 20, 2026
             </p>
           </div>
+          <p className="text-xs text-amber-400/80 bg-amber-400/10 border border-amber-400/20 px-4 py-3 text-center leading-relaxed">
+            If you already RSVP&apos;d via the Google Form, an account has been created for you —{" "}
+            <button onClick={() => setModal("login")} className="underline underline-offset-2 hover:text-amber-300 transition-colors">log in here</button>{" "}
+            instead.
+          </p>
           <SignupForm referredBy={referredBy} />
         </div>
       </Modal>
