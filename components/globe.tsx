@@ -68,11 +68,15 @@ export function Globe() {
 
     const IDLE_DELAY = 2000;
     const LERP = 0.03;
-    const dpr = Math.min(window.devicePixelRatio, 2);
+    const isMobile = window.matchMedia("(pointer: coarse)").matches || window.innerWidth <= 768;
+    // Cap DPR at 1 on mobile — halves the WebGL framebuffer size
+    const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio, 2);
 
     // Canvas CSS is 100vmax × 100vmax (always square) — use its actual size
     const rect = canvasRef.current.getBoundingClientRect();
-    const isMobile = window.innerWidth <= 768;
+
+    // Reduce arc and marker count on mobile to cut per-frame work
+    const visibleOrigins = isMobile ? SAMPLE_ORIGINS.slice(0, 12) : SAMPLE_ORIGINS;
 
     const globe = createGlobe(canvasRef.current, {
       devicePixelRatio: dpr,
@@ -82,7 +86,7 @@ export function Globe() {
       theta: currentTheta.current,
       dark: 0,
       diffuse: 1.2,
-      mapSamples: 8000,
+      mapSamples: isMobile ? 3000 : 8000,
       mapBrightness: 6,
       baseColor: [0.68, 0.62, 0.78],
       markerColor: [1, 1, 1],
@@ -91,9 +95,9 @@ export function Globe() {
       offset: [0, isMobile ? 400 : 1000],
       markers: [
         { location: VENUE, size: 0.04, color: [1, 0.85, 0.2] },
-        ...SAMPLE_ORIGINS.map((loc) => ({ location: loc, size: 0.015 })),
+        ...visibleOrigins.map((loc) => ({ location: loc, size: 0.015 })),
       ],
-      arcs: SAMPLE_ORIGINS.map((origin) => ({
+      arcs: visibleOrigins.map((origin) => ({
         from: origin,
         to: VENUE,
       })),

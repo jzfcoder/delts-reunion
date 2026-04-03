@@ -43,8 +43,11 @@ function createParticle(w: number, h: number): Particle {
 
 // One particle per ~14 000 px² of canvas area, clamped to a sensible range.
 // Recalculated on every resize so the field stays proportional at any size.
-function targetCount(w: number, h: number): number {
-  return Math.min(Math.max(Math.round((w * h) / 14000), 28), 150);
+// On mobile/tablet we use a larger divisor to keep the count low.
+function targetCount(w: number, h: number, isMobile: boolean): number {
+  const divisor = isMobile ? 24000 : 14000;
+  const max = isMobile ? 60 : 150;
+  return Math.min(Math.max(Math.round((w * h) / divisor), 18), max);
 }
 
 // ─── Component ───────────────────────────────────────────────────────────────
@@ -64,6 +67,8 @@ export function ParticleConstellation() {
     const el: HTMLCanvasElement = canvasRef.current;
     const cx: CanvasRenderingContext2D = ctx;
 
+    const isMobile = window.matchMedia("(pointer: coarse)").matches || window.innerWidth <= 768;
+
     let width = 0;
     let height = 0;
     let particles: Particle[] = [];
@@ -72,7 +77,8 @@ export function ParticleConstellation() {
 
     // ── Canvas sizing (DPR-aware) ──────────────────────────────────────────
     function resize() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // Cap DPR at 1 on mobile to halve the number of pixels rendered
+      const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
       width    = el.offsetWidth;
       height   = el.offsetHeight;
       el.width  = width  * dpr;
@@ -83,7 +89,7 @@ export function ParticleConstellation() {
     // ── Sync particle array to the target count for current dimensions ────
     // Adds new particles at random positions; trims excess from the tail.
     function syncParticleCount() {
-      const target = targetCount(width, height);
+      const target = targetCount(width, height, isMobile);
       while (particles.length < target) {
         particles.push(createParticle(width, height));
       }
@@ -141,15 +147,18 @@ export function ParticleConstellation() {
       }
 
       // ── Draw particles (shared glow state, one pass) ─────────────────
-      cx.shadowBlur  = 7;
-      cx.shadowColor = "rgba(255, 255, 255, 0.75)";
+      // shadowBlur is expensive on mobile GPUs — skip it on touch devices
+      if (!isMobile) {
+        cx.shadowBlur  = 7;
+        cx.shadowColor = "rgba(255, 255, 255, 0.75)";
+      }
       for (const p of particles) {
         cx.beginPath();
         cx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         cx.fillStyle = `rgba(255,255,255,${p.opacity.toFixed(2)})`;
         cx.fill();
       }
-      cx.shadowBlur = 0;
+      if (!isMobile) cx.shadowBlur = 0;
 
       // ── Draw connections ──────────────────────────────────────────────
       for (let i = 0; i < particles.length; i++) {
