@@ -178,7 +178,7 @@ export function HomePage({
 
         <div className="hero-divider" />
         <p className="hero-date">MAY 1 – MAY 3, 2026</p>
-        <p className="hero-location">416 BEACON ST, CAMBRIDGE, MA</p>
+        <p className="hero-location">416 BEACON ST, BOSTON, MA</p>
         <div className="hero-divider" />
         <p className="hero-label" style={{ fontSize: "0.75rem", opacity: 0.6 }}>RSVP DEADLINE — APRIL 20, 2026</p>
         <AttendeeCounter count={alumniCount} />
@@ -309,7 +309,7 @@ export function HomePage({
           <FadeIn delay={200}>
             <div className="itinerary-day">
               <p className="itinerary-day-label">Saturday — May 2</p>
-              <ItineraryEvent time="10:00 AM" title="Return of the Lobster Trip" detail="Vans leave at 10 — we're taking over the beach for a full day of lobster rolls, football, spike ball, and cornhole. This is the one." />
+              <ItineraryEvent time="10:00 AM" title="Return of the Lobster Trip" detail="This year's trip will be slightly modified — vans leave at 10 and we'll be heading to a beach about an hour away for lobster rolls, football, spike ball, and cornhole. This is the one." />
               <ItineraryEvent time="6:00 PM" title="Dinner at Fogo de Chão" detail="Private rooms reserved for the full Churrasco experience — unlimited cuts, exceptional company, and an evening to remember." />
             </div>
           </FadeIn>
