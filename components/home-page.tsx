@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { Countdown } from "@/components/countdown";
 import { GuestListPreview } from "@/components/guest-list-preview";
 import { Globe } from "@/components/globe";
@@ -108,6 +109,9 @@ export function HomePage({
               src={profilePicUrl}
               alt={userName ?? ""}
               className="hero-avatar-img"
+              width={36}
+              height={36}
+              decoding="async"
             />
           ) : (
             <svg
@@ -462,7 +466,7 @@ export function HomePage({
             email="jzflint@mit.edu"
             phone="408-648-5530"
             phoneHref="+14086485530"
-            photo="/jeremy.png"
+            photo="/jeremy.jpg"
           />
         </div>
       </div>
@@ -544,7 +548,15 @@ function ChairCard({
     <div className="chair-card">
       <div className="chair-photo-col">
         {photo ? (
-          <img src={photo} alt={name} className="chair-photo" />
+          <Image
+            src={photo}
+            alt={name}
+            className="chair-photo"
+            width={320}
+            height={480}
+            sizes="(max-width: 768px) 140px, 160px"
+            loading="lazy"
+          />
         ) : (
           <div className="chair-photo-placeholder">
             <span className="chair-photo-initials">{initials}</span>

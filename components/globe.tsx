@@ -122,7 +122,22 @@ export function Globe() {
     window.addEventListener("resize", updateSize);
 
     // Animation loop — cobe v2 uses globe.update(), not onRender
+    // Only runs while the canvas is on-screen and the tab is visible.
     let frameId: number;
+    let inView = true;
+    let running = false;
+
+    function start() {
+      if (running) return;
+      if (!inView || document.hidden) return;
+      running = true;
+      frameId = requestAnimationFrame(animate);
+    }
+
+    function stop() {
+      running = false;
+      cancelAnimationFrame(frameId);
+    }
 
     function animate() {
       const now = Date.now();
@@ -154,9 +169,27 @@ export function Globe() {
       );
 
       globe.update({ phi: currentPhi.current, theta: currentTheta.current });
-      frameId = requestAnimationFrame(animate);
+      if (running) frameId = requestAnimationFrame(animate);
     }
-    frameId = requestAnimationFrame(animate);
+    start();
+
+    // Pause when the canvas leaves the viewport
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting;
+        if (inView) start();
+        else stop();
+      },
+      { rootMargin: "200px" }
+    );
+    io.observe(canvasRef.current);
+
+    // Pause when the tab is hidden
+    function onVisibility() {
+      if (document.hidden) stop();
+      else start();
+    }
+    document.addEventListener("visibilitychange", onVisibility);
 
     // Pointer events for drag rotation
     const canvas = canvasRef.current;
@@ -193,7 +226,9 @@ export function Globe() {
     window.addEventListener("pointerup", onPointerUp);
 
     return () => {
-      cancelAnimationFrame(frameId);
+      stop();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       globe.destroy();
       canvas.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("pointermove", onPointerMove);

@@ -74,6 +74,10 @@ export function ParticleConstellation() {
     let particles: Particle[] = [];
     let frameId = 0;
     let resizeTimer: ReturnType<typeof setTimeout>;
+    // Only run the draw loop when the canvas is on-screen AND the tab is
+    // visible. Prevents CPU/GPU cost while the user is reading lower sections.
+    let inView = true;
+    let running = false;
 
     // ── Canvas sizing (DPR-aware) ──────────────────────────────────────────
     function resize() {
@@ -186,8 +190,38 @@ export function ParticleConstellation() {
       frameId = requestAnimationFrame(draw);
     }
 
+    function start() {
+      if (running) return;
+      if (!inView || document.hidden) return;
+      running = true;
+      frameId = requestAnimationFrame(draw);
+    }
+
+    function stop() {
+      running = false;
+      cancelAnimationFrame(frameId);
+    }
+
     init();
-    frameId = requestAnimationFrame(draw);
+    start();
+
+    // Pause when the canvas leaves the viewport
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting;
+        if (inView) start();
+        else stop();
+      },
+      { rootMargin: "200px" }
+    );
+    io.observe(el);
+
+    // Pause when the tab is hidden
+    function onVisibility() {
+      if (document.hidden) stop();
+      else start();
+    }
+    document.addEventListener("visibilitychange", onVisibility);
 
     // ── Mouse tracking (canvas-local coordinates) ──────────────────────
     function onMouseMove(e: MouseEvent) {
@@ -219,8 +253,10 @@ export function ParticleConstellation() {
     window.addEventListener("resize",    onResize,    { passive: true });
 
     return () => {
-      cancelAnimationFrame(frameId);
+      stop();
       clearTimeout(resizeTimer);
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("resize",    onResize);
     };
