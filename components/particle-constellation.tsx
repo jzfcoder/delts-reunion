@@ -45,8 +45,8 @@ function createParticle(w: number, h: number): Particle {
 // Recalculated on every resize so the field stays proportional at any size.
 // On mobile/tablet we use a larger divisor to keep the count low.
 function targetCount(w: number, h: number, isMobile: boolean): number {
-  const divisor = isMobile ? 24000 : 18000;
-  const max = isMobile ? 60 : 90;
+  const divisor = isMobile ? 24000 : 14000;
+  const max = isMobile ? 60 : 150;
   return Math.min(Math.max(Math.round((w * h) / divisor), 18), max);
 }
 
@@ -81,8 +81,8 @@ export function ParticleConstellation() {
 
     // ── Canvas sizing (DPR-aware) ──────────────────────────────────────────
     function resize() {
-      // Cap DPR at 1 on mobile, 1.5 on desktop — still sharp, ~45% fewer pixels
-      const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
+      // Cap DPR at 1 on mobile to halve the number of pixels rendered
+      const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
       width    = el.offsetWidth;
       height   = el.offsetHeight;
       el.width  = width  * dpr;
@@ -151,10 +151,9 @@ export function ParticleConstellation() {
       }
 
       // ── Draw particles (shared glow state, one pass) ─────────────────
-      // shadowBlur is expensive — skip it on touch devices, keep a softer
-      // glow on desktop.
+      // shadowBlur is expensive on mobile GPUs — skip it on touch devices
       if (!isMobile) {
-        cx.shadowBlur  = 4;
+        cx.shadowBlur  = 7;
         cx.shadowColor = "rgba(255, 255, 255, 0.75)";
       }
       for (const p of particles) {
