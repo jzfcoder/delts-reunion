@@ -45,8 +45,8 @@ function createParticle(w: number, h: number): Particle {
 // Recalculated on every resize so the field stays proportional at any size.
 // On mobile/tablet we use a larger divisor to keep the count low.
 function targetCount(w: number, h: number, isMobile: boolean): number {
-  const divisor = isMobile ? 24000 : 14000;
-  const max = isMobile ? 60 : 150;
+  const divisor = isMobile ? 24000 : 18000;
+  const max = isMobile ? 60 : 90;
   return Math.min(Math.max(Math.round((w * h) / divisor), 18), max);
 }
 
@@ -74,11 +74,15 @@ export function ParticleConstellation() {
     let particles: Particle[] = [];
     let frameId = 0;
     let resizeTimer: ReturnType<typeof setTimeout>;
+    // Only run the draw loop when the canvas is on-screen AND the tab is
+    // visible. Prevents CPU/GPU cost while the user is reading lower sections.
+    let inView = true;
+    let running = false;
 
     // ── Canvas sizing (DPR-aware) ──────────────────────────────────────────
     function resize() {
-      // Cap DPR at 1 on mobile to halve the number of pixels rendered
-      const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
+      // Cap DPR at 1 on mobile, 1.5 on desktop — still sharp, ~45% fewer pixels
+      const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
       width    = el.offsetWidth;
       height   = el.offsetHeight;
       el.width  = width  * dpr;
@@ -147,9 +151,10 @@ export function ParticleConstellation() {
       }
 
       // ── Draw particles (shared glow state, one pass) ─────────────────
-      // shadowBlur is expensive on mobile GPUs — skip it on touch devices
+      // shadowBlur is expensive — skip it on touch devices, keep a softer
+      // glow on desktop.
       if (!isMobile) {
-        cx.shadowBlur  = 7;
+        cx.shadowBlur  = 4;
         cx.shadowColor = "rgba(255, 255, 255, 0.75)";
       }
       for (const p of particles) {
@@ -186,8 +191,38 @@ export function ParticleConstellation() {
       frameId = requestAnimationFrame(draw);
     }
 
+    function start() {
+      if (running) return;
+      if (!inView || document.hidden) return;
+      running = true;
+      frameId = requestAnimationFrame(draw);
+    }
+
+    function stop() {
+      running = false;
+      cancelAnimationFrame(frameId);
+    }
+
     init();
-    frameId = requestAnimationFrame(draw);
+    start();
+
+    // Pause when the canvas leaves the viewport
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting;
+        if (inView) start();
+        else stop();
+      },
+      { rootMargin: "200px" }
+    );
+    io.observe(el);
+
+    // Pause when the tab is hidden
+    function onVisibility() {
+      if (document.hidden) stop();
+      else start();
+    }
+    document.addEventListener("visibilitychange", onVisibility);
 
     // ── Mouse tracking (canvas-local coordinates) ──────────────────────
     function onMouseMove(e: MouseEvent) {
@@ -219,8 +254,10 @@ export function ParticleConstellation() {
     window.addEventListener("resize",    onResize,    { passive: true });
 
     return () => {
-      cancelAnimationFrame(frameId);
+      stop();
       clearTimeout(resizeTimer);
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("resize",    onResize);
     };

@@ -51,6 +51,7 @@ export function CustomCursor() {
     let hovering = false;
     let pressed  = false;
     let frameId  = 0;
+    let running  = false;
 
     // ── Inject a <style> tag to hide the browser cursor everywhere ────
     // A class + !important can still be beaten by inline cursor styles
@@ -82,24 +83,43 @@ export function CustomCursor() {
     }
 
     // ── Animation loop: lerp ring toward mouse ─────────────────────────
+    // Parks itself when the ring has converged on the mouse, restarts on
+    // next mouse move. Avoids a permanent 60fps rAF loop.
     function tick() {
-      ring.x += (mouse.x - ring.x) * 0.12;
-      ring.y += (mouse.y - ring.y) * 0.12;
+      const dx = mouse.x - ring.x;
+      const dy = mouse.y - ring.y;
+      ring.x += dx * 0.12;
+      ring.y += dy * 0.12;
 
       // Translate from top-left origin; negative margin offsets center the
       // element on the cursor position (updated alongside size via CSS transition).
       dot.style.transform    = `translate(${mouse.x}px,${mouse.y}px)`;
       ringEl.style.transform = `translate(${ring.x}px,${ring.y}px)`;
 
+      if (dx * dx + dy * dy < 0.25) {
+        // Snap to final position and park the loop.
+        ring.x = mouse.x;
+        ring.y = mouse.y;
+        ringEl.style.transform = `translate(${ring.x}px,${ring.y}px)`;
+        running = false;
+        return;
+      }
+
       frameId = requestAnimationFrame(tick);
     }
-    frameId = requestAnimationFrame(tick);
+
+    function startLoop() {
+      if (running) return;
+      running = true;
+      frameId = requestAnimationFrame(tick);
+    }
 
     // ── Mouse events ──────────────────────────────────────────────────
     function onMove(e: MouseEvent) {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
       show();
+      startLoop();
     }
 
     function onLeave() { hide(); }
@@ -124,7 +144,9 @@ export function CustomCursor() {
     // Event delegation handles all current and future elements including
     // dynamically rendered modal content.
     function onOver(e: MouseEvent) {
-      if (!(e.target as Element).closest(INTERACTIVE)) return;
+      const target = e.target as Element | null;
+      if (!target || target.nodeType !== 1) return;
+      if (!target.closest(INTERACTIVE)) return;
       if (hovering) return;
       hovering = true;
       if (!pressed) {
@@ -133,7 +155,9 @@ export function CustomCursor() {
     }
 
     function onOut(e: MouseEvent) {
-      if (!(e.target as Element).closest(INTERACTIVE)) return;
+      const target = e.target as Element | null;
+      if (!target || target.nodeType !== 1) return;
+      if (!target.closest(INTERACTIVE)) return;
       // Only clear if the cursor isn't moving to another interactive element
       if ((e.relatedTarget as Element | null)?.closest(INTERACTIVE)) return;
       hovering = false;
@@ -165,7 +189,10 @@ export function CustomCursor() {
 
   return (
     <>
-      {/* Inner dot — snaps to the cursor instantly */}
+      {/* Inner dot — snaps to the cursor instantly. White center + dark
+          outline keeps it visible on both the light hero and dark sections
+          without the cost of mix-blend-mode: difference (which forces a
+          full-viewport composite every frame). */}
       <div
         ref={dotRef}
         aria-hidden="true"
@@ -177,14 +204,12 @@ export function CustomCursor() {
           height:        "6px",
           borderRadius:  "50%",
           background:    "white",
+          boxShadow:     "0 0 0 1px rgba(0,0,0,0.55)",
           pointerEvents: "none",
           zIndex:        99999,
           opacity:       0,
           marginLeft:    "-3px",
           marginTop:     "-3px",
-          // mix-blend-mode: difference inverts whatever is beneath the dot,
-          // making it visible on both the light hero and the dark sections.
-          mixBlendMode:  "difference",
           transition:    "opacity 0.3s ease",
           willChange:    "transform",
         }}
