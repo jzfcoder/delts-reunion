@@ -45,10 +45,14 @@ function createParticle(w: number, h: number): Particle {
 // Recalculated on every resize so the field stays proportional at any size.
 // On mobile/tablet we use a larger divisor to keep the count low.
 function targetCount(w: number, h: number, isMobile: boolean): number {
-  const divisor = isMobile ? 24000 : 14000;
-  const max = isMobile ? 60 : 150;
-  return Math.min(Math.max(Math.round((w * h) / divisor), 18), max);
+  const divisor = isMobile ? 26000 : 22000;
+  const max = isMobile ? 50 : 70;
+  return Math.min(Math.max(Math.round((w * h) / divisor), 16), max);
 }
+
+// Connection lines are batched into this many quantised alpha buckets so we
+// make ~BUCKETS stroke() calls per frame instead of one per line.
+const LINE_BUCKETS = 6;
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
@@ -81,8 +85,8 @@ export function ParticleConstellation() {
 
     // ── Canvas sizing (DPR-aware) ──────────────────────────────────────────
     function resize() {
-      // Cap DPR at 1 on mobile to halve the number of pixels rendered
-      const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
+      // Cap DPR at 1 on mobile, 1.5 on desktop — still sharp, ~45% fewer pixels
+      const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
       width    = el.offsetWidth;
       height   = el.offsetHeight;
       el.width  = width  * dpr;
@@ -150,21 +154,26 @@ export function ParticleConstellation() {
         else if (p.y > height + 5) p.y = -5;
       }
 
-      // ── Draw particles (shared glow state, one pass) ─────────────────
-      // shadowBlur is expensive on mobile GPUs — skip it on touch devices
-      if (!isMobile) {
-        cx.shadowBlur  = 7;
-        cx.shadowColor = "rgba(255, 255, 255, 0.75)";
-      }
+      // ── Draw particles ────────────────────────────────────────────────
+      // shadowBlur was the single most expensive op on this 2D canvas —
+      // every fill triggered a GPU-side blur pass. Removed entirely; the
+      // particle field still reads fine without it.
       for (const p of particles) {
         cx.beginPath();
         cx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         cx.fillStyle = `rgba(255,255,255,${p.opacity.toFixed(2)})`;
         cx.fill();
       }
-      if (!isMobile) cx.shadowBlur = 0;
 
       // ── Draw connections ──────────────────────────────────────────────
+      // Bucket lines by distance-derived alpha and draw each bucket as a
+      // single Path2D stroke. With thousands of candidate pairs this turns
+      // per-line stroke() calls + strokeStyle string allocations into
+      // LINE_BUCKETS strokes per frame.
+      cx.lineWidth = 0.55;
+      const buckets: Path2D[] = [];
+      for (let b = 0; b < LINE_BUCKETS; b++) buckets.push(new Path2D());
+
       for (let i = 0; i < particles.length; i++) {
         const a = particles[i];
         for (let j = i + 1; j < particles.length; j++) {
@@ -177,14 +186,20 @@ export function ParticleConstellation() {
           const distSq = dx * dx + dy * dy;
           if (distSq > CONNECT_DIST_SQ) continue;
 
-          const alpha = (1 - Math.sqrt(distSq) / CONNECT_DIST) * 0.18;
-          cx.beginPath();
-          cx.moveTo(a.x, a.y);
-          cx.lineTo(b.x, b.y);
-          cx.strokeStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
-          cx.lineWidth   = 0.55;
-          cx.stroke();
+          // distance-based 0..1 falloff → bucket index
+          const t = 1 - Math.sqrt(distSq) / CONNECT_DIST;
+          let bucket = (t * LINE_BUCKETS) | 0;
+          if (bucket >= LINE_BUCKETS) bucket = LINE_BUCKETS - 1;
+          const path = buckets[bucket];
+          path.moveTo(a.x, a.y);
+          path.lineTo(b.x, b.y);
         }
+      }
+      for (let b = 0; b < LINE_BUCKETS; b++) {
+        // Centre of each bucket scaled by 0.18 max alpha.
+        const alpha = ((b + 0.5) / LINE_BUCKETS) * 0.18;
+        cx.strokeStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
+        cx.stroke(buckets[b]);
       }
 
       frameId = requestAnimationFrame(draw);
