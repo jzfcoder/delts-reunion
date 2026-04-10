@@ -20,16 +20,16 @@ export const metadata: Metadata = {
       : "http://localhost:3000"
   ),
   title: "Delta Tau Delta — Alumni Reunion",
-  description: "July 18–20, 2025 — Oxford, Ohio. Join us for the Delta Tau Delta alumni reunion.",
+  description: "July 18–20, 2025 — Boston, Massachusetts. Join us for the Delta Tau Delta alumni reunion.",
   openGraph: {
     title: "MIT DTD 2026 Alumni Reunion",
-    description: "July 18–20, 2025 — Oxford, Ohio. Join us for the Delta Tau Delta alumni reunion.",
+    description: "July 18–20, 2025 — Boston, Massachusetts. Join us for the Delta Tau Delta alumni reunion.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "MIT DTD 2026 Alumni Reunion",
-    description: "July 18–20, 2025 — Oxford, Ohio. Join us for the Delta Tau Delta alumni reunion.",
+    description: "July 18–20, 2025 — Boston, Massachusetts. Join us for the Delta Tau Delta alumni reunion.",
   },
 };
 
