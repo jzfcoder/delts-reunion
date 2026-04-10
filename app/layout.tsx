@@ -14,8 +14,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "http://localhost:3000"
+  ),
   title: "Delta Tau Delta — Alumni Reunion",
   description: "July 18–20, 2025 — Oxford, Ohio. Join us for the Delta Tau Delta alumni reunion.",
+  openGraph: {
+    title: "MIT DTD 2026 Alumni Reunion",
+    description: "July 18–20, 2025 — Oxford, Ohio. Join us for the Delta Tau Delta alumni reunion.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MIT DTD 2026 Alumni Reunion",
+    description: "July 18–20, 2025 — Oxford, Ohio. Join us for the Delta Tau Delta alumni reunion.",
+  },
 };
 
 export default function RootLayout({
