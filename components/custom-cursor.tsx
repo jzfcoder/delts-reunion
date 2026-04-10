@@ -82,18 +82,18 @@ export function CustomCursor() {
       ringEl.style.opacity = "0";
     }
 
-    // ── Animation loop: lerp ring toward mouse ─────────────────────────
-    // Parks itself when the ring has converged on the mouse, restarts on
-    // next mouse move. Avoids a permanent 60fps rAF loop.
+    // ── Ring lerp loop ────────────────────────────────────────────────
+    // Only the ring uses rAF (for its trailing lerp). The dot is updated
+    // synchronously in onMove so it tracks the mouse 1:1 even when the
+    // main thread is saturated by the hero canvases — rAF callbacks can
+    // be scheduled late under load, which made the dot visibly trail.
+    // Parks itself when the ring has converged; restarts on next move.
     function tick() {
       const dx = mouse.x - ring.x;
       const dy = mouse.y - ring.y;
-      ring.x += dx * 0.12;
-      ring.y += dy * 0.12;
+      ring.x += dx * 0.2;
+      ring.y += dy * 0.2;
 
-      // Translate from top-left origin; negative margin offsets center the
-      // element on the cursor position (updated alongside size via CSS transition).
-      dot.style.transform    = `translate(${mouse.x}px,${mouse.y}px)`;
       ringEl.style.transform = `translate(${ring.x}px,${ring.y}px)`;
 
       if (dx * dx + dy * dy < 0.25) {
@@ -118,6 +118,9 @@ export function CustomCursor() {
     function onMove(e: MouseEvent) {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
+      // Update the dot synchronously — bypasses rAF scheduling so the dot
+      // tracks the cursor immediately even when the main thread is busy.
+      dot.style.transform = `translate(${mouse.x}px,${mouse.y}px)`;
       show();
       startLoop();
     }
