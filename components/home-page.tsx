@@ -315,13 +315,14 @@ export function HomePage({
               <p className="itinerary-day-label">Saturday — May 2</p>
               <ItineraryEvent time="10:00 AM" title="Return of the Lobster Trip" detail="This year's trip will be slightly modified — vans leave at 10 and we'll be heading to a beach about an hour away for lobster rolls, football, spike ball, and cornhole. This is the one." />
               <ItineraryEvent time="6:00 PM" title="Dinner at Fogo de Chão" detail="Private rooms reserved for the full Churrasco experience — unlimited cuts, exceptional company, and an evening to remember." />
+              <ItineraryEvent time="9:00 PM" title="Back to the House ... Brohood" detail="Head back to 416 for a night the way you remember it — drinks flowing, old games revived, and traditions brought back to life. This is your chance to relive the best nights at the house with brothers past and present." />
             </div>
           </FadeIn>
 
           {/* Sunday */}
           <FadeIn delay={300}>
             <div className="itinerary-day">
-              <p className="itinerary-day-label">Sunday — May 3 <span style={{ fontSize: "0.75em", fontWeight: 400, opacity: 0.6 }}>(Optional)</span></p>
+              <p className="itinerary-day-label">Sunday — May 3</p>
               <ItineraryEvent time="10:00 AM" title="Rooftop Send-Off" detail="Close out the weekend over breakfast with sweeping views of the Boston skyline and the Charles River. A proper goodbye." />
               <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.45)", marginTop: "8px", lineHeight: 1.5 }}>
                 Join us for one last morning together before heading out. If your class wants to plan something of your own afterward, this is the day to do it!
