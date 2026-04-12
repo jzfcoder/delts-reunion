@@ -305,7 +305,7 @@ export function HomePage({
           <FadeIn delay={100}>
             <div className="itinerary-day">
               <p className="itinerary-day-label">Friday — May 1</p>
-              <ItineraryEvent time="8:00 PM" title="Opening Night Drinks" detail="We're kicking off the weekend with our own private room at Carrie Nation — the whole crew, cold drinks, and the first round of catching up." />
+              <ItineraryEvent time="8:00 PM" title="Opening Night Drinks" detail="We're kicking off the weekend with our own private room at Carrie Nation — the whole crew, cold drinks, and the first round of catching up." featured />
             </div>
           </FadeIn>
 
@@ -313,9 +313,9 @@ export function HomePage({
           <FadeIn delay={200}>
             <div className="itinerary-day">
               <p className="itinerary-day-label">Saturday — May 2</p>
-              <ItineraryEvent time="10:00 AM" title="Return of the Lobster Trip" detail="This year's trip will be slightly modified — vans leave at 10 and we'll be heading to a beach about an hour away for lobster rolls, football, spike ball, and cornhole. This is the one." />
-              <ItineraryEvent time="6:00 PM" title="Dinner at Fogo de Chão" detail="Private rooms reserved for the full Churrasco experience — unlimited cuts, exceptional company, and an evening to remember." />
-              <ItineraryEvent time="9:00 PM" title="Back to the House ... Brohood" detail="Head back to 416 for a night the way you remember it — drinks flowing, old games revived, and traditions brought back to life. This is your chance to relive the best nights at the house with brothers past and present." />
+              <ItineraryEvent time="10:00 AM" title="Return of the Lobster Trip" detail="This year's trip will be slightly modified — vans leave at 10 and we'll be heading to a beach about an hour away for lobster rolls, football, spike ball, and cornhole. This is the one." featured badge="SIGNATURE EVENT" />
+              <ItineraryEvent time="6:00 PM" title="Dinner at Fogo de Chão" detail="Private rooms reserved for the full Churrasco experience — unlimited cuts, exceptional company, and an evening to remember." featured badge="SIGNATURE EVENT" />
+              <ItineraryEvent time="9:00 PM" title="Back to the House ... Brohood" detail="Head back to 416 for a night the way you remember it — drinks flowing, old games revived, and traditions brought back to life. This is your chance to relive the best nights at the house with brothers past and present." featured badge="SIGNATURE EVENT" />
             </div>
           </FadeIn>
 
@@ -609,10 +609,11 @@ function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
   );
 }
 
-function ItineraryEvent({ time, title, note, detail }: { time: string; title: string; note?: string; detail?: string }) {
+function ItineraryEvent({ time, title, note, detail, featured, badge }: { time: string; title: string; note?: string; detail?: string; featured?: boolean; badge?: string }) {
   return (
-    <div className="itinerary-event">
+    <div className={`itinerary-event${featured ? " itinerary-event--featured" : ""}`}>
       <span className="itinerary-time">{time}</span>
+      {badge && <span className="itinerary-event-badge">{badge}</span>}
       <span className="itinerary-event-title">{title}</span>
       {detail && <span className="itinerary-event-detail">{detail}</span>}
       {note && <span className="itinerary-event-note">{note}</span>}
