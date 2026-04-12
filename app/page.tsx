@@ -1,5 +1,6 @@
 import { HomePage } from "@/components/home-page";
 import { getSession } from "@/lib/auth";
+import { deduplicateGuests } from "@/lib/attendees";
 import { supabase } from "@/lib/supabase";
 import type { Attendee } from "@/lib/types";
 
@@ -13,24 +14,21 @@ export default async function Home({
   const params = await searchParams;
   const session = await getSession();
 
-  const [guests, alumniCount] = await Promise.all([
-    session
-      ? supabase
-          .from("attendees")
-          .select("first_name, last_name, graduation_date, profile_pic_url, days_attending")
-          .order("created_at", { ascending: true })
-          .then(({ data }) =>
-            (data ?? []) as Pick<
-              Attendee,
-              "first_name" | "last_name" | "graduation_date" | "profile_pic_url" | "days_attending"
-            >[]
-          )
-      : Promise.resolve([]),
-    supabase
-      .from("attendees")
-      .select("id", { count: "exact", head: true })
-      .then(({ count }) => count ?? 0),
-  ]);
+  const allGuests = await supabase
+    .from("attendees")
+    .select("first_name, last_name, graduation_date, profile_pic_url, days_attending")
+    .order("created_at", { ascending: true })
+    .then(({ data }) =>
+      deduplicateGuests(
+        (data ?? []) as Pick<
+          Attendee,
+          "first_name" | "last_name" | "graduation_date" | "profile_pic_url" | "days_attending"
+        >[]
+      )
+    );
+
+  const guests = session ? allGuests : [];
+  const alumniCount = allGuests.length;
 
   return (
     <HomePage

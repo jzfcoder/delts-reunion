@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import { getSession } from "@/lib/auth";
+import { deduplicateGuests } from "@/lib/attendees";
 import { redirect } from "next/navigation";
 import type { Attendee } from "@/lib/types";
 
@@ -14,10 +15,12 @@ export default async function GuestsPage() {
     .select("first_name, last_name, graduation_date, profile_pic_url, days_attending")
     .order("created_at", { ascending: true });
 
-  const guests = (attendees ?? []) as Pick<
-    Attendee,
-    "first_name" | "last_name" | "graduation_date" | "profile_pic_url" | "days_attending"
-  >[];
+  const guests = deduplicateGuests(
+    (attendees ?? []) as Pick<
+      Attendee,
+      "first_name" | "last_name" | "graduation_date" | "profile_pic_url" | "days_attending"
+    >[]
+  );
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-24">
