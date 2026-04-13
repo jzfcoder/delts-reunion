@@ -1827,9 +1827,15 @@ html {
   }
 
   .hero-nav {
-    position: absolute;
+    position: fixed;
     top: 24px;
     right: 20px;
+    z-index: 999;
+  }
+
+  /* Hide the duplicate section-nav inside the bottom sticky bar */
+  .sticky-rsvp-bar .section-nav {
+    display: none;
   }
 
   .hero-left {
@@ -2116,6 +2122,7 @@ html {
   .section-nav-dropdown {
     min-width: 200px;
   }
+
 
   /* ── Chairs message standalone ── */
   .chairs-message-standalone {
