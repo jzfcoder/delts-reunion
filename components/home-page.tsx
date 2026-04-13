@@ -57,13 +57,18 @@ export function HomePage({
       const isScrolled = window.scrollY > 80;
       setScrolled((prev) => (prev === isScrolled ? prev : isScrolled));
 
-      // Parallax effect on hero elements
+      // Parallax effect on hero elements (desktop only — on mobile the
+      // hero-left panel is position:relative so the -50% offset would
+      // push content off-screen)
       if (!rafId) {
         rafId = requestAnimationFrame(() => {
           const y = window.scrollY;
+          const isMobile = window.innerWidth <= 768;
           if (heroLeftRef.current) {
             heroLeftRef.current.style.opacity = `${Math.max(0, 1 - y / 500)}`;
-            heroLeftRef.current.style.transform = `translateY(calc(-50% + ${y * 0.15}px))`;
+            heroLeftRef.current.style.transform = isMobile
+              ? `translateY(${y * 0.15}px)`
+              : `translateY(calc(-50% + ${y * 0.15}px))`;
           }
           if (globeParallaxRef.current) {
             globeParallaxRef.current.style.transform = `translateY(${y * 0.3}px)`;
