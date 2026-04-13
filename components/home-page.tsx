@@ -196,6 +196,7 @@ export function HomePage({
       </div>
 
       {/* Left info panel */}
+<<<<<<< feat/open-guest-list
       <div className="hero-left" ref={heroLeftRef}>
         <div className="hero-divider hero-stagger-1" />
         <p className="hero-label hero-stagger-1" style={{ opacity: 0.6, marginBottom: "4px" }}>5TH ANNIVERSARY — HOUSE RENOVATION</p>
@@ -209,6 +210,24 @@ export function HomePage({
         {!isLoggedIn ? (
           <div className="hero-rsvp-cta hero-stagger-4">
             <RsvpDeadlineText />
+=======
+      <div className="hero-left">
+        <div className="hero-divider" />
+        <p className="hero-label" style={{ opacity: 0.6, marginBottom: "4px" }}>5TH ANNIVERSARY — HOUSE RENOVATION</p>
+        <h2 className="hero-countdown-title">ALUMNI REUNION IN</h2>
+        <Countdown />
+
+        <div className="hero-divider" />
+        <p className="hero-date">MAY 1 – MAY 3, 2026</p>
+        <p className="hero-location">416 BEACON ST, BOSTON, MA</p>
+        <div className="hero-divider" />
+        {!isLoggedIn ? (
+          <div className="hero-rsvp-cta">
+            <p className="hero-rsvp-deadline">
+              <span className="rsvp-pulse-dot" />
+              RSVP DEADLINE — APRIL 20, 2026
+            </p>
+>>>>>>> main
             <div className="hero-rsvp-buttons">
               <button
                 onClick={() => setModal("signup")}
@@ -225,9 +244,15 @@ export function HomePage({
             </div>
           </div>
         ) : (
+<<<<<<< feat/open-guest-list
           <RsvpDeadlineText compact />
         )}
         <div className="hero-stagger-5"><AttendeeCounter count={alumniCount} /></div>
+=======
+          <p className="hero-label" style={{ fontSize: "0.75rem", opacity: 0.6 }}>RSVP DEADLINE — APRIL 20, 2026</p>
+        )}
+        <AttendeeCounter count={alumniCount} />
+>>>>>>> main
       </div>
 
       {/* Right guest list panel */}
