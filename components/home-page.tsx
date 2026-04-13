@@ -184,17 +184,35 @@ export function HomePage({
         <p className="hero-date">MAY 1 – MAY 3, 2026</p>
         <p className="hero-location">416 BEACON ST, BOSTON, MA</p>
         <div className="hero-divider" />
-        <p className="hero-label" style={{ fontSize: "0.75rem", opacity: 0.6 }}>RSVP DEADLINE — APRIL 20, 2026</p>
+        {!isLoggedIn ? (
+          <div className="hero-rsvp-cta">
+            <p className="hero-rsvp-deadline">
+              <span className="rsvp-pulse-dot" />
+              RSVP DEADLINE — APRIL 20, 2026
+            </p>
+            <div className="hero-rsvp-buttons">
+              <button
+                onClick={() => setModal("signup")}
+                className="hero-btn hero-btn-solid"
+              >
+                RSVP
+              </button>
+              <button
+                onClick={() => setModal("login")}
+                className="hero-btn hero-btn-ghost"
+              >
+                LOG IN
+              </button>
+            </div>
+          </div>
+        ) : (
+          <p className="hero-label" style={{ fontSize: "0.75rem", opacity: 0.6 }}>RSVP DEADLINE — APRIL 20, 2026</p>
+        )}
         <AttendeeCounter count={alumniCount} />
       </div>
 
       {/* Right guest list panel */}
-      <GuestListPreview
-        guests={guests}
-        isLoggedIn={isLoggedIn}
-        onLogin={() => setModal("login")}
-        onSignup={() => setModal("signup")}
-      />
+      <GuestListPreview guests={guests} />
 
       {/* Bottom-left horizontal info */}
       <div className="hero-bottom-left">

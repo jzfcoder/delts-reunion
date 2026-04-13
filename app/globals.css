@@ -326,13 +326,6 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-.hero-guest-blurred {
-  filter: blur(2.5px);
-  /* ← adjust blur amount here */
-  opacity: 0.7;
-  pointer-events: none;
-  user-select: none;
-}
 
 .hero-guest-row {
   display: flex;
@@ -393,48 +386,6 @@
   text-transform: uppercase;
 }
 
-/* Skeleton bars for blurred state */
-.hero-skeleton-bar {
-  height: 10px;
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.hero-skeleton-bar-sm {
-  height: 7px;
-  margin-top: 6px;
-  background: rgba(255, 255, 255, 0.15);
-}
-
-/* Blur overlay with CTA */
-.hero-guest-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  z-index: 5;
-}
-
-.hero-guest-overlay-text {
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.15);
-}
-
-.hero-guest-overlay-deadline {
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  opacity: 0.5;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
 
 /* ─── RSVP Pulsing Dot ─── */
 .rsvp-pulse-dot {
@@ -452,14 +403,28 @@
   50% { opacity: 0.4; transform: scale(0.7); }
 }
 
-.hero-guest-overlay-buttons {
+/* ─── RSVP CTA block (left panel, logged-out only) ─── */
+.hero-rsvp-cta {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 4px;
 }
 
-.hero-guest-overlay-btn {
-  padding: 10px 24px;
-  font-size: 0.75rem;
+.hero-rsvp-deadline {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0.95;
+}
+
+.hero-rsvp-buttons {
+  display: flex;
+  gap: 12px;
 }
 
 /* ─── Bottom-left info ─── */
@@ -1423,6 +1388,16 @@
 
   .hero-guest-header {
     text-align: left;
+  }
+
+  .hero-rsvp-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero-rsvp-buttons .hero-btn {
+    width: 100%;
+    text-align: center;
   }
 
   .hero-bottom-left {
