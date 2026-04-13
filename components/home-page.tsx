@@ -401,11 +401,11 @@ export function HomePage({
         <div className="cost-breakdown">
           <div className="cost-breakdown-row">
             <span className="cost-breakdown-label">Vans (transportation)</span>
-            <span className="cost-breakdown-value">$20</span>
+            <span className="cost-breakdown-value">$25</span>
           </div>
           <div className="cost-breakdown-row">
             <span className="cost-breakdown-label">Lobster rolls &amp; food (Lobster Trip)</span>
-            <span className="cost-breakdown-value">$40</span>
+            <span className="cost-breakdown-value">$50</span>
           </div>
           <div className="cost-breakdown-row">
             <span className="cost-breakdown-label">Private room at Carrie Nation (incl. gratuity)</span>
@@ -413,16 +413,24 @@ export function HomePage({
           </div>
           <div className="cost-breakdown-row">
             <span className="cost-breakdown-label">Dinner at Fogo de Chão</span>
-            <span className="cost-breakdown-value">$110</span>
+            <span className="cost-breakdown-value">$100</span>
           </div>
           <div className="cost-breakdown-row">
             <span className="cost-breakdown-label">Rooftop breakfast send-off</span>
             <span className="cost-breakdown-value">$15</span>
           </div>
+          <div className="cost-breakdown-row">
+            <span className="cost-breakdown-label">Brohood</span>
+            <span className="cost-breakdown-value">$15</span>
+          </div>
+          <div className="cost-breakdown-row">
+            <span className="cost-breakdown-label">Miscellaneous</span>
+            <span className="cost-breakdown-value">$25</span>
+          </div>
           <div className="cost-breakdown-divider" />
           <div className="cost-breakdown-row cost-breakdown-row--total">
             <span className="cost-breakdown-label">Total per person</span>
-            <span className="cost-breakdown-value">$200</span>
+            <span className="cost-breakdown-value">$245</span>
           </div>
         </div>
         <div className="donations-grid">
@@ -487,6 +495,29 @@ export function HomePage({
             phoneHref="+14086485530"
             photo="/jeremy.jpg"
           />
+        </div>
+
+        <div className="chairs-message">
+          <h3 className="chairs-message-title">A Message from the Alumni Chairs</h3>
+          <div className="chair-divider" />
+          <p className="chairs-message-text">
+            Brothers,
+          </p>
+          <p className="chairs-message-text">
+            We want to take a moment to share something important with all of you. The current undergraduate chapter has voted not to hold an alumni reunion next year. We know that might come as a surprise, but we genuinely believe this is the right call — and here&apos;s why.
+          </p>
+          <p className="chairs-message-text">
+            Our goal has always been to make these reunions truly special. By holding them less frequently, we can build greater momentum between events, encourage broader attendance across alumni classes, and secure the funding needed to make each reunion larger, more memorable, and worthy of the time and travel it takes to bring everyone back together. Rather than stretching resources thin year after year, we want every reunion to feel like an event you can&apos;t afford to miss.
+          </p>
+          <p className="chairs-message-text">
+            That makes this year&apos;s 5th Anniversary Reunion all the more important. This is the one. We&apos;ve put months of work into planning a weekend that lives up to the history of this house and the bonds we&apos;ve built here — and we hope to see as many of you as possible at 416 Beacon this May.
+          </p>
+          <p className="chairs-message-text">
+            If you have any questions about this decision or thoughts on the future of alumni events, we&apos;re always happy to talk. Reach out anytime.
+          </p>
+          <p className="chairs-message-text" style={{ marginTop: "16px" }}>
+            — Nathan &amp; Jeremy
+          </p>
         </div>
       </div>
     </section>

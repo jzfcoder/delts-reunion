@@ -1138,6 +1138,32 @@
   gap: 24px;
 }
 
+.chairs-message {
+  margin-top: 56px;
+  padding: 40px 48px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  max-width: 720px;
+}
+
+.chairs-message-title {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.chairs-message-text {
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  line-height: 1.9;
+  opacity: 0.55;
+  font-weight: 400;
+  margin-top: 16px;
+}
+
 .chair-card {
   display: flex;
   flex-direction: row;
@@ -1482,6 +1508,11 @@
   }
 
   .chairs-blurb {
+    max-width: 100%;
+  }
+
+  .chairs-message {
+    padding: 28px 24px;
     max-width: 100%;
   }
 
