@@ -458,6 +458,19 @@ html {
   z-index: 1;
 }
 
+/* Hero-to-content gradient bridge */
+.hero-container::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, #16181f);
+  pointer-events: none;
+  z-index: 1;
+}
+
 /* Ensure content is above noise */
 .hero-logo,
 .hero-left,
@@ -727,7 +740,7 @@ html {
 
 /* ─── Itinerary Section ─── */
 .itinerary-section {
-  background: #1c1f27;
+  background: #16181f;
   color: #fff;
   font-family: var(--font-sans), system-ui, sans-serif;
   position: relative;
@@ -874,7 +887,6 @@ html {
   background: #16181f;
   color: #fff;
   font-family: var(--font-sans), system-ui, sans-serif;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .donations-grid {
@@ -1114,10 +1126,9 @@ html {
 
 /* ─── Alumni Chairs Section ─── */
 .chairs-section {
-  background: #1c1f27;
+  background: #16181f;
   color: #fff;
   font-family: var(--font-sans), system-ui, sans-serif;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .chairs-inner {
@@ -1259,24 +1270,169 @@ html {
   background: #16181f;
   color: #fff;
   font-family: var(--font-sans), system-ui, sans-serif;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .media-coming-soon {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 48px 40px;
+  align-items: center;
+  gap: 20px;
+  padding: 64px 40px;
   border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.02);
+  text-align: center;
+}
+
+.media-coming-soon-icon {
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: rgba(255, 255, 255, 0.03);
 }
 
 .media-coming-soon-title {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  font-weight: 600;
-  opacity: 0.35;
+  font-weight: 500;
+  opacity: 0.5;
+}
+
+.media-coming-soon-subtitle {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  opacity: 0.3;
+  line-height: 1.7;
+  max-width: 400px;
+}
+
+/* ─── Section Navigation Dropdown ─── */
+.section-nav {
+  position: relative;
+  z-index: 50;
+}
+
+.section-nav-toggle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.section-nav-toggle:hover {
+  border-color: rgba(0, 0, 0, 0.45);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.section-nav-toggle svg {
+  width: 18px;
+  height: 18px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.section-nav-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 220px;
+  background: #2a2d35;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  animation: modal-fade-in 0.15s ease;
+}
+
+.section-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+  text-align: left;
+  width: 100%;
+}
+
+.section-nav-link:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.section-nav-link-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+}
+
+/* Dark variant for below-hero (when scrolled) */
+.section-nav--dark .section-nav-toggle {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.section-nav--dark .section-nav-toggle:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.section-nav--dark .section-nav-toggle svg {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ─── Chairs Message standalone section ─── */
+.chairs-message-section {
+  background: #16181f;
+  color: #fff;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+.chairs-message-standalone {
+  margin-top: 56px;
+  padding: 40px 48px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  max-width: 720px;
+}
+
+/* ─── Typewriter reveal ─── */
+.tw-cursor-line {
+  width: 40px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  margin-top: 20px;
+  animation: tw-pulse 2s ease-in-out infinite;
+}
+
+@keyframes tw-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+/* ─── Payment Section ─── */
+.payment-section {
+  background: #16181f;
+  color: #fff;
+  font-family: var(--font-sans), system-ui, sans-serif;
 }
 
 /* ─── Hero staggered entrance ─── */
@@ -1310,35 +1466,26 @@ html {
   100% { background-position: -200% 0; }
 }
 
-/* ─── Section gradient dividers ─── */
-.itinerary-section::before,
-.donations-section::before,
-.chairs-section::before,
-.media-section::before {
+/* ─── Section dividers ─── */
+.section-divider {
+  width: 100%;
+  padding: 28px 0;
+}
+
+.section-divider::after {
   content: "";
-  position: absolute;
-  top: -60px;
-  left: 0;
-  right: 0;
-  height: 60px;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.itinerary-section::before {
-  background: linear-gradient(to bottom, transparent, #1c1f27);
-}
-
-.donations-section::before {
-  background: linear-gradient(to bottom, transparent, #16181f);
-}
-
-.chairs-section::before {
-  background: linear-gradient(to bottom, transparent, #1c1f27);
-}
-
-.media-section::before {
-  background: linear-gradient(to bottom, transparent, #16181f);
+  display: block;
+  height: 1px;
+  max-width: 720px;
+  margin: 0 auto;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.45) 15%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0.45) 85%,
+    transparent
+  );
 }
 
 /* ─── Attendee counter glow ─── */
@@ -1378,7 +1525,7 @@ html {
   align-items: center;
   justify-content: space-between;
   padding: 14px 48px;
-  background: rgba(28, 31, 39, 0.92);
+  background: rgba(22, 24, 31, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
@@ -1418,11 +1565,30 @@ html {
   padding: 8px 20px;
 }
 
+.sticky-rsvp-bar .section-nav-toggle {
+  width: 36px;
+  height: 36px;
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sticky-rsvp-bar .section-nav-toggle:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sticky-rsvp-bar .section-nav-toggle svg {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.sticky-rsvp-bar .section-nav-dropdown {
+  top: calc(100% + 14px);
+}
+
 /* ─── Social proof ticker ─── */
 .rsvp-ticker-wrapper {
   overflow: hidden;
-  background: #1c1f27;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: #16181f;
   padding: 14px 0;
   position: relative;
 }
@@ -1440,12 +1606,12 @@ html {
 
 .rsvp-ticker-wrapper::before {
   left: 0;
-  background: linear-gradient(to right, #1c1f27, transparent);
+  background: linear-gradient(to right, #16181f, transparent);
 }
 
 .rsvp-ticker-wrapper::after {
   right: 0;
-  background: linear-gradient(to left, #1c1f27, transparent);
+  background: linear-gradient(to left, #16181f, transparent);
 }
 
 .rsvp-ticker {
@@ -1544,7 +1710,6 @@ html {
   color: #fff;
   padding: 48px 48px 56px;
   font-family: var(--font-sans), system-ui, sans-serif;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .site-footer-inner {
@@ -1843,10 +2008,7 @@ html {
   }
 
   .itinerary-section,
-  .chairs-section {
-    background-color: #1c1f27;
-  }
-
+  .chairs-section,
   .donations-section,
   .media-section {
     background-color: #16181f;
@@ -1947,5 +2109,26 @@ html {
   /* ── Ticker mobile ── */
   .rsvp-ticker-wrapper {
     padding: 10px 0;
+  }
+
+
+  /* ── Section nav ── */
+  .section-nav-dropdown {
+    min-width: 200px;
+  }
+
+  /* ── Chairs message standalone ── */
+  .chairs-message-standalone {
+    padding: 28px 24px;
+    max-width: 100%;
+  }
+
+  /* ── Payment/chairs message sections ── */
+  .chairs-message-section,
+  .payment-section {
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
+    background-color: #16181f;
   }
 }

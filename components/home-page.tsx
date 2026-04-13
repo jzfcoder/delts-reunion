@@ -43,9 +43,11 @@ export function HomePage({
     showWelcome ? "welcome" : null
   );
   const [avatarOpen, setAvatarOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
   const heroLeftRef = useRef<HTMLDivElement>(null);
   const globeParallaxRef = useRef<HTMLDivElement>(null);
 
@@ -86,13 +88,19 @@ export function HomePage({
       ) {
         setAvatarOpen(false);
       }
+      if (
+        navRef.current &&
+        !navRef.current.contains(e.target as Node)
+      ) {
+        setNavOpen(false);
+      }
     }
-    if (avatarOpen) {
+    if (avatarOpen || navOpen) {
       document.addEventListener("mousedown", handleClickOutside);
       return () =>
         document.removeEventListener("mousedown", handleClickOutside);
     }
-  }, [avatarOpen]);
+  }, [avatarOpen, navOpen]);
 
   const referralUrl =
     referralCode && typeof window !== "undefined"
@@ -119,84 +127,125 @@ export function HomePage({
       {/* Top-left greek logo */}
       <div className="hero-logo">ΔΤΔ</div>
 
-      {/* Top-right avatar menu */}
-      <div className="hero-nav" ref={dropdownRef}>
-        <button
-          onClick={() => setAvatarOpen((v) => !v)}
-          className="hero-avatar-btn"
-          aria-label="Account menu"
-        >
-          {isLoggedIn && profilePicUrl ? (
-            <img
-              src={profilePicUrl}
-              alt={userName ?? ""}
-              className="hero-avatar-img"
-              width={36}
-              height={36}
-              decoding="async"
-            />
-          ) : (
-            <svg
-              className="hero-avatar-default"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
+      {/* Top-right nav area */}
+      <div className="hero-nav" style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+        {/* Section navigation */}
+        <div className={`section-nav${scrolled ? " section-nav--dark" : ""}`} ref={navRef}>
+          <button
+            onClick={() => { setNavOpen((v) => !v); setAvatarOpen(false); }}
+            className="section-nav-toggle"
+            aria-label="Navigate sections"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+              <line x1="4" y1="7" x2="20" y2="7" />
+              <line x1="4" y1="12" x2="20" y2="12" />
+              <line x1="4" y1="17" x2="20" y2="17" />
             </svg>
+          </button>
+          {navOpen && (
+            <div className="section-nav-dropdown">
+              {[
+                { label: "The Weekend", id: "itinerary" },
+                { label: "From the Chairs", id: "chairs-message" },
+                { label: "Tickets", id: "tickets" },
+                { label: "Payment", id: "payment" },
+                { label: "Contact", id: "contact" },
+                { label: "Memories", id: "memories" },
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  className="section-nav-link"
+                  onClick={() => {
+                    setNavOpen(false);
+                    document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >
+                  <span className="section-nav-link-dot" />
+                  {item.label}
+                </button>
+              ))}
+            </div>
           )}
-        </button>
+        </div>
 
-        {avatarOpen && (
-          <div className="hero-avatar-dropdown">
-            {isLoggedIn ? (
-              <>
-                <p className="hero-avatar-dropdown-greeting">
-                  Welcome, {userName}
-                </p>
-                <div className="hero-avatar-dropdown-divider" />
-                <p className="hero-avatar-dropdown-label">REFERRAL LINK</p>
-                <button
-                  onClick={copyReferral}
-                  className="hero-avatar-dropdown-copy"
-                >
-                  {copied ? "Copied!" : "Copy invite link"}
-                </button>
-                <div className="hero-avatar-dropdown-divider" />
-                <button
-                  onClick={() => logout()}
-                  className="hero-avatar-dropdown-copy"
-                >
-                  Log out
-                </button>
-              </>
+        {/* Avatar menu */}
+        <div ref={dropdownRef}>
+          <button
+            onClick={() => { setAvatarOpen((v) => !v); setNavOpen(false); }}
+            className="hero-avatar-btn"
+            aria-label="Account menu"
+          >
+            {isLoggedIn && profilePicUrl ? (
+              <img
+                src={profilePicUrl}
+                alt={userName ?? ""}
+                className="hero-avatar-img"
+                width={36}
+                height={36}
+                decoding="async"
+              />
             ) : (
-              <>
-                <button
-                  onClick={() => {
-                    setAvatarOpen(false);
-                    setModal("signup");
-                  }}
-                  className="hero-btn hero-btn-solid hero-avatar-dropdown-btn"
-                >
-                  RSVP
-                </button>
-                <button
-                  onClick={() => {
-                    setAvatarOpen(false);
-                    setModal("login");
-                  }}
-                  className="hero-btn hero-btn-ghost hero-avatar-dropdown-btn"
-                >
-                  LOG IN
-                </button>
-              </>
+              <svg
+                className="hero-avatar-default"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
+              </svg>
             )}
-          </div>
-        )}
+          </button>
+
+          {avatarOpen && (
+            <div className="hero-avatar-dropdown">
+              {isLoggedIn ? (
+                <>
+                  <p className="hero-avatar-dropdown-greeting">
+                    Welcome, {userName}
+                  </p>
+                  <div className="hero-avatar-dropdown-divider" />
+                  <p className="hero-avatar-dropdown-label">REFERRAL LINK</p>
+                  <button
+                    onClick={copyReferral}
+                    className="hero-avatar-dropdown-copy"
+                  >
+                    {copied ? "Copied!" : "Copy invite link"}
+                  </button>
+                  <div className="hero-avatar-dropdown-divider" />
+                  <button
+                    onClick={() => logout()}
+                    className="hero-avatar-dropdown-copy"
+                  >
+                    Log out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => {
+                      setAvatarOpen(false);
+                      setModal("signup");
+                    }}
+                    className="hero-btn hero-btn-solid hero-avatar-dropdown-btn"
+                  >
+                    RSVP
+                  </button>
+                  <button
+                    onClick={() => {
+                      setAvatarOpen(false);
+                      setModal("login");
+                    }}
+                    className="hero-btn hero-btn-ghost hero-avatar-dropdown-btn"
+                  >
+                    LOG IN
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Left info panel */}
-<<<<<<< feat/open-guest-list
       <div className="hero-left" ref={heroLeftRef}>
         <div className="hero-divider hero-stagger-1" />
         <p className="hero-label hero-stagger-1" style={{ opacity: 0.6, marginBottom: "4px" }}>5TH ANNIVERSARY — HOUSE RENOVATION</p>
@@ -210,24 +259,6 @@ export function HomePage({
         {!isLoggedIn ? (
           <div className="hero-rsvp-cta hero-stagger-4">
             <RsvpDeadlineText />
-=======
-      <div className="hero-left">
-        <div className="hero-divider" />
-        <p className="hero-label" style={{ opacity: 0.6, marginBottom: "4px" }}>5TH ANNIVERSARY — HOUSE RENOVATION</p>
-        <h2 className="hero-countdown-title">ALUMNI REUNION IN</h2>
-        <Countdown />
-
-        <div className="hero-divider" />
-        <p className="hero-date">MAY 1 – MAY 3, 2026</p>
-        <p className="hero-location">416 BEACON ST, BOSTON, MA</p>
-        <div className="hero-divider" />
-        {!isLoggedIn ? (
-          <div className="hero-rsvp-cta">
-            <p className="hero-rsvp-deadline">
-              <span className="rsvp-pulse-dot" />
-              RSVP DEADLINE — APRIL 20, 2026
-            </p>
->>>>>>> main
             <div className="hero-rsvp-buttons">
               <button
                 onClick={() => setModal("signup")}
@@ -244,15 +275,9 @@ export function HomePage({
             </div>
           </div>
         ) : (
-<<<<<<< feat/open-guest-list
           <RsvpDeadlineText compact />
         )}
         <div className="hero-stagger-5"><AttendeeCounter count={alumniCount} /></div>
-=======
-          <p className="hero-label" style={{ fontSize: "0.75rem", opacity: 0.6 }}>RSVP DEADLINE — APRIL 20, 2026</p>
-        )}
-        <AttendeeCounter count={alumniCount} />
->>>>>>> main
       </div>
 
       {/* Right guest list panel */}
@@ -344,23 +369,63 @@ export function HomePage({
         onClick={() => document.getElementById("itinerary")?.scrollIntoView({ behavior: "smooth" })}
         style={{ pointerEvents: scrolled ? "none" : "auto", cursor: "pointer" }}
       >
-        <span className="hero-scroll-hint-text">The Weekend Awaits</span>
+        <span className="hero-scroll-hint-text">Explore the Weekend</span>
         <svg width="12" height="8" viewBox="0 0 12 8" fill="none" className="hero-scroll-hint-arrow">
           <path d="M1 1L6 6.5L11 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       </div>
     </div>
 
-    {/* ── Sticky RSVP bar ── */}
-    {!isLoggedIn && (
-      <div className={`sticky-rsvp-bar${scrolled ? " sticky-rsvp-bar--visible" : ""}`}>
-        <span className="sticky-rsvp-bar-logo">ΔΤΔ</span>
-        <div className="sticky-rsvp-bar-right">
-          <span className="sticky-rsvp-bar-deadline"><RsvpDeadlineText compact /></span>
-          <button onClick={() => setModal("signup")} className="hero-btn hero-btn-solid">RSVP</button>
+    {/* ── Sticky bar (RSVP for logged-out, nav for everyone) ── */}
+    <div className={`sticky-rsvp-bar${scrolled ? " sticky-rsvp-bar--visible" : ""}`}>
+      <span className="sticky-rsvp-bar-logo">ΔΤΔ</span>
+      <div className="sticky-rsvp-bar-right">
+        {!isLoggedIn && (
+          <>
+            <span className="sticky-rsvp-bar-deadline"><RsvpDeadlineText compact /></span>
+            <button onClick={() => setModal("signup")} className="hero-btn hero-btn-solid">RSVP</button>
+          </>
+        )}
+        <div className="section-nav section-nav--dark" ref={scrolled ? navRef : undefined}>
+          <button
+            onClick={() => { setNavOpen((v) => !v); setAvatarOpen(false); }}
+            className="section-nav-toggle"
+            aria-label="Navigate sections"
+            style={{ width: "36px", height: "36px" }}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+              <line x1="4" y1="7" x2="20" y2="7" />
+              <line x1="4" y1="12" x2="20" y2="12" />
+              <line x1="4" y1="17" x2="20" y2="17" />
+            </svg>
+          </button>
+          {navOpen && scrolled && (
+            <div className="section-nav-dropdown">
+              {[
+                { label: "The Weekend", id: "itinerary" },
+                { label: "From the Chairs", id: "chairs-message" },
+                { label: "Tickets", id: "tickets" },
+                { label: "Payment", id: "payment" },
+                { label: "Contact", id: "contact" },
+                { label: "Memories", id: "memories" },
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  className="section-nav-link"
+                  onClick={() => {
+                    setNavOpen(false);
+                    document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >
+                  <span className="section-nav-link-dot" />
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
-    )}
+    </div>
 
     {/* ── Social proof ticker ── */}
     <RSVPTicker guests={guests} />
@@ -376,101 +441,103 @@ export function HomePage({
           </div>
         </FadeIn>
 
-        <FadeIn delay={50}>
-          <blockquote className="pull-quote">
-            <p className="pull-quote-text">&ldquo;This is the one.&rdquo;</p>
-          </blockquote>
-        </FadeIn>
-
         <div className="itinerary-days">
           {/* Friday */}
-          <FadeIn delay={100}>
-            <div className="itinerary-day">
-              <p className="itinerary-day-label">Friday — May 1</p>
-              <FadeIn delay={150}>
-                <ItineraryEvent time="8:00 PM" title="Opening Night Drinks" detail="We're kicking off the weekend with our own private room at Carrie Nation — the whole crew, cold drinks, and the first round of catching up." featured />
-              </FadeIn>
-            </div>
-          </FadeIn>
+          <div className="itinerary-day">
+            <p className="itinerary-day-label">Friday — May 1</p>
+            <FadeIn delay={100}>
+              <ItineraryEvent time="8:00 PM" title="Opening Night Drinks" detail="We're kicking off the weekend with our own private room at Carrie Nation — the whole crew, cold drinks, and the first round of catching up." featured />
+            </FadeIn>
+          </div>
 
           {/* Saturday */}
-          <FadeIn delay={200}>
-            <div className="itinerary-day">
-              <p className="itinerary-day-label">Saturday — May 2</p>
-              <FadeIn delay={250}>
-                <ItineraryEvent time="10:00 AM" title="Return of the Lobster Trip" detail="This year's trip will be slightly modified — vans leave at 10 and we'll be heading to a beach about an hour away for lobster rolls, football, spike ball, and cornhole. This is the one." featured badge="SIGNATURE EVENT" />
-              </FadeIn>
-              <FadeIn delay={350}>
-                <ItineraryEvent time="6:00 PM" title="Dinner at Fogo de Chão" detail="Private rooms reserved for the full Churrasco experience — unlimited cuts, exceptional company, and an evening to remember." featured badge="SIGNATURE EVENT" />
-              </FadeIn>
-              <FadeIn delay={450}>
-                <ItineraryEvent time="9:00 PM" title="Back to the House ... Brohood" detail="Head back to 416 for a night the way you remember it — drinks flowing, old games revived, and traditions brought back to life. This is your chance to relive the best nights at the house with brothers past and present." featured badge="SIGNATURE EVENT" />
-              </FadeIn>
-            </div>
-          </FadeIn>
+          <div className="itinerary-day">
+            <p className="itinerary-day-label">Saturday — May 2</p>
+            <FadeIn delay={150}>
+              <ItineraryEvent time="10:00 AM" title="Return of the Lobster Trip" detail="This year's trip will be slightly modified — vans leave at 10 and we'll be heading to a beach about an hour away for lobster rolls, football, spike ball, and cornhole. This is the one." featured badge="SIGNATURE EVENT" />
+            </FadeIn>
+            <FadeIn delay={200}>
+              <ItineraryEvent time="6:00 PM" title="Dinner at Fogo de Chão" detail="Private rooms reserved for the full Churrasco experience — unlimited cuts, exceptional company, and an evening to remember." featured badge="SIGNATURE EVENT" />
+            </FadeIn>
+            <FadeIn delay={250}>
+              <ItineraryEvent time="9:00 PM" title="Back to the House ... Brohood" detail="Head back to 416 for a night the way you remember it — drinks flowing, old games revived, and traditions brought back to life. This is your chance to relive the best nights at the house with brothers past and present." featured badge="SIGNATURE EVENT" />
+            </FadeIn>
+          </div>
 
           {/* Sunday */}
-          <FadeIn delay={300}>
-            <div className="itinerary-day">
-              <p className="itinerary-day-label">Sunday — May 3</p>
-              <FadeIn delay={350}>
-                <ItineraryEvent time="10:00 AM" title="Rooftop Send-Off" detail="Close out the weekend over breakfast with sweeping views of the Boston skyline and the Charles River. A proper goodbye." featured />
-              </FadeIn>
-              <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.45)", marginTop: "8px", lineHeight: 1.5 }}>
-                Join us for one last morning together before heading out. If your class wants to plan something of your own afterward, this is the day to do it!
-              </p>
-            </div>
-          </FadeIn>
+          <div className="itinerary-day">
+            <p className="itinerary-day-label">Sunday — May 3</p>
+            <FadeIn delay={300}>
+              <ItineraryEvent time="10:00 AM" title="Rooftop Send-Off" detail="Close out the weekend over breakfast with sweeping views of the Boston skyline and the Charles River. A proper goodbye." featured />
+            </FadeIn>
+            <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.45)", marginTop: "8px", lineHeight: 1.5 }}>
+              Join us for one last morning together before heading out. If your class wants to plan something of your own afterward, this is the day to do it!
+            </p>
+          </div>
         </div>
 
       </div>
     </section>
-    {/* ── Donations Section ── */}
-    <section className="donations-section">
+
+    {/* ── Section divider ── */}
+    <div className="section-divider" />
+
+    {/* ── Pull Quote + Chairs Message Section ── */}
+    <section id="chairs-message" className="chairs-message-section">
       <div className="chairs-inner">
-        <p className="itinerary-eyebrow">Weekend Ticket</p>
-        <h2 className="itinerary-headline">Tickets</h2>
-        <div className="hero-divider" style={{ marginTop: "20px" }} />
+        <FadeIn>
+          <p className="itinerary-eyebrow">&ldquo;This is the one.&rdquo;</p>
+          <h2 className="itinerary-headline">From the Chairs</h2>
+          <div className="hero-divider" style={{ marginTop: "20px" }} />
+        </FadeIn>
+
+        <TypewriterMessage paragraphs={[
+          { text: "Brothers," },
+          { text: "We want to take a moment to share something important with all of you. The current undergraduate chapter has voted not to hold an alumni reunion next year. We know that might come as a surprise, but we genuinely believe this is the right call \u2014 and here\u2019s why." },
+          { text: "Our goal has always been to make these reunions truly special. By holding them less frequently, we can build greater momentum between events, encourage broader attendance across alumni classes, and secure the funding needed to make each reunion larger, more memorable, and worthy of the time and travel it takes to bring everyone back together. Rather than stretching resources thin year after year, we want every reunion to feel like an event you can\u2019t afford to miss." },
+          { text: "That makes this year\u2019s 5th Anniversary Reunion all the more important. This is the one. We\u2019ve put months of work into planning a weekend that lives up to the history of this house and the bonds we\u2019ve built here \u2014 and we hope to see as many of you as possible at 416 Beacon this May." },
+          { text: "If you have any questions about this decision or thoughts on the future of alumni events, we\u2019re always happy to talk. Reach out anytime." },
+          { text: "\u2014 Nathan & Jeremy", style: { marginTop: "16px" } },
+        ]} />
+      </div>
+    </section>
+
+    {/* ── Section divider ── */}
+    <div className="section-divider" />
+
+    {/* ── Tickets Section ── */}
+    <section id="tickets" className="donations-section">
+      <div className="chairs-inner">
+        <FadeIn>
+          <p className="itinerary-eyebrow">Weekend Ticket</p>
+          <h2 className="itinerary-headline">Tickets</h2>
+          <div className="hero-divider" style={{ marginTop: "20px" }} />
+        </FadeIn>
         <p className="chairs-blurb">
           A ticket is required to attend the reunion. Ticket prices are tiered by graduation year — recent graduates are more price-sensitive, and we recognize that. Our goal is to preserve buy-in across the board without letting price suppress turnout among alumni who are earlier in their careers.
         </p>
-        <div className="donations-grid" style={{ marginBottom: "24px" }}>
-          <div className="donation-card">
-            <p className="donation-method">Graduated 2021–2025</p>
-            <div className="chair-divider" />
-            <p className="donation-value">$100</p>
+        <FadeIn>
+          <div className="donations-grid" style={{ marginBottom: "24px" }}>
+            <div className="donation-card">
+              <p className="donation-method">Graduated 2021–2025</p>
+              <div className="chair-divider" />
+              <p className="donation-value">$100</p>
+            </div>
+            <div className="donation-card">
+              <p className="donation-method">Graduated 2011–2020</p>
+              <div className="chair-divider" />
+              <p className="donation-value">$150</p>
+            </div>
+            <div className="donation-card">
+              <p className="donation-method">Graduated before 2011</p>
+              <div className="chair-divider" />
+              <p className="donation-value">$200</p>
+            </div>
           </div>
-          <div className="donation-card">
-            <p className="donation-method">Graduated 2011–2020</p>
-            <div className="chair-divider" />
-            <p className="donation-value">$150</p>
-          </div>
-          <div className="donation-card">
-            <p className="donation-method">Graduated before 2011</p>
-            <div className="chair-divider" />
-            <p className="donation-value">$200</p>
-          </div>
-        </div>
+        </FadeIn>
         <p className="chairs-blurb">
           Our current undergrads are chipping in too — each brother in the house is contributing $65 toward the weekend. We want to be fully transparent about where every dollar goes, so you can see exactly what your ticket covers. Any remaining difference is being graciously covered by House Corps — a generous gesture made in honor of this being our 5th anniversary celebration.
         </p>
-        {paid !== null ? (
-          <div className={`payment-status${paid ? " payment-status--paid" : " payment-status--unpaid"}`}>
-            <span className="payment-status-dot" />
-            <div className="payment-status-text">
-              <span className="payment-status-label">{paid ? "Payment Received" : "Payment Pending"}</span>
-              <span className="payment-status-sub">{paid ? "Your ticket is confirmed — see you in May." : "We manually verify payments, so this may take a little time to update. If you\u2019ve already sent it, you\u2019re all set."}</span>
-            </div>
-          </div>
-        ) : (
-          <div className="payment-status payment-status--logged-out" onClick={() => setModal("login")} style={{ cursor: "pointer" }}>
-            <span className="payment-status-dot" />
-            <div className="payment-status-text">
-              <span className="payment-status-label">Payment Status</span>
-              <span className="payment-status-sub">Log in to view your payment status.</span>
-            </div>
-          </div>
-        )}
         <p className="chairs-blurb">Here&apos;s the estimated per-person cost breakdown:</p>
         <div className="cost-breakdown">
           <div className="cost-breakdown-row">
@@ -507,29 +574,62 @@ export function HomePage({
             <span className="cost-breakdown-value">$245</span>
           </div>
         </div>
-        <div className="donations-grid">
-          <div className="donation-card">
-            <p className="donation-method">Zelle</p>
-            <div className="chair-divider" />
-            <p className="donation-detail">Send to</p>
-            <p className="donation-value">dtd-treasurer@mit.edu</p>
-            <p className="donation-note">In the message, include: Alumni Reunion - [First Name] [Last Name]</p>
+      </div>
+    </section>
+
+    {/* ── Section divider ── */}
+    <div className="section-divider" />
+
+    {/* ── Payment Section ── */}
+    <section id="payment" className="payment-section">
+      <div className="chairs-inner">
+        <FadeIn>
+          <p className="itinerary-eyebrow">Confirm Your Ticket</p>
+          <h2 className="itinerary-headline">Payment</h2>
+          <div className="hero-divider" style={{ marginTop: "20px" }} />
+        </FadeIn>
+        {paid !== null ? (
+          <div className={`payment-status${paid ? " payment-status--paid" : " payment-status--unpaid"}`} style={{ marginTop: "28px" }}>
+            <span className="payment-status-dot" />
+            <div className="payment-status-text">
+              <span className="payment-status-label">{paid ? "Payment Received" : "Payment Pending"}</span>
+              <span className="payment-status-sub">{paid ? "Your ticket is confirmed — see you in May." : "We manually verify payments, so this may take a little time to update. If you\u2019ve already sent it, you\u2019re all set."}</span>
+            </div>
           </div>
-          <div className="donation-card">
-            <p className="donation-method">Venmo</p>
-            <div className="chair-divider" />
-            <p className="donation-detail">Send to</p>
-            <p className="donation-value">@nathankim626</p>
-            <p className="donation-note">In the message, include: Alumni Reunion - [First Name] [Last Name]</p>
-            <p className="donation-note">The Delta Tau Delta Venmo is currently unavailable — please use this account in the meantime.</p>
+        ) : (
+          <div className="payment-status payment-status--logged-out" onClick={() => setModal("login")} style={{ cursor: "pointer", marginTop: "28px" }}>
+            <span className="payment-status-dot" />
+            <div className="payment-status-text">
+              <span className="payment-status-label">Payment Status</span>
+              <span className="payment-status-sub">Log in to view your payment status.</span>
+            </div>
           </div>
-          <div className="donation-card">
-            <p className="donation-method">Check</p>
-            <div className="chair-divider" />
-            <p className="donation-detail">Make payable to</p>
-            <p className="donation-value">Delta Tau Delta Fraternity</p>
+        )}
+        <FadeIn>
+          <div className="donations-grid" style={{ marginTop: "32px" }}>
+            <div className="donation-card">
+              <p className="donation-method">Zelle</p>
+              <div className="chair-divider" />
+              <p className="donation-detail">Send to</p>
+              <p className="donation-value">dtd-treasurer@mit.edu</p>
+              <p className="donation-note">In the message, include: Alumni Reunion - [First Name] [Last Name]</p>
+            </div>
+            <div className="donation-card">
+              <p className="donation-method">Venmo</p>
+              <div className="chair-divider" />
+              <p className="donation-detail">Send to</p>
+              <p className="donation-value">@nathankim626</p>
+              <p className="donation-note">In the message, include: Alumni Reunion - [First Name] [Last Name]</p>
+              <p className="donation-note">The Delta Tau Delta Venmo is currently unavailable — please use this account in the meantime.</p>
+            </div>
+            <div className="donation-card">
+              <p className="donation-method">Check</p>
+              <div className="chair-divider" />
+              <p className="donation-detail">Make payable to</p>
+              <p className="donation-value">Delta Tau Delta Fraternity</p>
+            </div>
           </div>
-        </div>
+        </FadeIn>
         <p className="donation-alt-note">
           Prefer a different payment method? Feel free to reach out to one of the alumni chairs and we&apos;ll make it work.
         </p>
@@ -543,75 +643,76 @@ export function HomePage({
       </div>
     </section>
 
-    {/* ── Alumni Chairs Section ── */}
-    <section className="chairs-section">
+    {/* ── Section divider ── */}
+    <div className="section-divider" />
+
+    {/* ── Contact Section (Alumni Chairs) ── */}
+    <section id="contact" className="chairs-section">
       <div className="chairs-inner">
-        <p className="itinerary-eyebrow">Questions? We&apos;re Here to Help</p>
-        <h2 className="itinerary-headline">Alumni Chairs</h2>
-        <div className="hero-divider" style={{ marginTop: "20px" }} />
+        <FadeIn>
+          <p className="itinerary-eyebrow">Questions? We&apos;re Here to Help</p>
+          <h2 className="itinerary-headline">Contact</h2>
+          <div className="hero-divider" style={{ marginTop: "20px" }} />
+        </FadeIn>
         <p className="chairs-blurb">
           We couldn&apos;t be more excited to bring everyone together for this. If you have any questions about logistics, the schedule, or anything in between, please don&apos;t hesitate to reach out to us directly.
         </p>
-        <div className="chairs-grid">
-          <ChairCard
-            initials="NK"
-            name="Nathan Kim"
-            email="nkim4724@mit.edu"
-            phone="818-696-6854"
-            phoneHref="+18186966854"
-            photo="/nathan.jpg"
-          />
-          <ChairCard
-            initials="JF"
-            name="Jeremy Flint"
-            email="jzflint@mit.edu"
-            phone="408-648-5530"
-            phoneHref="+14086485530"
-            photo="/jeremy.jpg"
-          />
-        </div>
+        <FadeIn>
+          <div className="chairs-grid">
+            <ChairCard
+              initials="NK"
+              name="Nathan Kim"
+              email="nkim4724@mit.edu"
+              phone="818-696-6854"
+              phoneHref="+18186966854"
+              photo="/nathan.jpg"
+            />
+            <ChairCard
+              initials="JF"
+              name="Jeremy Flint"
+              email="jzflint@mit.edu"
+              phone="408-648-5530"
+              phoneHref="+14086485530"
+              photo="/jeremy.jpg"
+            />
+          </div>
+        </FadeIn>
+      </div>
+    </section>
 
-        <div className="chairs-message">
-          <h3 className="chairs-message-title">A Message from the Alumni Chairs</h3>
-          <div className="chair-divider" />
-          <p className="chairs-message-text">
-            Brothers,
-          </p>
-          <p className="chairs-message-text">
-            We want to take a moment to share something important with all of you. The current undergraduate chapter has voted not to hold an alumni reunion next year. We know that might come as a surprise, but we genuinely believe this is the right call — and here&apos;s why.
-          </p>
-          <p className="chairs-message-text">
-            Our goal has always been to make these reunions truly special. By holding them less frequently, we can build greater momentum between events, encourage broader attendance across alumni classes, and secure the funding needed to make each reunion larger, more memorable, and worthy of the time and travel it takes to bring everyone back together. Rather than stretching resources thin year after year, we want every reunion to feel like an event you can&apos;t afford to miss.
-          </p>
-          <p className="chairs-message-text">
-            That makes this year&apos;s 5th Anniversary Reunion all the more important. This is the one. We&apos;ve put months of work into planning a weekend that lives up to the history of this house and the bonds we&apos;ve built here — and we hope to see as many of you as possible at 416 Beacon this May.
-          </p>
-          <p className="chairs-message-text">
-            If you have any questions about this decision or thoughts on the future of alumni events, we&apos;re always happy to talk. Reach out anytime.
-          </p>
-          <p className="chairs-message-text" style={{ marginTop: "16px" }}>
-            — Nathan &amp; Jeremy
-          </p>
-        </div>
-      </div>
-    </section>
+    {/* ── Section divider ── */}
+    <div className="section-divider" />
+
     {/* ── Media Section ── */}
-    <section className="media-section">
+    <section id="memories" className="media-section">
       <div className="chairs-inner">
-        <p className="itinerary-eyebrow">Photos & Videos</p>
-        <h2 className="itinerary-headline">Memories</h2>
-        <div className="hero-divider" style={{ marginTop: "20px" }} />
+        <FadeIn>
+          <p className="itinerary-eyebrow">Photos &amp; Videos</p>
+          <h2 className="itinerary-headline">Memories</h2>
+          <div className="hero-divider" style={{ marginTop: "20px" }} />
+        </FadeIn>
         <p className="chairs-blurb">
-          Photos and videos captured throughout the reunion weekend will be shared here.
+          Every moment from the reunion weekend will be captured. Photos, videos, and highlights will live here for years to come.
         </p>
-        <div className="media-coming-soon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.2 }}>
-            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-          </svg>
-          <p className="media-coming-soon-title">Coming Soon</p>
-        </div>
+        <FadeIn>
+          <div className="media-coming-soon">
+            <div className="media-coming-soon-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.4 }}>
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                <circle cx="12" cy="13" r="4" />
+              </svg>
+            </div>
+            <p className="media-coming-soon-title">Memories Will Be Captured</p>
+            <p className="media-coming-soon-subtitle">
+              We'll be documenting the weekend. Check back after May 3 for the full gallery.
+            </p>
+          </div>
+        </FadeIn>
       </div>
     </section>
+
+    {/* ── Section divider ── */}
+    <div className="section-divider" />
 
     {/* ── Footer ── */}
     <footer className="site-footer">
@@ -828,6 +929,83 @@ function RSVPTicker({ guests }: { guests: Guest[] }) {
           </span>
         ))}
       </div>
+    </div>
+  );
+}
+
+function TypewriterMessage({ paragraphs }: { paragraphs: { text: string; style?: React.CSSProperties }[] }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = useState(0); // 0 → 1
+  const doneRef = useRef(false);
+  const stateRef = useRef({ isVisible: false, lastScrollY: 0, accumulated: 0 });
+
+  // Full reveal over ~800px of scroll — a deliberate, readable pace
+  const SCROLL_DISTANCE = 800;
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const state = stateRef.current;
+
+    function onScroll() {
+      if (!state.isVisible || doneRef.current) return;
+      const y = window.scrollY;
+      const delta = Math.abs(y - state.lastScrollY);
+      state.lastScrollY = y;
+      state.accumulated += delta;
+      const p = Math.min(state.accumulated / SCROLL_DISTANCE, 1);
+      setProgress(p);
+      if (p >= 1) doneRef.current = true;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        state.isVisible = entry.isIntersecting;
+        if (entry.isIntersecting) {
+          state.lastScrollY = window.scrollY;
+        }
+      },
+      { threshold: 0.01 }
+    );
+    observer.observe(el);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Use a CSS mask to smoothly reveal text top-to-bottom with a soft
+  // gradient edge. The mask moves from covering nothing to covering
+  // everything as progress goes 0 → 1.
+  const revealPct = progress * 100;
+  const maskImage =
+    progress >= 1
+      ? "none"
+      : `linear-gradient(to bottom, #000 ${revealPct}%, transparent ${revealPct + 8}%)`;
+
+  return (
+    <div ref={containerRef} className="chairs-message-standalone">
+      <h3 className="chairs-message-title">A Message from the Alumni Chairs</h3>
+      <div className="chair-divider" />
+      <div
+        ref={textRef}
+        style={{
+          maskImage,
+          WebkitMaskImage: maskImage,
+        }}
+      >
+        {paragraphs.map((para, pi) => (
+          <p key={pi} className="chairs-message-text" style={para.style}>
+            {para.text}
+          </p>
+        ))}
+      </div>
+      {progress < 1 && progress > 0 && (
+        <div className="tw-cursor-line" style={{ opacity: Math.min(progress * 5, 1) }} />
+      )}
     </div>
   );
 }
