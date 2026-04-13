@@ -48,6 +48,7 @@ export function HomePage({
   const [scrolled, setScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
+  const stickyNavRef = useRef<HTMLDivElement>(null);
   const heroLeftRef = useRef<HTMLDivElement>(null);
   const globeParallaxRef = useRef<HTMLDivElement>(null);
 
@@ -95,7 +96,8 @@ export function HomePage({
       }
       if (
         navRef.current &&
-        !navRef.current.contains(e.target as Node)
+        !navRef.current.contains(e.target as Node) &&
+        (!stickyNavRef.current || !stickyNavRef.current.contains(e.target as Node))
       ) {
         setNavOpen(false);
       }
@@ -391,7 +393,7 @@ export function HomePage({
             <button onClick={() => setModal("signup")} className="hero-btn hero-btn-solid">RSVP</button>
           </>
         )}
-        <div className="section-nav section-nav--dark" ref={scrolled ? navRef : undefined}>
+        <div className="section-nav section-nav--dark" ref={stickyNavRef}>
           <button
             onClick={() => { setNavOpen((v) => !v); setAvatarOpen(false); }}
             className="section-nav-toggle"
