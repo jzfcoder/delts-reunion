@@ -85,6 +85,20 @@ export async function signup(
     return { error: "Something went wrong. Please try again." };
   }
 
+  // If a contribution already exists for this name, mark attendee as paid
+  const { data: matchingContributions } = await supabase
+    .from("contributions")
+    .select("id")
+    .ilike("first_name", firstName.trim())
+    .ilike("last_name", lastName ?? "");
+
+  if (matchingContributions && matchingContributions.length > 0) {
+    await supabase
+      .from("attendees")
+      .update({ paid: true })
+      .eq("session_token", sessionToken);
+  }
+
   console.log("insert succeeded, redirecting");
 
   const cookieStore = await cookies();

@@ -56,5 +56,16 @@ export async function submitContribution(
     return { error: "Something went wrong. Please try again." };
   }
 
+  // Mark matching attendee(s) as paid (case-insensitive name match)
+  const { error: paidError } = await supabase
+    .from("attendees")
+    .update({ paid: true })
+    .ilike("first_name", firstName)
+    .ilike("last_name", lastName ?? "");
+
+  if (paidError) {
+    console.error("failed to update attendee paid status:", paidError);
+  }
+
   return { success: true };
 }
