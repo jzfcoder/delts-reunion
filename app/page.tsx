@@ -27,7 +27,7 @@ export default async function Home({
       )
     );
 
-  const guests = session ? allGuests : [];
+  const guests = allGuests;
   const alumniCount = allGuests.length;
 
   return (
