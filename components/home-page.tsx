@@ -46,14 +46,35 @@ export function HomePage({
   const [copied, setCopied] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const heroLeftRef = useRef<HTMLDivElement>(null);
+  const globeParallaxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let rafId: number;
     function handleScroll() {
       const isScrolled = window.scrollY > 80;
       setScrolled((prev) => (prev === isScrolled ? prev : isScrolled));
+
+      // Parallax effect on hero elements
+      if (!rafId) {
+        rafId = requestAnimationFrame(() => {
+          const y = window.scrollY;
+          if (heroLeftRef.current) {
+            heroLeftRef.current.style.opacity = `${Math.max(0, 1 - y / 500)}`;
+            heroLeftRef.current.style.transform = `translateY(calc(-50% + ${y * 0.15}px))`;
+          }
+          if (globeParallaxRef.current) {
+            globeParallaxRef.current.style.transform = `translateY(${y * 0.3}px)`;
+          }
+          rafId = 0;
+        });
+      }
     }
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
 
@@ -89,10 +110,11 @@ export function HomePage({
     <div className="hero-container">
       {/* Particle constellation — lives between the noise texture (z-index 1)
           and the globe / UI panels (z-index 2+) */}
-      <ParticleConstellation />
-
-      {/* Center globe */}
-      <Globe />
+      <div ref={globeParallaxRef} style={{ position: "absolute", inset: 0, willChange: "transform" }}>
+        <ParticleConstellation />
+        {/* Center globe */}
+        <Globe />
+      </div>
 
       {/* Top-left greek logo */}
       <div className="hero-logo">ΔΤΔ</div>
@@ -174,22 +196,19 @@ export function HomePage({
       </div>
 
       {/* Left info panel */}
-      <div className="hero-left">
-        <div className="hero-divider" />
-        <p className="hero-label" style={{ opacity: 0.6, marginBottom: "4px" }}>5TH ANNIVERSARY — HOUSE RENOVATION</p>
-        <h2 className="hero-countdown-title">ALUMNI REUNION IN</h2>
-        <Countdown />
+      <div className="hero-left" ref={heroLeftRef}>
+        <div className="hero-divider hero-stagger-1" />
+        <p className="hero-label hero-stagger-1" style={{ opacity: 0.6, marginBottom: "4px" }}>5TH ANNIVERSARY — HOUSE RENOVATION</p>
+        <h2 className="hero-countdown-title hero-stagger-2">ALUMNI REUNION IN</h2>
+        <div className="hero-stagger-2"><Countdown /></div>
 
-        <div className="hero-divider" />
-        <p className="hero-date">MAY 1 – MAY 3, 2026</p>
-        <p className="hero-location">416 BEACON ST, BOSTON, MA</p>
-        <div className="hero-divider" />
+        <div className="hero-divider hero-stagger-3" />
+        <p className="hero-date hero-stagger-3">MAY 1 – MAY 3, 2026</p>
+        <p className="hero-location hero-stagger-3">416 BEACON ST, BOSTON, MA</p>
+        <div className="hero-divider hero-stagger-4" />
         {!isLoggedIn ? (
-          <div className="hero-rsvp-cta">
-            <p className="hero-rsvp-deadline">
-              <span className="rsvp-pulse-dot" />
-              RSVP DEADLINE — APRIL 20, 2026
-            </p>
+          <div className="hero-rsvp-cta hero-stagger-4">
+            <RsvpDeadlineText />
             <div className="hero-rsvp-buttons">
               <button
                 onClick={() => setModal("signup")}
@@ -206,9 +225,9 @@ export function HomePage({
             </div>
           </div>
         ) : (
-          <p className="hero-label" style={{ fontSize: "0.75rem", opacity: 0.6 }}>RSVP DEADLINE — APRIL 20, 2026</p>
+          <RsvpDeadlineText compact />
         )}
-        <AttendeeCounter count={alumniCount} />
+        <div className="hero-stagger-5"><AttendeeCounter count={alumniCount} /></div>
       </div>
 
       {/* Right guest list panel */}
@@ -307,6 +326,20 @@ export function HomePage({
       </div>
     </div>
 
+    {/* ── Sticky RSVP bar ── */}
+    {!isLoggedIn && (
+      <div className={`sticky-rsvp-bar${scrolled ? " sticky-rsvp-bar--visible" : ""}`}>
+        <span className="sticky-rsvp-bar-logo">ΔΤΔ</span>
+        <div className="sticky-rsvp-bar-right">
+          <span className="sticky-rsvp-bar-deadline"><RsvpDeadlineText compact /></span>
+          <button onClick={() => setModal("signup")} className="hero-btn hero-btn-solid">RSVP</button>
+        </div>
+      </div>
+    )}
+
+    {/* ── Social proof ticker ── */}
+    <RSVPTicker guests={guests} />
+
     {/* ── Itinerary Section ── */}
     <section id="itinerary" className="itinerary-section">
       <div className="itinerary-inner">
@@ -318,12 +351,20 @@ export function HomePage({
           </div>
         </FadeIn>
 
+        <FadeIn delay={50}>
+          <blockquote className="pull-quote">
+            <p className="pull-quote-text">&ldquo;This is the one.&rdquo;</p>
+          </blockquote>
+        </FadeIn>
+
         <div className="itinerary-days">
           {/* Friday */}
           <FadeIn delay={100}>
             <div className="itinerary-day">
               <p className="itinerary-day-label">Friday — May 1</p>
-              <ItineraryEvent time="8:00 PM" title="Opening Night Drinks" detail="We're kicking off the weekend with our own private room at Carrie Nation — the whole crew, cold drinks, and the first round of catching up." featured />
+              <FadeIn delay={150}>
+                <ItineraryEvent time="8:00 PM" title="Opening Night Drinks" detail="We're kicking off the weekend with our own private room at Carrie Nation — the whole crew, cold drinks, and the first round of catching up." featured />
+              </FadeIn>
             </div>
           </FadeIn>
 
@@ -331,9 +372,15 @@ export function HomePage({
           <FadeIn delay={200}>
             <div className="itinerary-day">
               <p className="itinerary-day-label">Saturday — May 2</p>
-              <ItineraryEvent time="10:00 AM" title="Return of the Lobster Trip" detail="This year's trip will be slightly modified — vans leave at 10 and we'll be heading to a beach about an hour away for lobster rolls, football, spike ball, and cornhole. This is the one." featured badge="SIGNATURE EVENT" />
-              <ItineraryEvent time="6:00 PM" title="Dinner at Fogo de Chão" detail="Private rooms reserved for the full Churrasco experience — unlimited cuts, exceptional company, and an evening to remember." featured badge="SIGNATURE EVENT" />
-              <ItineraryEvent time="9:00 PM" title="Back to the House ... Brohood" detail="Head back to 416 for a night the way you remember it — drinks flowing, old games revived, and traditions brought back to life. This is your chance to relive the best nights at the house with brothers past and present." featured badge="SIGNATURE EVENT" />
+              <FadeIn delay={250}>
+                <ItineraryEvent time="10:00 AM" title="Return of the Lobster Trip" detail="This year's trip will be slightly modified — vans leave at 10 and we'll be heading to a beach about an hour away for lobster rolls, football, spike ball, and cornhole. This is the one." featured badge="SIGNATURE EVENT" />
+              </FadeIn>
+              <FadeIn delay={350}>
+                <ItineraryEvent time="6:00 PM" title="Dinner at Fogo de Chão" detail="Private rooms reserved for the full Churrasco experience — unlimited cuts, exceptional company, and an evening to remember." featured badge="SIGNATURE EVENT" />
+              </FadeIn>
+              <FadeIn delay={450}>
+                <ItineraryEvent time="9:00 PM" title="Back to the House ... Brohood" detail="Head back to 416 for a night the way you remember it — drinks flowing, old games revived, and traditions brought back to life. This is your chance to relive the best nights at the house with brothers past and present." featured badge="SIGNATURE EVENT" />
+              </FadeIn>
             </div>
           </FadeIn>
 
@@ -341,7 +388,9 @@ export function HomePage({
           <FadeIn delay={300}>
             <div className="itinerary-day">
               <p className="itinerary-day-label">Sunday — May 3</p>
-              <ItineraryEvent time="10:00 AM" title="Rooftop Send-Off" detail="Close out the weekend over breakfast with sweeping views of the Boston skyline and the Charles River. A proper goodbye." featured />
+              <FadeIn delay={350}>
+                <ItineraryEvent time="10:00 AM" title="Rooftop Send-Off" detail="Close out the weekend over breakfast with sweeping views of the Boston skyline and the Charles River. A proper goodbye." featured />
+              </FadeIn>
               <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.45)", marginTop: "8px", lineHeight: 1.5 }}>
                 Join us for one last morning together before heading out. If your class wants to plan something of your own afterward, this is the day to do it!
               </p>
@@ -538,41 +587,60 @@ export function HomePage({
         </div>
       </div>
     </section>
+
+    {/* ── Footer ── */}
+    <footer className="site-footer">
+      <div className="site-footer-inner">
+        <div className="site-footer-left">
+          <span className="site-footer-logo">ΔΤΔ — Delta Tau Delta</span>
+          <span className="site-footer-detail">416 Beacon St, Boston, MA — Est. 1889</span>
+        </div>
+        <div className="site-footer-right">
+          Made with care by the Alumni Chairs
+        </div>
+      </div>
+    </footer>
     </>
   );
 }
 
 function AttendeeCounter({ count }: { count: number }) {
   const [display, setDisplay] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const counterRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (count === 0) return;
+    if (count === 0 || hasAnimated) return;
+    const el = counterRef.current;
+    if (!el) return;
 
-    function runAnimation() {
-      const duration = 5000;
-      const start = performance.now();
-      let raf: number;
-      function tick(now: number) {
-        const elapsed = now - start;
-        const progress = Math.min(elapsed / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        setDisplay(Math.round(eased * count));
-        if (progress < 1) raf = requestAnimationFrame(tick);
-      }
-      raf = requestAnimationFrame(tick);
-      return () => cancelAnimationFrame(raf);
-    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          observer.disconnect();
 
-    const cancel = runAnimation();
-    const interval = setInterval(runAnimation, 15000);
-    return () => {
-      cancel();
-      clearInterval(interval);
-    };
-  }, [count]);
+          const duration = 4000;
+          const start = performance.now();
+          let raf: number;
+          function tick(now: number) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setDisplay(Math.round(eased * count));
+            if (progress < 1) raf = requestAnimationFrame(tick);
+          }
+          raf = requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [count, hasAnimated]);
 
   return (
-    <div className="attendance-counter">
+    <div className="attendance-counter" ref={counterRef}>
       <span className="attendance-number">{display}</span>
       <span className="attendance-label">Attendees &amp; Counting</span>
     </div>
@@ -654,6 +722,87 @@ function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
       }}
     >
       {children}
+    </div>
+  );
+}
+
+function RsvpDeadlineText({ compact }: { compact?: boolean } = {}) {
+  const deadline = new Date("2026-04-20T23:59:59");
+  const now = new Date();
+  const diffMs = deadline.getTime() - now.getTime();
+  const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+  const diffHours = Math.ceil(diffMs / (1000 * 60 * 60));
+
+  let text: string;
+  let urgencyClass = "";
+  let fastPulse = false;
+
+  if (diffMs <= 0) {
+    text = "LATE RSVP — CONTACT ALUMNI CHAIRS";
+    urgencyClass = "urgency-critical";
+    fastPulse = true;
+  } else if (diffDays <= 3) {
+    text = `RSVP CLOSING SOON — ${diffHours} HOURS LEFT`;
+    urgencyClass = "urgency-critical";
+    fastPulse = true;
+  } else if (diffDays <= 7) {
+    text = `ONLY ${diffDays} DAYS LEFT TO RSVP`;
+    urgencyClass = "urgency-high";
+    fastPulse = true;
+  } else if (diffDays <= 14) {
+    text = `RSVP CLOSES IN ${diffDays} DAYS`;
+    urgencyClass = "";
+  } else {
+    text = "RSVP DEADLINE — APRIL 20, 2026";
+    urgencyClass = "";
+  }
+
+  if (compact) {
+    return (
+      <p className={`hero-label ${urgencyClass}`} style={{ fontSize: "0.75rem", opacity: 0.6 }}>
+        {text}
+      </p>
+    );
+  }
+
+  return (
+    <p className={`hero-rsvp-deadline ${urgencyClass}`}>
+      <span className={`rsvp-pulse-dot${fastPulse ? " rsvp-pulse-dot--fast" : ""}`} />
+      {text}
+    </p>
+  );
+}
+
+function RSVPTicker({ guests }: { guests: Guest[] }) {
+  if (guests.length === 0) return null;
+
+  const items = guests.map((g) => ({
+    name: `${g.first_name}${g.graduation_date ? ` '${g.graduation_date.slice(-2)}` : ""}`,
+    pic: g.profile_pic_url,
+    initial: (g.first_name?.[0] ?? "?").toUpperCase(),
+  }));
+
+  // Duplicate for seamless loop
+  const doubled = [...items, ...items];
+  const duration = Math.max(20, items.length * 1.5);
+
+  return (
+    <div className="rsvp-ticker-wrapper">
+      <div className="rsvp-ticker" style={{ "--ticker-duration": `${duration}s` } as React.CSSProperties}>
+        {doubled.map((item, i) => (
+          <span key={i} className="rsvp-ticker-item">
+            <span className="rsvp-ticker-avatar">
+              {item.pic ? (
+                <img src={item.pic} alt="" width={24} height={24} decoding="async" />
+              ) : (
+                <span className="rsvp-ticker-avatar-letter">{item.initial}</span>
+              )}
+            </span>
+            <span className="rsvp-ticker-name">{item.name}</span>
+            {i < doubled.length - 1 && <span className="rsvp-ticker-dot" />}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }

@@ -37,6 +37,16 @@ export function Modal({
       }}
     >
       <div className="modal-content">
+        {/* Mobile drag handle */}
+        <div className="modal-drag-handle" style={{
+          display: "none",
+          width: 40,
+          height: 4,
+          background: "rgba(255,255,255,0.2)",
+          margin: "0 auto 16px",
+          borderRadius: 2,
+          flexShrink: 0,
+        }} />
         <button
           type="button"
           onClick={onClose}
