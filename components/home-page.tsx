@@ -543,6 +543,9 @@ export function HomePage({
           </div>
         </FadeIn>
         <p className="chairs-blurb">
+          Bringing a plus one? Your ticket price is doubled to cover both guests.
+        </p>
+        <p className="chairs-blurb">
           Our current undergrads are chipping in too — each brother in the house is contributing $65 toward the weekend. We want to be fully transparent about where every dollar goes, so you can see exactly what your ticket covers. Any remaining difference is being graciously covered by House Corps — a generous gesture made in honor of this being our 5th anniversary celebration.
         </p>
         <p className="chairs-blurb">Here&apos;s the estimated per-person cost breakdown:</p>
