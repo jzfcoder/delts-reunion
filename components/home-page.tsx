@@ -326,7 +326,7 @@ export function HomePage({
             <p className="mt-2 text-sm text-gray-400">May 1 – 3, 2026</p>
             <p className="mt-1 text-xs text-gray-500 flex items-center justify-center gap-1.5">
               <span className="rsvp-pulse-dot" />
-              RSVP deadline: April 20, 2026
+              RSVP deadline: April 21, 2026
             </p>
           </div>
           <p className="text-xs text-amber-400/80 bg-amber-400/10 border border-amber-400/20 px-4 py-3 text-center leading-relaxed">
@@ -863,7 +863,7 @@ function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 }
 
 function RsvpDeadlineText({ compact }: { compact?: boolean } = {}) {
-  const deadline = new Date("2026-04-20T23:59:59");
+  const deadline = new Date("2026-04-21T23:59:59");
   const now = new Date();
   const diffMs = deadline.getTime() - now.getTime();
   const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
@@ -889,7 +889,7 @@ function RsvpDeadlineText({ compact }: { compact?: boolean } = {}) {
     text = `RSVP CLOSES IN ${diffDays} DAYS`;
     urgencyClass = "";
   } else {
-    text = "RSVP DEADLINE — APRIL 20, 2026";
+    text = "RSVP DEADLINE — APRIL 21, 2026";
     urgencyClass = "";
   }
 
