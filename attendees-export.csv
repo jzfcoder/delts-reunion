@@ -1,0 +1,106 @@
+first_name,last_name,email,phone,graduation_date,days_attending,willing_to_pay,willing_to_pay_other,plus_one,plus_one_count,donation_amount,paid,created_at
+Alan,Abreu,alanabreu106@hotmail.com,6313653896,2022,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Daniel,Antov,danieltantov@alum.mit.edu,5127516013,2025,Friday; May 1; Saturday; May 2; Sunday; May 3,I can chip in but I do not have money like that.,,false,0,$50,false,2026-03-25T22:28:33.780323+00:00
+Talla,Babou,tfbabou@gmail.com,2129205299,2019,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Sam,Bruce,sgbruce@alum.mit.edu,4109910886,2024,May 1; May 2; May 3,no,,false,0,,false,2026-04-10T00:20:55.703427+00:00
+Leo,Campos,ljcampos@alum.mit.edu,8303192921,2025,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Krithi,Chandrakasan,krithichandrakasan@gmail.com,8573739319,2017,May 1; May 2,no,,false,0,,false,2026-04-21T01:18:56.502934+00:00
+Evan,Comiskey,ellcomiskey@gmail.com,7148755617,2025,Friday; May 1; Saturday; May 2; Sunday; May 3,No,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Evan,Comiskey,ellcomiskey@gmail.com,7148755617,2025,May 1; May 2; May 3,no,,false,0,,false,2026-04-10T01:07:40.625427+00:00
+Evan,Comiskey,comiskey@mit.edu,7148755617,2025,Friday; May 1; Saturday; May 2; Sunday; May 3,No,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Carlos,Cruz,carlosrodrigo1@mac.com,8063927037,2018,Friday; May 1; Saturday; May 2,Yes,,true,0,$250,false,2026-03-25T22:28:33.780323+00:00
+Theodore,Dahl,dahlt781@mit.edu,5084795526,2028,May 2,no,,false,0,,false,2026-04-12T21:05:20.894933+00:00
+Adam,Eisdorfer,adameis@mit.edu,7327700139,2029,Friday; May 1; Sunday; May 3,unsure,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Lucas,Escandon,lescando@mit.edu,7329660373,2026,Friday; May 1; Saturday; May 2; Sunday; May 3,No,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Max,Feenstra,pmfeen@gmail.com,2035175936,2025,Friday; May 1; Saturday; May 2; Sunday; May 3,I assume not going to dinner means not being charged for it,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Kaden,Fenno,fennokw@gmail.com,2107255219,2029,Friday; May 1; Sunday; May 3,Yes,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Jacob,Flatter,jflatter@gmail.com,6176947853,2007,Friday; May 1; Saturday; May 2,Yes,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Sawyer,Garrett,gsawyer@mit.edu,5085454437,2026,Saturday; May 2; Sunday; May 3,Yes,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Noah,Getz,noahb930@gmail.com,9179034976,2025,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Jamie,Goldstein,jamie@pillar.vc,7812494070,1989,Friday; May 1; Saturday; May 2,Yes,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Jono,Goldstein,jgoldstein@ta.com,617-574-6773,1983,May 1,no,,false,0,,false,2026-04-21T13:52:22.991875+00:00
+Diego,Gonzalez,diegogon@mit.edu,3054951890,2029,Sunday; May 3,Yes,,true,0,$100,false,2026-03-25T22:28:33.780323+00:00
+Michael,Ho,mikecho@yahoo.com,2069146182,1989,May 1; May 2; May 3,yes,,false,0,,false,2026-04-26T17:53:17.535575+00:00
+Andrew,Hochstadt,andrew.hochstadt@gmail.com,6308008417,2016,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,true,0,,false,2026-03-25T22:28:33.780323+00:00
+Ryan,Hoffman,Rnh@mit.edu,2035242479,2028,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Blake,Hudspeth,bhhudspeth@gmail.com,4694014171,2025,May 1; May 2; May 3,no,,false,0,,false,2026-04-09T20:45:01.736009+00:00
+Declan,King,daking@mit.edu,7162776683,2027,Friday; May 1; Saturday; May 2,Yes,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Declan,King,d.the.king1616@gmail.com,7162776683,2027,May 1; May 3,no,,false,0,,false,2026-04-12T15:35:15.651522+00:00
+Declan,King,d.the.king1616@gmail.com,7162776683,2027,May 1,no,,false,0,,false,2026-04-12T15:34:16.939194+00:00
+Nishant,Lahiri,lahirin@mit.edu,6074380647,2027,Friday; May 1; Saturday; May 2; Sunday; May 3,$100 seems steep. Hoping this can be partially comped by budget.,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Thomas,Li,tomli@mit.edu,8578297536,2029,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Barry,Magda,bajmagda@gmail.com,207.358.93354 ,1975,Saturday; May 2; Sunday; May 3,Yes,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Patrick,Marx,patrick.k.marx@gmail.com,6173048489,2013,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,true,0,,false,2026-03-25T22:28:33.780323+00:00
+Jacob,McCarran,mccarranjr@gmail.com,4129160121,2025,Friday; May 1; Saturday; May 2; Sunday; May 3,Hell naw Jews don’t give away moneh,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Andrew,Merrell,stink40lax@outlook.com,7198224400,2025,Friday; May 1; Saturday; May 2; Sunday; May 3,No,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+John,Mose,jjmose2409@gmail.com,9257855342,2024,May 1; May 2; May 3,no,,false,0,,false,2026-04-13T17:56:08.613608+00:00
+Mario,Mrowka,mrowkamaad@gmail.com,8572091873,2025,Friday; May 1; Saturday; May 2; Sunday; May 3,No,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Insuh,Na,insuhna326@gmail.com,3478859106,2025,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Tobe,Obochi,tobochi2003@gmail.com,8478406805,2024,Friday; May 1; Saturday; May 2; Sunday; May 3,bruh,,false,0,i will give you $20,false,2026-03-25T22:28:33.780323+00:00
+Miles,Oglesby,miles.oglesby@gmail.com,8569050535,2024,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Alex,Podrez,apodrez21@gmail.com,2167122575,2025,Friday; May 1; Saturday; May 2; Sunday; May 3,No,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Mark,Porter,markportercfp@gmail.com,6173596191,2005,Saturday; May 2,Yes,,false,0,$100,false,2026-03-25T22:28:33.780323+00:00
+Gabriel,Ravel,geravel@gmail.com,6463572972,2017,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,true,0,,false,2026-03-25T22:28:33.780323+00:00
+Brendon,Reperttang,brendonRT@gmail.com,6198950022,2023,May 1; May 2; May 3,no,,false,0,,false,2026-04-21T03:30:06.473998+00:00
+Brendon,Reperttang,brendonRT@gmail,6198950022,2024,Friday; May 1; Saturday; May 2; Sunday; May 3,No,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Jack,Rich,jackprichjr@gmail.com,4107369526,2024,May 1; May 2; May 3,other,,false,0,,false,2026-04-08T20:21:33.940385+00:00
+Grant,Robinson,None,8573631366,2024,,Will not be spending money ,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Daniel,Seong,dyseong@mit.edu,551-777-2367,2029,Friday; May 1; Saturday; May 2; Sunday; May 3,Maybe,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Alay,Shah,alay0shah@gmail.com,6162168983,2025,Friday; May 1; Saturday; May 2; Sunday; May 3,No,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Charles,Sloane,csmsloane@gmail.com,7817757654,2025,Friday; May 1; Saturday; May 2; Sunday; May 3,No,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Chas,Stahl,chas.stahl03@gmail.com,8588297530,2013,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,true,0,,false,2026-03-25T22:28:33.780323+00:00
+Nick,Stiles,nicholasgstiles@gmail.com,862-228-4571,2025,Friday; May 1; Saturday; May 2; Sunday; May 3,No,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Nick,Stiles,ngstiles@mit.edu,8622284571,2025,May 1; May 2; May 3,no,,false,0,,false,2026-04-10T04:25:35.273037+00:00
+Matt,Tyburski,mjtyb@mit.edu,6102207221,2029,Sunday; May 3,Yes,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Brad,Volin,bradvolin@gmail.com,3032463016,1989,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,true,0,,false,2026-03-25T22:28:33.780323+00:00
+Brad,Volin,bradvolin@gmail.com,3032463016,1989,May 2; May 3,yes,,false,0,,false,2026-04-21T02:24:48.741667+00:00
+CJ,Whelan,cjwhelan@alum.mit.edu,303-873-1212,1992,May 1,no,,false,0,,false,2026-04-02T19:50:58.112353+00:00
+Noah,Wiley,njwiley@mit.edu,4159009953,2026,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes but 100 a little much for dinner ,,true,0,,false,2026-03-25T22:28:33.780323+00:00
+Andy,Yang,yangandy2006@gmail.com,8035533668,2028,May 1; May 2; May 3,no,,false,0,,false,2026-04-12T22:45:48.400693+00:00
+Andy,Yang,alyang@mit.edu,8035533668,2028,,Yes,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+Nathan,Zhu,nathannn@mit.edu,8592213401,2027,Friday; May 1; Saturday; May 2,No,,false,0,,false,2026-03-25T22:28:33.780323+00:00
+David,Abarbanel,davidabarbanel07@gmail.com,8183008248,2029,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Benjamin,Bakal,benbakal@mit.edu,2244360828,2026,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Jian,Barazi,jianbarazi@gmail.com,8182229988,2016,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Dominic,Bollettieri,dboll@mit.edu,6512536855,2029,Friday; May 1; Saturday; May 2; Sunday; May 3,No,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Dominic,Bollettieri,dboll@mit.edu,6512536855,2029,Friday; May 1; Saturday; May 2,Yes,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Mike,Bromberg,MABromberg@aol.com,6034599610,1970,May 1; May 2; May 3,yes,,false,0,,true,2026-04-02T13:38:11.22333+00:00
+Mike,Bromberg,mabromberg@aol.com,6038782381,1970,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Wes,Chapin,wchapin@mit.edu,7159771507,2029,May 2,no,,false,0,,true,2026-04-12T21:04:29.196075+00:00
+Adam,Cohen,adamc710@mit.edu,2028090664,2024,May 1; May 2,no,,false,0,,true,2026-04-12T20:52:44.746972+00:00
+Carson,Colmer,carson29@mit.edu,8033357299,2029,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Carson,Colmer,carson29@mit.edu,8033357299,2029,May 1; May 2; May 3,no,,false,0,,true,2026-04-13T15:50:38.991756+00:00
+Carlos,De Oliveira,cmoliv17@mit.edu,2404837827,2029,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Stephen,DeFalco,spdefalco@gmail.com,2035050320,1983,May 2; May 3,yes,,false,0,,true,2026-04-12T21:31:01.342065+00:00
+Drake,Elliott,drake180@mit.edu,4693409911,2026,Friday; May 1; Saturday; May 2; Sunday; May 3,No,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Nielsen,Euvrard,Neuvrard@mit.edu,6175057119,2027,Saturday; May 2,Yes,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Jeremy,Flint,jzflint@mit.edu,4086485530,2028,May 1; May 2; May 3,yes,,false,0,,true,2026-03-25T22:56:29.513611+00:00
+Elwin,Futrell,elwin_cessna@icloud.com,8086578610,2028,Saturday; May 2,Yes,,true,0,,true,2026-03-25T22:28:33.780323+00:00
+Luc,Gaitskell,lucg@mit.edu,4012975454,2026,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,true,0,,true,2026-03-25T22:28:33.780323+00:00
+Romeo,Giudici,romeo32@mit.edu,8023632944,2026,Friday; May 1; Saturday; May 2; Sunday; May 3,Current Student,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Stephen,Goodman,sgoodmanmit@gmail.com,8589458497,2012,May 1; May 2; May 3,yes,,false,0,,true,2026-04-08T21:55:45.151062+00:00
+Paul,Gutkovich,paulmte5@mit.edu,3479250928,2027,Friday; May 1; Saturday; May 2; Sunday; May 3,Fuck nah,,false,0,0$,true,2026-03-25T22:28:33.780323+00:00
+Griffin,Haisman,ghaisman@mit.edu,5087626265,2029,May 2,no,,false,0,,true,2026-04-12T21:06:29.070299+00:00
+Anant,Kapoor,anantk147@gmail.com,+33749229572,2015,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,"$25, $50, $100",true,2026-03-25T22:28:33.780323+00:00
+Nathan,Kim,nkim4724@mit.edu,,2028,May 1; May 2; May 3,yes,,false,0,,true,2026-03-30T04:22:44.468305+00:00
+Jasper,Lienhard,jasperlienhard@gmail.com,7818790232,2015,May 1; May 2; May 3,yes,,false,0,,true,2026-04-12T19:14:42.209245+00:00
+Rick,Martin,martinr81@gmail.com,3144061828,1981,May 2,yes,,false,0,,true,2026-04-19T20:42:03.751267+00:00
+Keon,McClure,kem323@mit.edu,3042086621,2029,Friday; May 1; Saturday; May 2; Sunday; May 3,No,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Jan,Mistak,janm319@mit.edu,7272419640,2029,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Maximilian,Porlein,maxporlein@gmail.com,+1 347 574 6329,2022,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Maximilian,Porlein,mporlein@mit.edu,+447470631415,2022,May 1; May 2; May 3,yes,,false,0,,true,2026-04-02T10:39:12.089982+00:00
+Bryce,Roberts,llachlanroberts@gmail.com,4154809234,2027,Friday; May 1; Saturday; May 2; Sunday; May 3,No,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Braedon,Rudolph,braedonrudolph@gmail.com,7204606230,2026,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,true,0,,true,2026-03-25T22:28:33.780323+00:00
+Braedon,Rudolph,bgrudolp@mit.edu,7204606230,2026,May 1; May 2; May 3,no,,false,0,,true,2026-04-13T01:22:07.303196+00:00
+Mitch,Rydzynski,mitch.rydzynski@gmail.com,5854784466,2022,Friday; May 1,Yes,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+CJ,Sanchez,carlos17@mit.edu,9144410150,2026,May 1; May 2; May 3,no,,false,0,,true,2026-04-12T20:41:20.311458+00:00
+Kainalu,Seales,sealeskainalu@gmail.com,8082207869,2029,May 1; May 2; May 3,no,,false,0,,true,2026-04-13T00:56:26.915598+00:00
+John,Tietjen,jtiet@mit.edu,8166067988,2027,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,true,0,exposure,true,2026-03-25T22:28:33.780323+00:00
+Patrick,Timons,patricktimons@gmail.com,9739060325,2025,May 1; May 2,no,,false,0,,true,2026-04-27T01:55:36.891594+00:00
+Patrick,Timons,patricktimons@gmail.com,9739060325,2025,Saturday; May 2; Sunday; May 3,Yes,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Patrick,Timons,patricktimons@gmail.com,9739060325,2025,May 1; May 2,no,,false,0,,true,2026-04-26T23:00:44.310513+00:00
+David,Vapnek,davidvapnek@gmail.com,8582430716,2023,Friday; May 1; Saturday; May 2,Yes,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Charles,Vest,Cdvest@mit.edu,6174705252,2029,Saturday; May 2; Sunday; May 3,Yes,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Zack,West,zwest402@gmail.com,8087974327,2026,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,true,2026-03-25T22:28:33.780323+00:00
+Zack,West,zwest402@gmail.com,8087974327,2026,May 1; May 2; May 3,no,,false,0,,true,2026-04-12T02:45:18.04708+00:00
+Caden,Wong,cadenw@mit.edu,9088586346,2029,Friday; May 1; Saturday; May 2; Sunday; May 3,Yes,,false,0,,true,2026-03-25T22:28:33.780323+00:00
