@@ -846,6 +846,70 @@ html {
   margin-top: 4px;
 }
 
+.itinerary-event-logistics {
+  margin: 10px 0 0;
+  padding: 18px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.itinerary-event-logistics-detail {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  line-height: 1.65;
+  font-weight: 400;
+  opacity: 0.55;
+}
+
+.itinerary-event-logistics-list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.itinerary-event-logistics-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.itinerary-event-logistics-row dt {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  margin: 0;
+}
+
+.itinerary-event-logistics-row dd {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+  opacity: 0.7;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.itinerary-day-note {
+  margin: 0 0 18px;
+  padding: 12px 16px;
+  border-left: 1px solid rgba(212, 175, 55, 0.35);
+  background: rgba(212, 175, 55, 0.04);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  line-height: 1.55;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.6);
+}
+
 /* Featured event accent (Friday & Saturday) */
 .itinerary-event--featured {
   border-left: 2px solid rgba(212, 175, 55, 0.5);
@@ -1947,6 +2011,20 @@ html {
 
   .itinerary-event {
     padding: 20px 18px;
+  }
+
+  .itinerary-event-logistics-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .itinerary-event-logistics-row dd {
+    font-size: 0.78rem;
+  }
+
+  .itinerary-day-note {
+    font-size: 0.72rem;
+    padding: 10px 14px;
   }
 
   .itinerary-event-title {

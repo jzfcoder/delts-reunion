@@ -453,21 +453,68 @@ export function HomePage({
           <div className="itinerary-day">
             <p className="itinerary-day-label">Friday — May 1</p>
             <FadeIn delay={100}>
-              <ItineraryEvent time="8:00 PM" title="Opening Night Drinks" detail="We're kicking off the weekend with our own private room at Carrie Nation — the whole crew, cold drinks, and the first round of catching up." featured />
+              <ItineraryEvent
+                time="8:00 – 11:00 PM"
+                title="Opening Night Drinks"
+                detail="We're kicking off the weekend with our own private room at Carrie Nation — the whole crew, cold drinks, and the first round of catching up."
+                logisticsDetail="Meet us at Carrie Nation at 8:00 PM. On arrival, mention you're with the Delts Reunion and you'll be guided to the Beacon Room, which we have to ourselves for the night."
+                logistics={[
+                  { label: "Location", value: "Carrie Nation Restaurant & Cocktail Club" },
+                  { label: "Address", value: "6 Beacon St, Boston, MA 02108" },
+                ]}
+                featured
+              />
             </FadeIn>
           </div>
 
           {/* Saturday */}
           <div className="itinerary-day">
             <p className="itinerary-day-label">Saturday — May 2</p>
+            <p className="itinerary-day-note">
+              A heads-up — depending on how the day flows, you may want to drop a change of clothes at the house in the morning so you&apos;re ready for dinner and brohood when we return.
+            </p>
             <FadeIn delay={150}>
-              <ItineraryEvent time="10:00 AM" title="Return of the Lobster Trip" detail="This year's trip will be slightly modified — vans leave at 10 and we'll be heading to a beach about an hour away for lobster rolls, football, spike ball, and cornhole. This is the one." featured badge="SIGNATURE EVENT" />
+              <ItineraryEvent
+                time="9:30 AM – 4:00 PM"
+                title="Return of the Lobster Trip"
+                detail="A modified take on the classic — we're heading up the coast for lobster rolls, football, spike ball, and cornhole. This is the one."
+                logisticsDetail="Transportation is provided — we're all leaving together from the Shelter in vans. Arrive between 9:30 and 10:00 AM; we depart at 10:00 sharp and expect to be back around 4:00 PM. Expect mid-40s and a bit chilly, but we'll have plenty of competitions, lobster rolls, snacks, and drinks to keep us moving. Dress accordingly."
+                logistics={[
+                  { label: "Meet-up", value: "Delta Tau Delta — 416 Beacon St" },
+                  { label: "Destination", value: "Wingaersheek Beach, Gloucester" },
+                ]}
+                featured
+                badge="SIGNATURE EVENT"
+              />
             </FadeIn>
             <FadeIn delay={200}>
-              <ItineraryEvent time="6:00 PM" title="Dinner at Fogo de Chão" detail="Private rooms reserved for the full Churrasco experience — unlimited cuts, exceptional company, and an evening to remember." featured badge="SIGNATURE EVENT" />
+              <ItineraryEvent
+                time="6:00 – 9:00 PM"
+                title="Dinner at Fogo de Chão"
+                detail="Private rooms reserved for the full Churrasco experience — unlimited cuts, exceptional company, and an evening to remember."
+                logisticsDetail="We'll walk over together from the house at 5:45 PM. If you'd rather meet us there, arrive by 6:00 PM and ask for the Delts Reunion. Our private rooms are reserved until 9:00, though we'll head out whenever the table reaches that perfect equilibrium of full and ready for brohood."
+                logistics={[
+                  { label: "Meet-up", value: "Delta Tau Delta — 416 Beacon St (5:45 PM walk)" },
+                  { label: "Venue", value: "Fogo de Chão Brazilian Steakhouse" },
+                  { label: "Address", value: "200 Dartmouth St, Boston, MA 02116" },
+                  { label: "Dress", value: "Business / Smart Casual" },
+                ]}
+                featured
+                badge="SIGNATURE EVENT"
+              />
             </FadeIn>
             <FadeIn delay={250}>
-              <ItineraryEvent time="9:00 PM" title="Back to the House ... Brohood" detail="Head back to 416 for a night the way you remember it — drinks flowing, old games revived, and traditions brought back to life. This is your chance to relive the best nights at the house with brothers past and present." featured badge="SIGNATURE EVENT" />
+              <ItineraryEvent
+                time="9:00 PM – Late"
+                title="Back to the House ... Brohood"
+                detail="Head back to 416 for a night the way you remember it — drinks flowing, old games revived, and traditions brought back to life. This is your chance to relive the best nights at the house with brothers past and present."
+                logisticsDetail="After dinner we'll walk back to the house (around 8–9 PM) for brohood with all generations. Alumni vs. Undergrad competitions are on the docket — start thinking about who's repping your class."
+                logistics={[
+                  { label: "Location", value: "Throughout the house — 416 Beacon St" },
+                ]}
+                featured
+                badge="SIGNATURE EVENT"
+              />
             </FadeIn>
           </div>
 
@@ -475,11 +522,17 @@ export function HomePage({
           <div className="itinerary-day">
             <p className="itinerary-day-label">Sunday — May 3</p>
             <FadeIn delay={300}>
-              <ItineraryEvent time="10:00 AM" title="Rooftop Send-Off" detail="Close out the weekend over breakfast with sweeping views of the Boston skyline and the Charles River. A proper goodbye." featured />
+              <ItineraryEvent
+                time="10:00 – 11:30 AM"
+                title="Rooftop Send-Off"
+                detail="Close out the weekend over breakfast with sweeping views of the Boston skyline and the Charles River. A proper goodbye."
+                logisticsDetail="A simple breakfast on the roofdeck to mark the close of the weekend. If your class wants extra time together afterward, this is the morning to plan it — we're hoping to have everyone present at Saturday's signature events."
+                logistics={[
+                  { label: "Location", value: "Delta Tau Delta — 416 Beacon St (Roofdeck)" },
+                ]}
+                featured
+              />
             </FadeIn>
-            <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.45)", marginTop: "8px", lineHeight: 1.5 }}>
-              Join us for one last morning together before heading out. If your class wants to plan something of your own afterward, this is the day to do it!
-            </p>
           </div>
         </div>
 
@@ -1020,13 +1073,29 @@ function TypewriterMessage({ paragraphs }: { paragraphs: { text: string; style?:
   );
 }
 
-function ItineraryEvent({ time, title, note, detail, featured, badge }: { time: string; title: string; note?: string; detail?: string; featured?: boolean; badge?: string }) {
+function ItineraryEvent({ time, title, note, detail, featured, badge, logistics, logisticsDetail }: { time: string; title: string; note?: string; detail?: string; featured?: boolean; badge?: string; logistics?: { label: string; value: string }[]; logisticsDetail?: string }) {
+  const hasLogisticsBlock = Boolean(logisticsDetail) || (logistics && logistics.length > 0);
   return (
     <div className={`itinerary-event${featured ? " itinerary-event--featured" : ""}`}>
       <span className="itinerary-time">{time}</span>
       {badge && <span className="itinerary-event-badge">{badge}</span>}
       <span className="itinerary-event-title">{title}</span>
       {detail && <span className="itinerary-event-detail">{detail}</span>}
+      {hasLogisticsBlock && (
+        <div className="itinerary-event-logistics">
+          {logisticsDetail && <p className="itinerary-event-logistics-detail">{logisticsDetail}</p>}
+          {logistics && logistics.length > 0 && (
+            <dl className="itinerary-event-logistics-list">
+              {logistics.map((row) => (
+                <div key={row.label} className="itinerary-event-logistics-row">
+                  <dt>{row.label}</dt>
+                  <dd>{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </div>
+      )}
       {note && <span className="itinerary-event-note">{note}</span>}
     </div>
   );
