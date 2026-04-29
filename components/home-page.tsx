@@ -497,7 +497,7 @@ export function HomePage({
                   { label: "Meet-up", value: "Delta Tau Delta — 416 Beacon St (5:45 PM walk)" },
                   { label: "Venue", value: "Fogo de Chão Brazilian Steakhouse" },
                   { label: "Address", value: "200 Dartmouth St, Boston, MA 02116" },
-                  { label: "Dress", value: "Business / Smart Casual" },
+                  { label: "Dress", value: "Smart Casual" },
                 ]}
                 featured
                 badge="SIGNATURE EVENT"
